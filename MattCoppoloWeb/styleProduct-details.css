@@ -64,7 +64,7 @@ a{
     justify-content: space-around;
 }
 .col{
-    flex-basis: 25%;
+    flex-basis: 0%;
     transition: transform 0.5s;
 }
 .col img{
