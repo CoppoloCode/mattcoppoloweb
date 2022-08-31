@@ -47,7 +47,9 @@
         </div>
         <div class="row">
             <div class="col">
-                <img src="images/featuredkeyboard.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredkeyboard.jpg" id="product1" onclick="getImageProduct(id)">
+                </a>
                 <h4>RGB Clear Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -59,7 +61,9 @@
                 <p>50.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredkeyboard2.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredkeyboard2.jpg" id="product2" onclick="getImageProduct(id)">
+                </a>
                 <h4>Black RGB Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -71,7 +75,9 @@
                 <p>80.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredmouse.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredmouse.jpg" id="product3" onclick="getImageProduct(id)">
+                </a>
                 <h4>RGB Mesh Mouse</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -83,7 +89,9 @@
                 <p>60.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredpc.pg.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredpc.pg.jpg" id="product4" onclick="getImageProduct(id)">
+                </a>
                 <h4>Green PC</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -97,7 +105,9 @@
         </div>
         <div class="row">
             <div class="col">
-                <img src="images/featuredkeyboard3.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredkeyboard3.jpg" id="product5" onclick="getImageProduct(id)">
+                </a>
                 <h4>Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -109,7 +119,9 @@
                 <p>50.00$</p>
             </div>
             <div class="col">
-                <img src="images/headset.png">
+                <a href="product-details.html">
+                <img src="images/headset.png" id="product6" onclick="getImageProduct(id)">
+                </a>
                 <h4>RGB Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -121,7 +133,9 @@
                 <p>80.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredmouse2.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredmouse2.jpg" id="product7" onclick="getImageProduct(id)">
+                </a>
                 <h4>Hyper Mouse</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -133,7 +147,9 @@
                 <p>60.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredpc2.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredpc2.jpg" id="product8" onclick="getImageProduct(id)">
+                </a>
                 <h4>Blue Gaming PC</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -147,7 +163,9 @@
          </div> 
          <div class="row">
             <div class="col">
-                <img src="images/frontpagepc.png">
+                <a href="product-details.html">    
+                <img src="images/frontpagepc.png" id="product9" onclick="getImageProduct(id)">
+                </a>
                 <h4>Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -159,7 +177,9 @@
                 <p>50.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredmouse3.jpg">
+                <a href="product-details.html">
+                <img src="images/featuredmouse3.jpg" id="product10" onclick="getImageProduct(id)">
+                </a>
                 <h4>RGB Keyboard</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -171,7 +191,9 @@
                 <p>80.00$</p>
             </div>
             <div class="col">
-                <img src="images/redpc.png">
+                <a href="product-details.html">
+                <img src="images/redpc.png" id="product11" onclick="getImageProduct(id)">
+                </a>
                 <h4>Hyper Mouse</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -183,7 +205,7 @@
                 <p>60.00$</p>
             </div>
             <div class="col">
-                <img src="images/featuredpc3.jpg">
+                <img src="images/featuredpc3.jpg" id="product12" onclick="getImageProduct(id)">
                 <h4>Blue Gaming PC</h4>
                 <div class="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -246,6 +268,11 @@
             <p class="copyright">Copyright 2022 - My Test Website</p>
         </div>
     </div>
+
+    <!--------js for seclecting product--------->
+    <!--Gets the elementID of chosen product and splits it to remove the onclick tag. Then stores in localStorage -->
+
+    <script src="clickProduct.js"></script>
 
     <!--------js for toggle menu--------->
 

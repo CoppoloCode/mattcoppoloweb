@@ -50,7 +50,8 @@ a{
 /*--------------------Products-------------------------*/
 .small-container{
     max-width: auto;
-    padding: 150px;
+    text-align: center;
+    padding: 10px;
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
 }
 .row{
@@ -61,11 +62,12 @@ a{
 }
 .col{
     flex-basis: 25%;
-    
     transition: transform 0.5s;
 }
 .col img{
-    width: 75%;
+    width: 200px;
+    height: 200px;
+    object-fit: scale-down;
 }
 .col p{
     font-size: 14px;
@@ -74,12 +76,8 @@ a{
     transform: translateY(-5px);
 }
 
-/*--------------------All Products-------------------------*/
+/*--------------------Sorting and Page Buttons-------------------------*/
 
-.row-2{
-    justify-content: space-between;
-    margin: 100px auto 50px;
-}
 select{
     border: 1px solid green;
     padding: 5px;
