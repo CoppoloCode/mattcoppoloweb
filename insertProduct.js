@@ -48,15 +48,24 @@ function setReview(productReview){
 
     function setProductsAtLocation(products){
 
-        createProduct("product-1", products, 6);
-        createProduct("product-2", products, 4);
-        createProduct("product-3", products, 2);
-        createProduct("product-4", products, 5);
-        createProduct("product-5", products, 3);
-        createProduct("product-6", products, 7);
-        createProduct("product-7", products, 9);
-        createProduct("product-8", products, 8);
-
+        randomProducts = [];
+        
+        getRandomProduts();
+        function getRandomProduts(){
+            for(i=0;i<products.length-1;i++){
+                randomProducts[i] = Math.floor(Math.random() * (products.length-1));
+            }
+        }
+       
+        createProduct("product-1", products, randomProducts[0]);
+        createProduct("product-2", products, randomProducts[1]);
+        createProduct("product-3", products, randomProducts[2]);
+        createProduct("product-4", products, randomProducts[3]);
+        createProduct("product-5", products, randomProducts[4]);
+        createProduct("product-6", products, randomProducts[5]);
+        createProduct("product-7", products, randomProducts[6]);
+        createProduct("product-8", products, randomProducts[7]);
+    
     }
 
 

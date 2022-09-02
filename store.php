@@ -71,10 +71,8 @@
     <div class="small-container">
         <h3 class="title"> Featured Products </h3>
         <div class="row-3">
-            <div class="col-4">
-                <a href='product-details.html' id ="product-1">   
-                    
-                </a>
+            <div class="col-4" id = "product-1">
+                
             </div>
             <div class="col-4" id = "product-2">
                 
