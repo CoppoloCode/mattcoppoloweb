@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styleStore.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
 </head>
 <body>
@@ -20,7 +20,7 @@
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="index.html">Back to CoppoloCode</a></li>
-                        <li><a href="store.php">Home</a></li>
+                        <li><a href="store.html">Home</a></li>
                         <li><a href="Products.html">Products</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
@@ -263,7 +263,7 @@
         }
     </script>
 
-
+    
 
 
     
@@ -273,11 +273,23 @@
 
     <script src="insertProduct-details.js"></script>
     <script src="insertProduct.js"></script>
-    <script src="test.php"></script>
     
     
-   
+    
+   <script>
+        test();
+        function test(){
+            $.ajax({
+                url: 'getProducts.php',
+                type: 'POST',
+                success: function(data){                   
+                    var products = data;
+                    splitProducts(products);
+                }
+            });
+        }
+        
+    </script>
 
-    
 </body>
 </html>

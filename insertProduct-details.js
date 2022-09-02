@@ -1,22 +1,49 @@
+
+/* ------------recieves ID and calls functions to create image and description -----------*/
+
+function setupDetails(productId){
+    setImageProduct(productId);
+    setInfoProduct(productId);
+}
+
 /* ------------gets the image of a product and stores in local storage -----------*/
 
-function getImageProduct(productId){
+function setImageProduct(productId){
     var productElement = document.getElementById(productId).outerHTML
-    var cutElement = productElement.split(" ");
-    var productElement = cutElement[0] + ' ' + cutElement[1] + cutElement[2] + '>';
-    localStorage.setItem("productSelected", productElement);
+    var productElement = productElement.split('onclick="setupDetails(id)"').join('');
+    localStorage.setItem("imageSelected", productElement);
+    
 }
+
+
+/* ------------gets the description of a product and stores in local storage -----------*/
+
+function setInfoProduct(productId){
+    var productElement = document.getElementById(productId).outerHTML
+    var productElement = productElement.split('"');
+    var productId = productElement[3];
+    localStorage.setItem("productId", productId);
+
+    
+}
+
+function setDescription(productDescriptions){
+    var productId = localStorage.getItem("productId");
+    var productDescriptions = productDescriptions.split("\\n");
+    productDescriptions.length = productDescriptions.length - 1;
+    productDescription = productDescriptions[productId-1];
+    localStorage.setItem("productDescription", productDescription);
+    
+
+}
+
+
 
 /*-------- setting product image and Info on Product-details.html ---------*/
 
 function onLoad(){
-    var productIdIndex = 3;
-    document.getElementById("showImage").innerHTML = localStorage.getItem("productSelected");
-    var productID = localStorage.getItem("productSelected").split('"');
-    var productID = productID[productIdIndex];
-    var productID = productID.split("");
-    var productID = productID[0]+productID[1]+productID[2]+productID[3]+productID[4]+productID[5]+productID[6]+"Info"+productID[7];
-    var cutInfoElement = document.getElementById(productID).outerHTML.split('hidden');
-    var InfoElement = cutInfoElement[0] + cutInfoElement[1];
-    document.getElementById("showInfo").innerHTML = InfoElement;
+
+    document.getElementById("showImage").innerHTML = localStorage.getItem("imageSelected");
+    document.getElementById("showInfo").innerHTML = '<p>' + localStorage.getItem("productDescription") + '</P>';
+
 }

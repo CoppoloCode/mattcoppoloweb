@@ -27,19 +27,25 @@ function createProduct(productPlacementID, products, chosenProduct){
     var productCost = products[chosenProduct][4];
 
     var review = setReview(productReview);
-    console.log(document.getElementById(productPlacementID).innerHTML = "<a href='product-details.html'>" + "<img src='images/" 
-    + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='getImageProduct(id)'></a><h4>" 
-    + productName + "</h4><div>" + review + "</div><p>" + productCost + "</p>");
+    document.getElementById(productPlacementID).innerHTML = "<a href='product-details.html'>" + "<img src='images/" 
+    + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='setupDetails(id)'></a><h4>" 
+    + productName + "</h4><div>" + review + "</div><p>" + productCost + "</p>";
 }
 
 function splitProducts(productsToSplit){
     var products = [];     
-    products = productsToSplit.split('\n');
+    products = productsToSplit.split('\\n');
+    products[0] = products[0].split("\r\n").join('');
+    products.length = products.length - 1;
+    for(i = 0; i < products.length; i++){
+        products[i] = products[i].split("\\").join('');
+        products[i] = products[i].split(" ").join('');
+    }
+    products[0] = products[0].split('"').join('');
 
     for(i = 0; i<products.length;i++){
         products[i] = products[i].split('-');
     }
-
     setProductsAtLocation(products);
 
 }
@@ -53,8 +59,8 @@ function setProductsAtLocation(products){
     var resultToReturn = false;
 
     do{
-        for(i=0;i<products.length-1;i++){
-            randomProducts[i] = Math.floor(Math.random() * (products.length-1));
+        for(i=0;i<products.length;i++){
+            randomProducts[i] = Math.floor(Math.random() * (products.length));
         }
         resultToReturn = randomProducts.some((element, index) => {
             return randomProducts.indexOf(element) !== index
