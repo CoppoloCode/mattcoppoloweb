@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styleStore.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    
 </head>
 <body>
     <div class="header">
@@ -18,7 +20,7 @@
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="index.html">Back to CoppoloCode</a></li>
-                        <li><a href="store.html">Home</a></li>
+                        <li><a href="store.php">Home</a></li>
                         <li><a href="Products.html">Products</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
@@ -69,61 +71,19 @@
     <div class="small-container">
         <h3 class="title"> Featured Products </h3>
         <div class="row-3">
-            <div class="col-4">      
-                <a href="product-details.html">         
-                <img src="images/featuredkeyboard.jpg" id="product1" onclick="getImageProduct(id)">
-                </a>
-                <h4>RGB Clear Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
-            </div>
             <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard2.jpg" id="product2" onclick="getImageProduct(id)">
+                <a href='product-details.html' id ="product-1">   
+                    
                 </a>
-                <h4>Black RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
             </div>
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredmouse.jpg" id="product3" onclick="getImageProduct(id)">
-                </a>
-                <h4>RGB Mesh Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col-4" id = "product-2">
+                
             </div>
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredpc.pg.jpg" id="product4" onclick="getImageProduct(id)">
-                </a>
-                <h4>Green PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1000.00$</p>
+            <div class="col-4" id = "product-3">
+                
+            </div>
+            <div class="col-4" id = "product-4">
+                
             </div>
         </div>
     </div>
@@ -135,61 +95,17 @@
     <div class="small-container">
         <h3 class="title"> Latest Products </h3>
         <div class="row-3">
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard3.jpg" id="product5" onclick="getImageProduct(id)">
-                </a>
-                <h4>Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
+            <div class="col-4" id = "product-5">
+                
             </div>
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard2.jpg" id="product6" onclick="getImageProduct(id)">
-                </a>
-                <h4>RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
+            <div class="col-4" id = "product-6">
+                
             </div>
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredmouse2.jpg" id="product7" onclick="getImageProduct(id)">
-                </a>
-                <h4>Hyper Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col-4" id = "product-7">
+                
             </div>
-            <div class="col-4">
-                <a href="product-details.html">
-                <img src="images/featuredpc2.jpg" id="product8" onclick="getImageProduct(id)">
-                </a>
-                <h4>Blue Gaming PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1200.00$</p>
+            <div class="col-4" id = "product-8">
+                
             </div>
         </div>
     </div>
@@ -329,11 +245,9 @@
         </div>
     </div>
 
-     <!--------js for seclecting product--------->
-    <!--Gets the elementID of chosen product and splits it to remove the onclick tag. Then stores in localStorage -->
-
-    <script src="Product.js"></script>
-
+    
+    
+   
     <!--------js for toggle menu--------->
 
     <script>
@@ -351,5 +265,49 @@
         }
     </script>
 
+
+
+
+    
+
+<!-----------------------------------------php for getting product info from DB--------------------------------------------->
+
+
+    <?php
+
+        $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
+
+        if($conn->connect_error){
+            die("Connection Failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT ID, Name, Image, Review, Cost FROM products";
+        $result = $conn->query($sql);
+        $i = 0;
+
+
+
+        while($row = $result->fetch_assoc()){
+            $products[$i] = $row["ID"] . "-" . $row["Name"] . "-" . $row["Image"] . "-" . $row["Review"] . "-" . $row["Cost"] . '\n';
+            $i++;
+        }
+
+        $conn->close();
+    ?>
+
+    <script src="insertProduct-details.js"></script>
+    <script src="insertProduct.js"></script>
+    <script>
+
+        var productsToSplit = "<?php $product = 0; while($product < 12){echo $products[$product]; $product++;} ?>";
+
+        splitProducts(productsToSplit);
+
+    </script>
+    
+    
+
+
+    
 </body>
 </html>
