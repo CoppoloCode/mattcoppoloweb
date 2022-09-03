@@ -12,7 +12,7 @@
 </head>
 <script src="insertProduct-details.js"></script>
 
-<body onload="onLoad()">
+<body onload = "setImageandDescription()">
 
     <div class="header">
         <div class="container">
@@ -53,61 +53,17 @@
     <!---------- products ----------->
     <div class="small-container">
          <div class="row-2">
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/frontpagepc.png" id="1" onclick="setupDetails(id)">
-                </a>
-                <h4>Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
+            <div class="col" id="product-1">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredmouse3.jpg" id="2" onclick="setupDetails(id)">
-                </a>
-                <h4>RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
+            <div class="col" id="product-2">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/redpc.png" id="3" onclick="setupDetails(id)">
-                </a>
-                <h4>Hyper Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col" id="product-3">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredpc3.jpg" id="4" onclick="setupDetails(id)">
-                </a>
-                <h4>Blue Gaming PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1200.00$</p>
+            <div class="col" id="product-4">
+                
             </div>
          </div>   
     </div>
@@ -175,22 +131,37 @@
         }
     </script>
 
-    <script>
-        
-        test();
-        function test(){
-            $.ajax({
-                url: 'getDescription.php',
-                type: 'POST',
-                success: function(data){                   
-                    var descriptions = data;
-                    setDescription(descriptions);
-                    
-                }
-            });
-        }
-        
-    </script>
+<!--------Gets the Description data from DataBase for products--------->
+    
+    
+
+<!-----------------Gets Product data For placement--------------->
+<script src="insertProduct.js"></script>
+
+<script>
+    getProductsFromDataBase();
+    function getProductsFromDataBase(){
+        $.ajax({
+            url: 'getProducts.php',
+            type: 'POST',
+            success: function setProducts(data){         
+                          
+                let products = data;
+                let randomProducts = [];
+                let productElements = [];
+                let productPlacementId = "product-";
+
+                products = getFormatedProducts(products);
+                randomProducts = getRandomProductsId(products);
+                productElements = getProductElements(randomProducts);
+                for(let i = 1; i < 5; i++){
+                    document.getElementById(productPlacementId + i).innerHTML = productElements[i];
+                }                 
+            }
+        });
+    }
+    
+</script>
 
 
 </body>

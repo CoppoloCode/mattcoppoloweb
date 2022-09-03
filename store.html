@@ -277,14 +277,24 @@
     
     
    <script>
-        test();
-        function test(){
+        getProductsFromDataBase();
+        function getProductsFromDataBase(){
             $.ajax({
                 url: 'getProducts.php',
                 type: 'POST',
-                success: function(data){                   
-                    var products = data;
-                    splitProducts(products);
+                success: function setProducts(data){         
+                              
+                    let products = data;
+                    let randomProducts = [];
+                    let productElements = [];
+                    let productPlacementId = "product-";
+
+                    products = getFormatedProducts(products);
+                    randomProducts = getRandomProductsId(products);
+                    productElements = getProductElements(randomProducts);
+                    for(let i = 1; i < 9; i++){
+                        document.getElementById(productPlacementId + i).innerHTML = productElements[i];
+                    }                 
                 }
             });
         }
