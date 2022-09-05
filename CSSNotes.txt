@@ -16,7 +16,7 @@ margin-bottom: auto;          //pushes content completely up
 }
 
 .grid{
-display: grid;                   //use when formatting a group of images or trying to center something doesnt work with flex
+display: grid;                   //use when formatting a group of images or trying to center something that doesnt work with flex
 grid-template-columns: Xrem 1fr; //rem scales the column to the size of the text eg. 30px font with 10rem=300px, 1 fr will take the remaining space .5 half etc
                                  //each digit is represents a column this would be 2
 align-itmes: center;             //aligns column center vertically
