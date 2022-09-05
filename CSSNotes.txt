@@ -1,0 +1,25 @@
+.flex{
+display: flex;                  //use most of the time unless centering becomes impossible
+justify-content: center;        //aligns Horizontally
+justify-content: space-around;  //spaces the conent evenly 
+align-items: center;            //aligns Vertically
+flex: 1;                        //allows the content to fill the remaing unused space
+flex-direction: column;         //default is row, this will change conent to be in a column 
+flex-wrap: wrap;                //default will not wrap content on a new row, this will
+gap: Xpx;                       //creates a gap around the content
+
+margin-top: auto;             //pushes content completely down
+margin-right: auto;           //pushes content completely left
+margin-left: auto;            //pushes content completely right
+margin-bottom: auto;          //pushes content completely up
+
+}
+
+.grid{
+display: grid;                   //use when formatting a group of images or trying to center something doesnt work with flex
+grid-template-columns: Xrem 1fr; //rem scales the column to the size of the text eg. 30px font with 10rem=300px, 1 fr will take the remaining space .5 half etc
+                                 //each digit is represents a column this would be 2
+align-itmes: center;             //aligns column center vertically
+
+
+}
