@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styleProducts.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
     <div class="header">
@@ -39,184 +41,51 @@
             <select>
                 <option>Default Sorting</option>
                 <option>Sort by price</option>
-                <option>Sort by popularity</option>
                 <option>Sort by rating</option>
-                <option>Sort by sale</option>
+                <option>Sort by type</option>              
                 </option>
             </select>
         </div>
         <div class="row">
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard.jpg" id="1" onclick="setupDetails(id)">
-                </a>
-                <h4>RGB Clear Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
+            <div class="col" id="product-1">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard2.jpg" id="2" onclick="setupDetails(id)">
-                </a>
-                <h4>Black RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
+            <div class="col" id="product-2">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredmouse.jpg" id="3" onclick="setupDetails(id)">
-                </a>
-                <h4>RGB Mesh Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col" id="product-3">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredpc.jpg" id="4" onclick="setupDetails(id)">
-                </a>
-                <h4>Green PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1000.00$</p>
+            <div class="col" id="product-4">
+                
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredkeyboard3.jpg" id="5" onclick="setupDetails(id)">
-                </a>
-                <h4>Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
+            <div class="col" id="product-5">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/headset.png" id="6" onclick="setupDetails(id)">
-                </a>
-                <h4>RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
+            <div class="col" id="product-6">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredmouse2.jpg" id="7" onclick="setupDetails(id)">
-                </a>
-                <h4>Hyper Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col" id="product-7">
+
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredpc2.jpg" id="8" onclick="setupDetails(id)">
-                </a>
-                <h4>Blue Gaming PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1200.00$</p>
+            <div class="col" id="product-8">
+                
             </div>
          </div> 
          <div class="row">
-            <div class="col">
-                <a href="product-details.html">    
-                <img src="images/frontpagepc.png" id="9" onclick="setupDetails(id)">
-                </a>
-                <h4>Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>50.00$</p>
+            <div class="col" id="product-9">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredmouse3.jpg" id="10" onclick="setupDetails(id)">
-                </a>
-                <h4>RGB Keyboard</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>80.00$</p>
+            <div class="col" id="product-10">
+                
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/redpc.png" id="11" onclick="setupDetails(id)">
-                </a>
-                <h4>Hyper Mouse</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>60.00$</p>
+            <div class="col" id="product-11">
+               
             </div>
-            <div class="col">
-                <a href="product-details.html">
-                <img src="images/featuredpc3.jpg" id="12" onclick="setupDetails(id)">
-                </a>
-                <h4>Blue Gaming PC</h4>
-                <div class="rating">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </div>
-                <p>1200.00$</p>
+            <div class="col" id="product-12">
+                
             </div>
          </div>   
          <div class="page-btn">
@@ -272,6 +141,8 @@
     </div>
 
     <script src="insertProduct-details.js"></script>
+    <script src="insertProduct.js"></script>
+
     <!--------js for toggle menu--------->
 
     <script>
@@ -288,6 +159,42 @@
             }
         }
     </script>
+
+    <script>
+       
+
+        getProductsFromDataBase();
+       
+
+        function getProductsFromDataBase(){
+            
+           $.ajax({
+                url: 'getProducts.php',
+                type: 'POST',
+                success: function setProducts(data){         
+                            
+                    products = JSON.parse(data);
+                    let randomProducts = [];
+                    let productElements = [];
+                    let productPlacementId = "product-";
+
+
+                    randomProducts = getRandomProductsId(products);
+                    productElements = getProductElements(randomProducts);
+                    for(let i = 0; i < 12; i++){
+                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[i];
+                    }                 
+
+                    
+                }                
+            });
+        }
+        
+        
+        
+    </script>
+    
+
 
 </body>
 </html>

@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products</title>
-    <link rel="stylesheet" href="styleProduct-details.css">
+    <link rel="stylesheet" href="styleProducts.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-
 <body>
-
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -34,28 +32,21 @@
             </div>
         </div>
     </div>
-
-    <!---------- product details ----------->
-
-    <div class="small-container">
-        <div class="row">
-            <div class="col-1">
-                <div class="Image" id="showImage"></div>
-            </div>
-            <div class="col-2">
-                <div class="Name" id="showName"></div>
-                <div class="Info" id="showInfo"></div>
-                <div class="Review" id="showReview"></div>
-                <div class="Price" id="showPrice" ></div>
-                <a href="" class="btn"> Buy Now &#8594; </a>
-            </div>
-        </div>
-    </div>
-
+    
 
     <!---------- products ----------->
     <div class="small-container">
-         <div class="row-2">
+        <div class="row row-2">
+            <h2>All Products</h2>
+            <select>
+                <option onclick="">Default Sorting</option>
+                <option>Sort by price</option>
+                <option>Sort by rating</option>
+                <option>Sort by type</option>              
+                </option>
+            </select>
+        </div>
+        <div class="row">
             <div class="col" id="product-1">
                 
             </div>
@@ -68,7 +59,42 @@
             <div class="col" id="product-4">
                 
             </div>
+        </div>
+        <div class="row">
+            <div class="col" id="product-5">
+                
+            </div>
+            <div class="col" id="product-6">
+                
+            </div>
+            <div class="col" id="product-7">
+
+            </div>
+            <div class="col" id="product-8">
+                
+            </div>
+         </div> 
+         <div class="row">
+            <div class="col" id="product-9">
+                
+            </div>
+            <div class="col" id="product-10">
+                
+            </div>
+            <div class="col" id="product-11">
+               
+            </div>
+            <div class="col" id="product-12">
+                
+            </div>
          </div>   
+         <div class="page-btn">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>&#8594;</span>
+         </div>
     </div>
 
     
@@ -114,8 +140,8 @@
         </div>
     </div>
 
-
-
+    <script src="insertProduct-details.js"></script>
+    <script src="insertProduct.js"></script>
 
     <!--------js for toggle menu--------->
 
@@ -134,42 +160,40 @@
         }
     </script>
 
-<!--------Gets the Description data from DataBase for products--------->
-    
-    
+    <script>
+       
 
-<!-----------------Gets Product data For placement--------------->
-<script src="insertProduct.js"></script>
-<script src="insertProduct-details.js"></script>
+        getProductsFromDataBase();
+       
 
-<script>
+        function getProductsFromDataBase(){
+            
+           $.ajax({
+                url: 'getProducts.php',
+                type: 'POST',
+                success: function setProducts(data){         
+                            
+                    products = JSON.parse(data);
+                    let randomProducts = [];
+                    let productElements = [];
+                    let productPlacementId = "product-";
+                    
 
-    getProductsFromDataBase();
-    function getProductsFromDataBase(){
-        $.ajax({
-            url: 'getProducts.php',
-            type: 'POST',
-            success: function setProducts(data){         
-                          
-                let products = JSON.parse(data);
-                let randomProducts = [];
-                let productElements = [];
-                let productPlacementId = "product-";
+                    randomProducts = getRandomProductsId(products);
+                    productElements = getProductElements(randomProducts);
+                    for(let i = 0; i < 12; i++){
+                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[i];
+                    }                 
 
-                setProductDetails(products);
-                
-                
-                randomProducts = getRandomProductsId(products);
-                productElements = getProductElements(randomProducts);
-                for(let i = 1; i < 5; i++){
-                    document.getElementById(productPlacementId + i).innerHTML = productElements[i];
-                }                 
-            }
-        });
-    }
+                    
+                }                
+            });
+        }
+        
+        
+        
+    </script>
     
-    
-</script>
 
 
 </body>

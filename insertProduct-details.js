@@ -15,16 +15,28 @@ function setProductDetails(products){
     let productDescriptionElement;
     let productPriceElement;
     let productReviewElement;
+    let productNameElement;
     
+    productNameElement = getNameElement(products, chosenProductId);
     productImageElement = getImageElement(products, chosenProductId);
     productDescriptionElement = getDescription(products, chosenProductId);
     productReviewElement = getReviewElement(products, chosenProductId);
     productPriceElement = getPriceELement(products, chosenProductId);
+    document.getElementById("showName").innerHTML = productNameElement;
     document.getElementById("showImage").innerHTML = productImageElement;
     document.getElementById("showInfo").innerHTML = productDescriptionElement;
     document.getElementById("showReview").innerHTML = productReviewElement;
     document.getElementById("showPrice").innerHTML = productPriceElement;
     
+}
+
+function getNameElement(products, productId){
+
+    let productName = products[productId-1][1]
+
+    productNameElement = '<p>'+productName +'</p>';
+
+    return productNameElement;
 }
 
 /* ------------gets the image of a product and stores in local storage -----------*/
@@ -76,7 +88,7 @@ function setReviewElement(productReview){
 function getPriceELement(products, productId){
 
     let productPriceElement;
-    productPriceElement = '<p>' + products[productId-1][4] + '</p>';
+    productPriceElement = '<p>' + '$' + products[productId-1][4] + '</p>';
     return productPriceElement 
 
 }

@@ -50,29 +50,50 @@ a{
 
 .row{
     display: flex;
-    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    padding-left: 15%;
-    margin-right: 15%;
+    padding-top: 50px;
 }
-
 
 .col-1 img{
     width: 500px;
     height: 500px;
     object-fit: scale-down;
-}
-.col-2{
-    display: inline-block;
-    margin: 10%;  
     
 }
+.col-2{
+    width:25%;
+    padding-left: 20px;
+}
+.col-2 .Name{
+    text-align: left;
+    font-size: 40px;
+}
+.col-2 .Info{
+    margin-bottom:20px;
+    text-align: left;
+    color:black;
+}
 .col-2 .Review{
-    padding: 10%;
+    text-align: left;
+    font-size: 25px;
+    color: gold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.col-2 .Review i{
+    margin: 5px;
+}
+
+.col-2 .Price{
+    font-size: 50px;
+    text-align: left;
 }
 
 .col-2 .btn{
-    display: inline-block;
+    display: block;
+    width: 40%;
     background-color: #ff523b;
     color: #fff;
     padding: 8px 30px;
@@ -87,15 +108,15 @@ a{
     max-width: auto;
     align-items: center;
     text-align: center;
-    padding: 150px;
+    padding-top: 10px;
+    padding-bottom: 100px;
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
 }
 .row-2{
-    display: flex;
-    text-align: center;
-    align-items: center;
+    display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
+   
 }
 .col{
     flex-basis: 25%;

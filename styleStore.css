@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+   
+    
 }
 body{
     font-family: 'Poppins', sans-serif;
@@ -65,7 +67,7 @@ a{
 }
 .col-2 img{
     width: 300px;
-    max-width: 100%;
+    max-width: auto;
 }
 p{
     color: rgb(0, 0, 0);

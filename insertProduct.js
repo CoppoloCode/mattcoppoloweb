@@ -52,7 +52,7 @@ function getProductElements(randomProducts){
 
         productElements[i] = "<a href='product-details.html'>" + "<img src='images/" 
         + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='saveProductId(id)'></a><h4>" 
-        + productName + "</h4><div>" + review + "</div><p>" + productCost + "</p>";
+        + productName + "</h4><div>" + review + "</div><p>$" + productCost + "</p>";
     }
 
     return productElements;
