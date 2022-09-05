@@ -1,27 +1,40 @@
 
 /* ------------recieves ID and calls functions to create image and description -----------*/
 
-function setupDetails(productId){
+function saveProductId(productId){
 
+    let chosenProductId = productId;
+    localStorage.setItem("chosenProductId", chosenProductId);
+
+}
+
+function setProductDetails(products){
     
-    let productDescriptions;
-
-    setImageElement(productId);
-    productDescriptions = getDescriptionsFromDataBase();
-    setDescription(productDescriptions, productId);
+    let chosenProductId = localStorage.getItem("chosenProductId");
+    let productImageElement;
+    let productDescriptionElement;
+    let productPriceElement;
+    let productReviewElement;
     
-
-
+    productImageElement = getImageElement(products, chosenProductId);
+    productDescriptionElement = getDescription(products, chosenProductId);
+    productReviewElement = getReviewElement(products, chosenProductId);
+    productPriceElement = getPriceELement(products, chosenProductId);
+    document.getElementById("showImage").innerHTML = productImageElement;
+    document.getElementById("showInfo").innerHTML = productDescriptionElement;
+    document.getElementById("showReview").innerHTML = productReviewElement;
+    document.getElementById("showPrice").innerHTML = productPriceElement;
+    
 }
 
 /* ------------gets the image of a product and stores in local storage -----------*/
 
-function setImageElement(productId){
+function getImageElement(products, productId){
 
     let productImageElement;
-    productImageElement = document.getElementById(productId).outerHTML;
-    productImageElement = productImageElement.split('onclick="setupDetails(id)"').join('');
-    localStorage.setItem("productImageElement" ,  productImageElement);
+    
+    productImageElement =  "<img src='images/" + products[productId-1][2] + "'" + ">"+"</img>"; 
+    return  productImageElement;
 
 }
 
@@ -29,31 +42,43 @@ function setImageElement(productId){
 /* ------------gets the description of a product and stores in local storage -----------*/
 
 
-function setDescription(productDescriptions, productId){
+function getDescription(products, productId){
 
-    let productDescription;
-    productDescriptions = productDescriptions.split("\\n");
-    productDescriptions.length = productDescriptions.length - 1;
-    productDescription = productDescriptions[productId];
-    productDescription = '<p>' + productDescription + '</p>';
-    localStorage.setItem("productDescription" ,  productDescription);
+    let productDescription = products[productId-1][5];
+    let productDescriptionElement;
+    productDescriptionElement = "<small>" + productDescription + "</small>";
+    return productDescriptionElement;
     
 
 }
 
-function setImageandDescription(){
-    document.getElementById("showImage").innerHTML = localStorage.getItem("productImageElement");
-    document.getElementById("showInfo").innerHTML = localStorage.getItem("productDescription");
+function getReviewElement(products, productId){
+    let productReviewElement;
+    let productReview = products[productId-1][3];
+    productReviewElement = setReviewElement(productReview);
+    return productReviewElement;
 }
 
-function getDescriptionsFromDataBase(){
-    $.ajax({
-        url: 'getDescription.php',
-        type: 'POST',
-        success: function(data){                   
-            let descriptions = data;
-            return descriptions;  
-        }
-    });
+function setReviewElement(productReview){
+    productReview = parseInt(productReview);
+    let starElement = '<i class="fa fa-star" aria-hidden="true"></i>';
+    let emptyStarElement = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+    let result = "";
+    for(i=0; i<productReview; i++){
+       result += starElement;
+    }
+    for(i=productReview; i<5; i++){
+        result += emptyStarElement;
+    }
+    return result;
 }
+
+function getPriceELement(products, productId){
+
+    let productPriceElement;
+    productPriceElement = '<p>' + products[productId-1][4] + '</p>';
+    return productPriceElement 
+
+}
+
         

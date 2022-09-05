@@ -2,24 +2,6 @@
 
 /*--------------------splits products string for formating ---------------*/
 
-function getFormatedProducts(productsToSplit){
-
-    let products = [];     
-    products = productsToSplit.split('\\n');
-    products[0] = products[0].split("\r\n").join('');
-    products.length = products.length - 1;
-    for(i = 0; i < products.length; i++){
-        products[i] = products[i].split("\\").join('');
-        products[i] = products[i].split(" ").join('');
-    }
-    products[0] = products[0].split('"').join('');
-
-    for(i = 0; i<products.length;i++){
-        products[i] = products[i].split('-');
-    }
-    return products;
-
-}
 
 /*--------------------setting the products in their place ---------------*/
 
@@ -69,7 +51,7 @@ function getProductElements(randomProducts){
         review = getReview(productReview);
 
         productElements[i] = "<a href='product-details.html'>" + "<img src='images/" 
-        + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='setupDetails(id)'></a><h4>" 
+        + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='saveProductId(id)'></a><h4>" 
         + productName + "</h4><div>" + review + "</div><p>" + productCost + "</p>";
     }
 

@@ -10,9 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<script src="insertProduct-details.js"></script>
 
-<body onload = "setImageandDescription()">
+<body>
 
     <div class="header">
         <div class="container">
@@ -40,11 +39,14 @@
 
     <div class="small-container">
         <div class="row">
-            <div class="col-2">
-                <p id="showImage"></p>
+            <div class="col-1">
+                <div class="Image" id="showImage"></div>
             </div>
             <div class="col-2">
-                <p id="showInfo"></p>
+                <div class="Info" id="showInfo"></div>
+                <div class="Review" id="showReview"></div>
+                <div class="Price" id="showPrice" ></div>
+                <a href="" class="btn"> Buy Now &#8594; </a>
             </div>
         </div>
     </div>
@@ -137,8 +139,10 @@
 
 <!-----------------Gets Product data For placement--------------->
 <script src="insertProduct.js"></script>
+<script src="insertProduct-details.js"></script>
 
 <script>
+
     getProductsFromDataBase();
     function getProductsFromDataBase(){
         $.ajax({
@@ -146,12 +150,14 @@
             type: 'POST',
             success: function setProducts(data){         
                           
-                let products = data;
+                let products = JSON.parse(data);
                 let randomProducts = [];
                 let productElements = [];
                 let productPlacementId = "product-";
 
-                products = getFormatedProducts(products);
+                setProductDetails(products);
+                
+                
                 randomProducts = getRandomProductsId(products);
                 productElements = getProductElements(randomProducts);
                 for(let i = 1; i < 5; i++){
@@ -160,6 +166,7 @@
             }
         });
     }
+    
     
 </script>
 
