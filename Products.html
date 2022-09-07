@@ -88,12 +88,8 @@
                 
             </div>
          </div>   
-         <div class="page-btn">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>&#8594;</span>
+         <div class="page-btn" id="page-btn">
+            
          </div>
     </div>
 
@@ -162,11 +158,22 @@
 
     <script>
        
+        var currentPage = 1;
+        var productStart = 0;
+        var totalPages; 
+        var totalProducts;
+        var clickCount = 0;
+        var buttonNum = 1;
+        
+        getProductsFromDataBase(productStart);
 
-        getProductsFromDataBase();
-       
+        totalPages = parseInt(localStorage.getItem("totalPages"));
+        totalProducts = parseInt(localStorage.getItem("totalProducts"));
 
-        function getProductsFromDataBase(){
+        
+        setPageButtonsForward();
+
+        function getProductsFromDataBase(productStart){
             
            $.ajax({
                 url: 'getProducts.php',
@@ -174,20 +181,95 @@
                 success: function setProducts(data){         
                             
                     products = JSON.parse(data);
-                    let randomProducts = [];
                     let productElements = [];
-                    let productPlacementId = "product-";
+                    let productPlacementId = "product-";   
+                    let totalPages = products.length/12;
+                    totalPages = Math.ceil(totalPages);
+                    let totalProducts = products.length;
+                    localStorage.setItem("totalPages", totalPages);
+                    localStorage.setItem("totalProducts",totalProducts);
 
+                    productElements = getProductElements(products);
 
-                    randomProducts = getRandomProductsId(products);
-                    productElements = getProductElements(randomProducts);
                     for(let i = 0; i < 12; i++){
-                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[i];
+                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[productStart];
+                        productStart++;
                     }                 
 
                     
                 }                
             });
+        }
+        
+        function setPageButtonsForward(){
+
+            document.getElementById("page-btn").innerHTML = null;  
+
+            this.clickCount++;
+
+            if(this.clickCount > 1){
+                document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsBackward()"><span>&#8592;</span></a>';
+            }
+            if((this.buttonNum-3) > 0){
+                this.buttonNum = this.buttonNum-3;
+            }
+            for(i = 0; i < 4; i++){
+                document.getElementById("page-btn").innerHTML += "<a id='"+ (this.buttonNum) + "' onclick='pageSwap(id,currentPage)'><span>"+ (this.buttonNum) +"</span></a>";
+                this.buttonNum++;
+                this.totalButtonsPlaced += 1; 
+            }
+            
+            if(this.clickCount < this.totalPages-3){
+                document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsForward()"><span>&#8594;</span></a>';
+            }
+             
+        }
+        function changeButtonsForward(){
+
+            setPageButtonsForward();
+
+        }
+        function changeButtonsBackward(){
+
+            setPageButtonsBackward();
+
+        }
+
+        function setPageButtonsBackward(){
+            
+            document.getElementById("page-btn").innerHTML = null;
+
+                this.clickCount--;
+
+
+                if(this.clickCount > 1){
+                    document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsBackward()"><span>&#8592;</span></a>';
+                }
+                if((this.buttonNum-5) > 0){
+                    this.buttonNum = this.buttonNum-5;
+                }
+                for(i = 0; i < 4; i++){
+                    document.getElementById("page-btn").innerHTML += "<a id='"+ (this.buttonNum) + "' onclick='pageSwap(id,currentPage)'><span>"+ (this.buttonNum) +"</span></a>";
+                    this.buttonNum++;
+                    this.totalButtonsPlaced += 1; 
+                }
+
+                if(this.clickCount < this.totalPages-3){
+                    document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsForward()"><span>&#8594;</span></a>';
+                }
+
+        }
+
+        
+
+        function pageSwap(pageNumberSelected,currentPage){
+            
+            if(pageNumberSelected != currentPage){
+                this.currentPage = pageNumberSelected;
+                productStart = (this.currentPage * 12) - 12;
+                getProductsFromDataBase(productStart);
+                
+            }
         }
         
         

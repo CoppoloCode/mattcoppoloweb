@@ -1,5 +1,5 @@
 
-/* ------------recieves ID and calls functions to create image and description -----------*/
+/* ------------recieves ID and saves to local storage -----------*/
 
 function saveProductId(productId){
 
@@ -7,6 +7,8 @@ function saveProductId(productId){
     localStorage.setItem("chosenProductId", chosenProductId);
 
 }
+
+/* ------------gathers differecnt HTML Elemnts for product details -----------*/
 
 function setProductDetails(products){
     
@@ -30,6 +32,8 @@ function setProductDetails(products){
     
 }
 
+/* ------------gets the Name of a product  -----------*/
+
 function getNameElement(products, productId){
 
     let productName = products[productId-1][1]
@@ -39,7 +43,7 @@ function getNameElement(products, productId){
     return productNameElement;
 }
 
-/* ------------gets the image of a product and stores in local storage -----------*/
+/* ------------gets the image of a product  -----------*/
 
 function getImageElement(products, productId){
 
@@ -51,7 +55,7 @@ function getImageElement(products, productId){
 }
 
 
-/* ------------gets the description of a product and stores in local storage -----------*/
+/* ------------gets the description of a product -----------*/
 
 
 function getDescription(products, productId){
@@ -63,6 +67,7 @@ function getDescription(products, productId){
     
 
 }
+/* ------------gets the Review of a product  -----------*/
 
 function getReviewElement(products, productId){
     let productReviewElement;
@@ -70,6 +75,8 @@ function getReviewElement(products, productId){
     productReviewElement = setReviewElement(productReview);
     return productReviewElement;
 }
+
+/* ------------sets the Review Elements based on raiting of a product  -----------*/
 
 function setReviewElement(productReview){
     productReview = parseInt(productReview);
@@ -84,6 +91,7 @@ function setReviewElement(productReview){
     }
     return result;
 }
+/* ------------gets the Price of a product  -----------*/
 
 function getPriceELement(products, productId){
 

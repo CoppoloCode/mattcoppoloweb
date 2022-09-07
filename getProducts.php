@@ -39,7 +39,7 @@
     }
 
    
-
+    
     echo json_encode($products);
 
 

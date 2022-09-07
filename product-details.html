@@ -152,15 +152,15 @@
             success: function setProducts(data){         
                           
                 let products = JSON.parse(data);
-                let randomProducts = [];
+                let shuffledProducts = [];
                 let productElements = [];
                 let productPlacementId = "product-";
 
                 setProductDetails(products);
                 
                 
-                randomProducts = getRandomProductsId(products);
-                productElements = getProductElements(randomProducts);
+                shuffledProducts = shuffleProducts(products);
+                productElements = getProductElements(shuffledProducts);
                 for(let i = 1; i < 5; i++){
                     document.getElementById(productPlacementId + i).innerHTML = productElements[i];
                 }                 

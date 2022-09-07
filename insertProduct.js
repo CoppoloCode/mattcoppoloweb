@@ -1,37 +1,36 @@
 
 
-/*--------------------splits products string for formating ---------------*/
-
-
 /*--------------------setting the products in their place ---------------*/
 
-function getRandomProductsId(products){
+function shuffleProducts(products){
 
-    let randomProductsId = [];
-    let randomProducts = [];
+    
+    let currentIndex = products.length;
+    let randomIndex;
 
-    let isUnique = false;
+  
+    while (currentIndex != 0) {
 
-    do{
-        for(i=0;i<products.length;i++){
-            randomProductsId[i] = Math.floor(Math.random() * (products.length));
-        }
-        isUnique = randomProductsId.some((element, index) => {
-            return randomProductsId.indexOf(element) !== index
-        });
-    }while(isUnique == true);
-    for(let i = 0; i < randomProductsId.length; i++){
-        randomProducts[i] = products[randomProductsId[i]];
+        
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [products[currentIndex], products[randomIndex]] = [products[randomIndex], products[currentIndex]];
     }
+
     
-    
-    return randomProducts;
+    return products;
 
 }
 
+
+
+
+
+
 /*-------------creates the product Element--------------------*/
 
-function getProductElements(randomProducts){
+function getProductElements(products){
 
     let productID;
     let productName;
@@ -41,13 +40,13 @@ function getProductElements(randomProducts){
     let review = getReview(productReview);
     let productElements = [];
 
-    for(let i = 0; i < randomProducts.length; i++){
+    for(let i = 0; i < products.length; i++){
 
-        productID = randomProducts[i][0];
-        productName = randomProducts[i][1];
-        productImage = randomProducts[i][2];
-        productReview = randomProducts[i][3];
-        productCost = randomProducts[i][4];
+        productID = products[i][0];
+        productName = products[i][1];
+        productImage = products[i][2];
+        productReview = products[i][3];
+        productCost = products[i][4];
         review = getReview(productReview);
 
         productElements[i] = "<a href='product-details.html'>" + "<img src='images/" 
