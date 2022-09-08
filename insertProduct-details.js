@@ -1,8 +1,11 @@
 
 /* ------------recieves ID and saves to local storage -----------*/
 
+
+
 function saveProductId(productId){
 
+    console.log(productId);
     let chosenProductId = productId;
     localStorage.setItem("chosenProductId", chosenProductId);
 
@@ -11,6 +14,8 @@ function saveProductId(productId){
 /* ------------gathers differecnt HTML Elemnts for product details -----------*/
 
 function setProductDetails(products){
+
+    
     
     let chosenProductId = localStorage.getItem("chosenProductId");
     let productImageElement;
@@ -18,6 +23,7 @@ function setProductDetails(products){
     let productPriceElement;
     let productReviewElement;
     let productNameElement;
+
     
     productNameElement = getNameElement(products, chosenProductId);
     productImageElement = getImageElement(products, chosenProductId);

@@ -1,6 +1,13 @@
 
 <?php
 
+    if($_POST['typeName']){
+
+        if($_POST['typeName'] == 'headset'){
+            $typeName = 'headset'
+        }
+    }
+
     if($_POST['functionname']){
 
         $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
@@ -11,28 +18,23 @@
 
         if($_POST['functionname'] == 'getProducts'){
 
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ";
+            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName";
 
         }
 
         if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
 
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost ASC";
+            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Cost ASC";
             
         }
         if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
 
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products  ORDER BY Cost Desc";
+            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Cost Desc";
             
         }
         if($_POST['functionname'] == 'getProductsSortedReview'){
 
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products  ORDER BY Review Desc";
-            
-        }
-        if($_POST['functionname'] == 'getProductsSortedType'){
-
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products  ORDER BY Type Desc";
+            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Review Desc";
             
         }
     }
@@ -71,7 +73,3 @@
 
     $conn->close();
 ?>
-
-    
-
-

@@ -37,12 +37,12 @@
     <!---------- products ----------->
     <div class="small-container">
         <div class="row row-2">
-            <h2>All Products</h2>
-            <select>
-                <option onclick="">Default Sorting</option>
-                <option>Sort by price</option>
-                <option>Sort by rating</option>
-                <option>Sort by type</option>              
+            <h2>All Headsets</h2>
+            <select id="selectBox" onchange="changeSorting()">
+                <option value="1">Sort by Featured</option>
+                <option value="2">Sort by price asc</option>
+                <option value="3">Sort by price desc</option>
+                <option value="4">Sort by rating</option>  
                 </option>
             </select>
         </div>
@@ -88,12 +88,8 @@
                 
             </div>
          </div>   
-         <div class="page-btn">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>&#8594;</span>
+         <div class="page-btn" id="page-btn">
+            
          </div>
     </div>
 
@@ -140,60 +136,11 @@
         </div>
     </div>
 
-    <script src="insertProduct-details.js"></script>
-    <script src="insertProduct.js"></script>
-
-    <!--------js for toggle menu--------->
-
-    <script>
-        var MenuItems = document.getElementById("MenuItems");
-
-        MenuItems.style.maxHeight = "0px";
-
-        function menutoggle(){
-            if(MenuItems.style.maxHeight == "0px"){
-                MenuItems.style.maxHeight = "200px";
-            }
-            else{
-                MenuItems.style.maxHeight = "0px";
-            }
-        }
-    </script>
-
-    <script>
-       
-
-        getProductsFromDataBase();
-       
-
-        function getProductsFromDataBase(){
-            
-           $.ajax({
-                url: 'getProducts.php',
-                type: 'POST',
-                success: function setProducts(data){         
-                            
-                    products = JSON.parse(data);
-                    let randomProducts = [];
-                    let productElements = [];
-                    let productPlacementId = "product-";
-                    console.log(products);
-
-                    randomProducts = getRandomProductsId(products);
-                    productElements = getProductElements(randomProducts);
-                    for(let i = 0; i < 12; i++){
-                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[i];
-                    }                 
-
-                    
-                }                
-            });
-        }
-        
-        
-        
-    </script>
     
+    <script src="insertProduct.js"></script>
+    <script src="setupProductsType.js"></script>
+    <script src="toggleMenu.js"></script>
+
 
 
 </body>

@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body>
+<body onload="getProductsFromDataBase(0,1),setPageButtons()">
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -38,17 +38,18 @@
     <div class="small-container">
         <div class="row row-2">
             <h2>All Products</h2>
-            <select>
-                <option>Default Sorting</option>
-                <option>Sort by price</option>
-                <option>Sort by rating</option>
-                <option>Sort by type</option>              
+            <select id="selectBox" onchange="changeSorting()">
+                <option value="1">Sort by Featured</option>
+                <option value="2">Sort by price asc</option>
+                <option value="3">Sort by price desc</option>
+                <option value="4">Sort by rating</option>
+                <option value="5">Sort by type</option>              
                 </option>
             </select>
         </div>
         <div class="row">
             <div class="col" id="product-1">
-                
+             
             </div>
             <div class="col" id="product-2">
                 
@@ -136,147 +137,11 @@
         </div>
     </div>
 
-    <script src="insertProduct-details.js"></script>
-    <script src="insertProduct.js"></script>
-
-    <!--------js for toggle menu--------->
-
-    <script>
-        var MenuItems = document.getElementById("MenuItems");
-
-        MenuItems.style.maxHeight = "0px";
-
-        function menutoggle(){
-            if(MenuItems.style.maxHeight == "0px"){
-                MenuItems.style.maxHeight = "200px";
-            }
-            else{
-                MenuItems.style.maxHeight = "0px";
-            }
-        }
-    </script>
-
-    <script>
-       
-        var currentPage = 1;
-        var productStart = 0;
-        var totalPages; 
-        var totalProducts;
-        var clickCount = 0;
-        var buttonNum = 1;
-        
-        getProductsFromDataBase(productStart);
-
-        totalPages = parseInt(localStorage.getItem("totalPages"));
-        totalProducts = parseInt(localStorage.getItem("totalProducts"));
-
-        
-        setPageButtonsForward();
-
-        function getProductsFromDataBase(productStart){
-            
-           $.ajax({
-                url: 'getProducts.php',
-                type: 'POST',
-                success: function setProducts(data){         
-                            
-                    products = JSON.parse(data);
-                    let productElements = [];
-                    let productPlacementId = "product-";   
-                    let totalPages = products.length/12;
-                    totalPages = Math.ceil(totalPages);
-                    let totalProducts = products.length;
-                    localStorage.setItem("totalPages", totalPages);
-                    localStorage.setItem("totalProducts",totalProducts);
-
-                    productElements = getProductElements(products);
-
-                    for(let i = 0; i < 12; i++){
-                        document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[productStart];
-                        productStart++;
-                    }                 
-
-                    
-                }                
-            });
-        }
-        
-        function setPageButtonsForward(){
-
-            document.getElementById("page-btn").innerHTML = null;  
-
-            this.clickCount++;
-
-            if(this.clickCount > 1){
-                document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsBackward()"><span>&#8592;</span></a>';
-            }
-            if((this.buttonNum-3) > 0){
-                this.buttonNum = this.buttonNum-3;
-            }
-            for(i = 0; i < 4; i++){
-                document.getElementById("page-btn").innerHTML += "<a id='"+ (this.buttonNum) + "' onclick='pageSwap(id,currentPage)'><span>"+ (this.buttonNum) +"</span></a>";
-                this.buttonNum++;
-                this.totalButtonsPlaced += 1; 
-            }
-            
-            if(this.clickCount < this.totalPages-3){
-                document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsForward()"><span>&#8594;</span></a>';
-            }
-             
-        }
-        function changeButtonsForward(){
-
-            setPageButtonsForward();
-
-        }
-        function changeButtonsBackward(){
-
-            setPageButtonsBackward();
-
-        }
-
-        function setPageButtonsBackward(){
-            
-            document.getElementById("page-btn").innerHTML = null;
-
-                this.clickCount--;
-
-
-                if(this.clickCount > 1){
-                    document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsBackward()"><span>&#8592;</span></a>';
-                }
-                if((this.buttonNum-5) > 0){
-                    this.buttonNum = this.buttonNum-5;
-                }
-                for(i = 0; i < 4; i++){
-                    document.getElementById("page-btn").innerHTML += "<a id='"+ (this.buttonNum) + "' onclick='pageSwap(id,currentPage)'><span>"+ (this.buttonNum) +"</span></a>";
-                    this.buttonNum++;
-                    this.totalButtonsPlaced += 1; 
-                }
-
-                if(this.clickCount < this.totalPages-3){
-                    document.getElementById("page-btn").innerHTML += '<a onclick="changeButtonsForward()"><span>&#8594;</span></a>';
-                }
-
-        }
-
-        
-
-        function pageSwap(pageNumberSelected,currentPage){
-            
-            if(pageNumberSelected != currentPage){
-                this.currentPage = pageNumberSelected;
-                productStart = (this.currentPage * 12) - 12;
-                getProductsFromDataBase(productStart);
-                
-            }
-        }
-        
-        
-        
-    </script>
     
-
+    <script src="insertProduct.js"></script>
+    <script src="insertProduct-details.js"></script>
+    <script src="toggleMenu.js"></script>
+    <script src="setupProductsPage.js"></script>
 
 </body>
 </html>

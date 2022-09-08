@@ -26,8 +26,6 @@ function shuffleProducts(products){
 
 
 
-
-
 /*-------------creates the product Element--------------------*/
 
 function getProductElements(products){

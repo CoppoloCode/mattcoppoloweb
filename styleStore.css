@@ -12,39 +12,34 @@ body{
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
 }
 .container{
-    max-width: auto;
     margin: auto;
 }
 /*--------------------Navbar-------------------------*/
 .navbar{
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    
+}
+.navbar .menu-icon{
+    width: 30px;
+    padding-right: 10px;
 }
 .logo img{
-    width: 75px;
+    width: 50px;
     padding: 2px;
 }
 nav img{
     width: 20px;
 }
 nav{
-    flex: 1;
-    text-align: right;
-    padding-right: 20px;
+    padding-right: 10px;
 }
-nav ul{
-    display:  inline-block;
-    list-style-type: none;
-}
-nav ul li{
-    display: inline-block;
+nav ul a{
     padding: 10px;
-}
-a{
     text-decoration: none;
     font-size: 20px;
     color: rgb(31, 29, 29);
-    display: inline-block;
 }
 
 /*--------------------Header-------------------------*/
@@ -67,7 +62,6 @@ a{
 }
 .col-2 img{
     width: 300px;
-    max-width: auto;
 }
 p{
     color: rgb(0, 0, 0);
@@ -75,8 +69,7 @@ p{
 
 /*--------------------Categories to choose-------------------------*/
 
-.categories{
-    max-width: auto;
+.categories{ 
     border-bottom-style: solid;
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
 }
@@ -107,7 +100,7 @@ p{
     width: 100%;
 }
 .small-container{
-    max-width: auto;
+    
     background: radial-gradient(rgb(202, 181, 181), rgb(61, 204, 223));
 }
 
@@ -254,7 +247,7 @@ small{
     flex-basis: 20%;
     text-align: center;
 }
-ul{
+.footer ul{
     list-style-type: none;
 }
 .app-logo{
