@@ -23,8 +23,6 @@
                         <li><a href="index.html">Back to CoppoloCode</a></li>
                         <li><a href="store.html">Home</a></li>
                         <li><a href="Products.html">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
                         <li><a href="">Account</a></li>
                     </ul>
                 <img src="images/checkouticon.png">
@@ -34,12 +32,17 @@
         </div>
     </div>
     
+        
+    
 
     <!---------- products ----------->
-    <div class="small-container">
+    <div class="products-container">
+        <div class="title-row">
+            <h1 id="title"></h1>
+        </div>
         <div class="row">
             <div class="btnLeft">
-                <a href="">&#8249;</a>
+                <a id="btnLeft" onclick="productDecrease(),sendProduct()"><span>&#8249;</span></a>
             </div>
             <div class="col-1">
                 <div class="Image" id="showImage-1"></div>
@@ -61,7 +64,7 @@
                 <div class="Price" id="showPrice-3" ></div> 
             </div>
             <div class="btnRight">
-                <a href="">&#8250;</a>
+                <a id="btnRight" onclick="productIncrease(),sendProduct()"><span>&#8250;</span></a>
             </div>
         </div>
     </div>

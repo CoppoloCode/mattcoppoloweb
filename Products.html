@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body onload="getProductsFromDataBase(1),setPageButtons()">
+<body onload="getProductsFromDataBase(1,1);">
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -22,8 +22,6 @@
                         <li><a href="index.html">Back to CoppoloCode</a></li>
                         <li><a href="store.html">Home</a></li>
                         <li><a href="Products.html">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
                         <li><a href="">Account</a></li>
                     </ul>
                 <img src="images/checkouticon.png">
@@ -36,14 +34,21 @@
 
     <!---------- products ----------->
     <div class="small-container">
-        <div class="row row-2">
+        <div class="sort-row">
             <h2>All Products</h2>
-            <select id="selectBox" onchange="changeSorting()">
+            <select class="sorting" id="selectBox" onchange="changeSorting()">
                 <option value="1">Sort by Featured</option>
                 <option value="2">Sort by price asc</option>
                 <option value="3">Sort by price desc</option>
-                <option value="4">Sort by rating</option>
-                <option value="5">Sort by type</option>              
+                <option value="4">Sort by rating</option>              
+                </option>
+            </select>
+            <select class="typesorting" id="selectTypeBox" onchange="changeTypeSorting()">
+                <option value="1">Sort by All</option>
+                <option value="2">Sort by headsets</option>
+                <option value="3">Sort by keyboards</option>
+                <option value="4">Sort by mouses</option>      
+                <option value="5">Sort by PCs</option>        
                 </option>
             </select>
         </div>

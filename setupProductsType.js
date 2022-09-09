@@ -1,7 +1,8 @@
 
 class Page{
-    constructor(buttonCounter){
-        this.buttonCounter = buttonCounter;
+    constructor(productCounter,products){
+        this.productCounter = productCounter;
+        this.products = products;
     }
 }
 
@@ -11,6 +12,7 @@ let page = new Page(0);
 function setTypeName(){
     typeName = localStorage.getItem("chosenProductId");
     typeName = typeName.toString();
+    document.getElementById("title").innerText = "All " + typeName + 's';
     getProductsFromDataBase(typeName);
 }
 
@@ -27,25 +29,45 @@ function getProductsFromDataBase(typeName){
 
 function getProducts(data){         
                     
-    let products = data;
-
-    sendProduct(products);
-                      
+    page.products = data;
+    sendProduct();                  
 }
 
-function buttonIncrease(){
-    page.buttonCounter++;
-}
-
-function buttonDecrease(){
-    page.buttonCounter--;
-}
-
-function sendProduct(products){
-    let i = 0;
-    for(i; i < 3; i++){
-        setupProduct(products[i],i);
+function productIncrease(){
+    if(page.productCounter == page.products.length-1){
+        page.productCounter = 0;
+    }else{
+        page.productCounter++;
     }
+}
+
+function productDecrease(){
+    if(page.productCounter == 0){
+        page.productCounter = page.products.length-1;
+    }else{
+        page.productCounter--;
+    }
+    
+}
+
+function sendProduct(){
+
+    if(page.productCounter == page.products.length-1){
+        setupProduct(page.products[page.productCounter-1],1);
+        setupProduct(page.products[page.productCounter],2);
+        setupProduct(page.products[0],3);   
+    }
+    else if(page.productCounter == 0){
+        setupProduct(page.products[page.products.length-1],1);
+        setupProduct(page.products[0],2);
+        setupProduct(page.products[1],3);   
+    }else{
+        setupProduct(page.products[page.productCounter-1],1);
+        setupProduct(page.products[page.productCounter],2);   
+        setupProduct(page.products[page.productCounter+1],3);
+    }
+
+    
 }
 
 
@@ -58,9 +80,8 @@ function setupProduct(product,productNum){
     let productPriceElement;
     let productReviewElement;
     let productNameElement;
-    let productNumString = (productNum+1).toString();
+    let productNumString = (productNum).toString();
 
-    console.log(productNumString);
     
     productNameElement = getNameElement(product);
     productImageElement = getImageElement(product);
@@ -81,7 +102,7 @@ function setupProduct(product,productNum){
  
 function getNameElement(product){
 
-    let productName = product[1]
+    let productName = product[1];
 
     productNameElement = '<p>'+ productName +'</p>';
 

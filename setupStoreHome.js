@@ -4,7 +4,7 @@ function getProductsFromDataBase(){
         url: 'getProducts.php',
         type: 'POST',
         dataType: 'json',
-        data: {functionname: 'getProducts'},
+        data: {functionname: 'getProducts' , typename: 'all'},
         success: setProducts,
     });
 }

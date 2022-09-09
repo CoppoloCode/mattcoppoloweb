@@ -54,6 +54,21 @@ a{
     padding: 10px;
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
 }
+.sort-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.sort-row h2{
+    margin-left: 10%;
+}
+.sorting{
+    margin-left: auto; 
+}
+.typesorting{
+    margin-right: 10%;
+}
+
 .row{
     display: flex;
     align-items: center;
