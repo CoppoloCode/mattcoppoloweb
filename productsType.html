@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products</title>
-    <link rel="stylesheet" href="styleProducts.css">
+    <link rel="stylesheet" href="styleProductsType.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body>
+<body onload="setTypeName()">
+
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -36,61 +37,33 @@
 
     <!---------- products ----------->
     <div class="small-container">
-        <div class="row row-2">
-            <h2>All Headsets</h2>
-            <select id="selectBox" onchange="changeSorting()">
-                <option value="1">Sort by Featured</option>
-                <option value="2">Sort by price asc</option>
-                <option value="3">Sort by price desc</option>
-                <option value="4">Sort by rating</option>  
-                </option>
-            </select>
-        </div>
         <div class="row">
-            <div class="col" id="product-1">
-                
+            <div class="btnLeft">
+                <a href="">&#8249;</a>
             </div>
-            <div class="col" id="product-2">
-                
+            <div class="col-1">
+                <div class="Image" id="showImage-1"></div>
+                <div class="Name" id="showName-1"></div>
+                <div class="Review" id="showReview-1"></div>
+                <div class="Price" id="showPrice-1" ></div>             
             </div>
-            <div class="col" id="product-3">
-                
+            <div class="col-2">
+                <div class="Image" id="showImage-2"></div>
+                <div class="Name" id="showName-2"></div>
+                <div class="Review" id="showReview-2"></div>
+                <div class="Price" id="showPrice-2" ></div>
+                <a href="" class="btn"> Buy Now </a>
             </div>
-            <div class="col" id="product-4">
-                
+            <div class="col-3">
+                <div class="Image" id="showImage-3"></div>
+                <div class="Name" id="showName-3"></div>
+                <div class="Review" id="showReview-3"></div>
+                <div class="Price" id="showPrice-3" ></div> 
+            </div>
+            <div class="btnRight">
+                <a href="">&#8250;</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col" id="product-5">
-                
-            </div>
-            <div class="col" id="product-6">
-                
-            </div>
-            <div class="col" id="product-7">
-
-            </div>
-            <div class="col" id="product-8">
-                
-            </div>
-         </div> 
-         <div class="row">
-            <div class="col" id="product-9">
-                
-            </div>
-            <div class="col" id="product-10">
-                
-            </div>
-            <div class="col" id="product-11">
-               
-            </div>
-            <div class="col" id="product-12">
-                
-            </div>
-         </div>   
-         <div class="page-btn" id="page-btn">
-            
-         </div>
     </div>
 
     
@@ -99,7 +72,7 @@
 
     <div class="footer">
         <div class="container">
-            <div class="row-3">
+            <div class="footer-row">
                 <div class="footer-col-1">
                     <h3>Download Our App</h3>
                     <p>Download App for Android and ios mobie phone.</p>

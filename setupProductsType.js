@@ -1,116 +1,136 @@
 
-var currentPage = 1;
-var productStart = 0;
-var totalPages; 
-var clickCount = 0;
-var buttonNum = 0;
-var sorting = 1;
-var typeName;
-
-getProductsFromDataBase(productStart,sorting);
-
-totalPages = parseInt(localStorage.getItem("totalPages"));
-
-setPageButtons();
-
-function saveTypeName(type){
-    this.typeName = type;
+class Page{
+    constructor(buttonCounter){
+        this.buttonCounter = buttonCounter;
+    }
 }
 
-function getProductsFromDataBase(productStart,sorting){
+let page = new Page(0);
 
-    if(sorting == 1){
-        var functionName = 'getProducts';
-    }
-    if(sorting == 2){
-        var functionName = 'getProductsSortedPriceAsc';
-    }
-    if(sorting == 3){
-        var functionName = 'getProductsSortedPriceDesc';
-    }
-    if(sorting == 4){
-        var functionName = 'getProductsSortedReview';
-    }
-    
+
+function setTypeName(){
+    typeName = localStorage.getItem("chosenProductId");
+    typeName = typeName.toString();
+    getProductsFromDataBase(typeName);
+}
+
+function getProductsFromDataBase(typeName){
+
     $.ajax({
-        
+        url: 'getProductsType.php',
         type: 'POST',
-        url: "getProductsType.php",
-        dataType: 'json',
-        data: {functionname: functionName, typeName: this.typeName},
-        success: function setProducts(data){         
-                    
-            products = data;
-            let productElements = [];
-            let productPlacementId = "product-";   
-            let totalPages = products.length/12;
-            totalPages = Math.ceil(totalPages);
-
-            localStorage.setItem("totalPages", totalPages);
-        
-            productElements = getProductElements(products);
-
-            for(let i = 0; i < 12; i++){
-                document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[productStart];
-                productStart++;
-            }                 
-
-        }                
+        dataType:'json',
+        data: {functionname: 'getProductsSortedReview', typename: typeName},
+        success: getProducts,
     });
 }  
 
-function setPageButtons(direction){
+function getProducts(data){         
+                    
+    let products = data;
 
-    document.getElementById("page-btn").innerHTML = null;  
-    
-    if(direction == "forward"){
-        this.clickCount++;
-        if((this.buttonNum-3) > 0){
-            this.buttonNum = this.buttonNum-3;                   
-        }
-    }
-    if(direction == "backward"){
-        this.clickCount--;
-        if((this.buttonNum-5) >= 0){
-            this.buttonNum = this.buttonNum-5;
-        }
-    }
+    sendProduct(products);
+                      
+}
 
-    if(this.clickCount >= 1){
-        document.getElementById("page-btn").innerHTML += '<a id="backward" onclick="setPageButtons(id)"><span>&#8592;</span></a>';
+function buttonIncrease(){
+    page.buttonCounter++;
+}
+
+function buttonDecrease(){
+    page.buttonCounter--;
+}
+
+function sendProduct(products){
+    let i = 0;
+    for(i; i < 3; i++){
+        setupProduct(products[i],i);
     }
-    for(i = 0; i < 4; i++){
-        this.buttonNum++;
-        document.getElementById("page-btn").innerHTML += "<a id='"+ (this.buttonNum) + "' onclick='pageSwap(id,currentPage)'><span>"+ (this.buttonNum) +"</span></a>";        
-    }
-    
-    if(this.buttonNum < this.totalPages){
-        document.getElementById("page-btn").innerHTML += '<a id="forward" onclick="setPageButtons(id)"><span>&#8594;</span></a>';
-    }
-        
 }
 
 
 
-function pageSwap(pageNumberSelected,currentPage){
+function setupProduct(product,productNum){
+
     
-    if(pageNumberSelected != currentPage){
-        this.currentPage = pageNumberSelected;
-        productStart = (this.currentPage * 12) - 12;
-        getProductsFromDataBase(productStart,this.sorting); 
+    
+    let productImageElement;
+    let productPriceElement;
+    let productReviewElement;
+    let productNameElement;
+    let productNumString = (productNum+1).toString();
+
+    console.log(productNumString);
+    
+    productNameElement = getNameElement(product);
+    productImageElement = getImageElement(product);
+    productReviewElement = getReviewElement(product);
+    productPriceElement = getPriceELement(product);
+
+    
+    document.getElementById("showName-" + productNumString).innerHTML = productNameElement;
+    document.getElementById("showImage-" + productNumString).innerHTML = productImageElement;
+    document.getElementById("showReview-" + productNumString).innerHTML = productReviewElement;
+    document.getElementById("showPrice-" + productNumString).innerHTML = productPriceElement;
+    
+   
+    
+}
+
+/* ------------gets the Name of a product  -----------*/
+ 
+function getNameElement(product){
+
+    let productName = product[1]
+
+    productNameElement = '<p>'+ productName +'</p>';
+
+    return productNameElement;
+}
+
+/* ------------gets the image of a product  -----------*/
+
+function getImageElement(product){
+
+    let productImageElement;
+    
+    productImageElement =  "<img src='images/" + product[2] + "'" + ">"+"</img>"; 
+    return  productImageElement;
+
+}
+
+
+/* ------------gets the Review of a product  -----------*/
+
+function getReviewElement(product){
+    let productReviewElement;
+    let productReview = product[3];
+    productReviewElement = setReviewElement(productReview);
+    return productReviewElement;
+}
+
+/* ------------sets the Review Elements based on raiting of a product  -----------*/
+
+function setReviewElement(productReview){
+    productReview = parseInt(productReview);
+    let starElement = '<i class="fa fa-star" aria-hidden="true"></i>';
+    let emptyStarElement = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+    let result = "";
+    for(i=0; i<productReview; i++){
+       result += starElement;
     }
-                
+    for(i=productReview; i<5; i++){
+        result += emptyStarElement;
+    }
+    return result;
+}
+/* ------------gets the Price of a product  -----------*/
+
+function getPriceELement(product){
+
+    let productPriceElement;
+    productPriceElement = '<p>' + '$' + product[4] + '</p>';
+    return productPriceElement 
+
 }
 
-function changeSorting(){
-    let selectBox = document.getElementById("selectBox");
-    let selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    this.sorting = selectedValue;
-    this.buttonNum = 0;
-    this.clickCount = 0;
-    this.currentPage = 1;
-
-    setPageButtons();
-    getProductsFromDataBase(0,selectedValue);
-    
-}

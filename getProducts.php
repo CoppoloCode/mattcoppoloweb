@@ -35,6 +35,8 @@
             $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products  ORDER BY Type Desc";
             
         }
+    }else{
+        die("Error: function name not supported" . $_POST['functionname']);
     }
 
     $result = $conn->query($sql);

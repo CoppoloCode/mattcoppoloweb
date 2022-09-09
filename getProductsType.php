@@ -1,14 +1,26 @@
 
 <?php
 
-    if($_POST['typeName']){
+    if($_POST['typename']){
 
-        if($_POST['typeName'] == 'headset'){
-            $typeName = 'headset'
+        if($_POST['typename'] == 'headset'){
+            $typeName = 'headset';
         }
+        if($_POST['typename'] == 'keyboard'){
+            $typeName = 'Keyboard';
+        }
+        if($_POST['typename'] == 'mouse'){
+            $typeName = 'Mouse';
+        }
+        if($_POST['typename'] == 'PC'){
+            $typeName = 'PC';
+        }
+
+    }else{
+        die("Error: type name not supported" . $_POST['typename']);
     }
 
-    if($_POST['functionname']){
+    if($_POST['functionname'] == 'getProductsSortedReview'){
 
         $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
 
@@ -16,27 +28,11 @@
             die("Connection Failed: " . $conn->connect_error);
         }
 
-        if($_POST['functionname'] == 'getProducts'){
-
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName";
-
-        }
-
-        if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
-
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Cost ASC";
-            
-        }
-        if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
-
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Cost Desc";
-            
-        }
-        if($_POST['functionname'] == 'getProductsSortedReview'){
-
-            $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = $typeName ORDER BY Review Desc";
-            
-        }
+        $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " ."'". $typeName ."'" . " ORDER BY Review Desc";
+        
+        
+    }else{
+        die("Error: function name not supported" . $_POST['functionname']);
     }
 
     $result = $conn->query($sql);
