@@ -55,7 +55,6 @@ a{
     align-items: center;
     padding-top: 50px;
 }
-
 .col-1 img{
     width: 500px;
     height: 500px;
@@ -113,9 +112,14 @@ a{
 }
 .row-2{
     display:flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-   
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.btnLeft a, .btnRight a{
+    font-size: 150px; 
+    cursor: pointer;
+    user-select: none;
 }
 .col{
     flex-basis: 25%;

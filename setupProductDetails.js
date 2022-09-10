@@ -1,29 +1,71 @@
 
+class Page{
+    constructor(products, productCounter, productElements){
+        this.products = products;
+        this.productCounter = productCounter;
+        this.productElements = productElements;
+    }
+}
+
+let page = new Page([],0,[]);
+
 function getProductsFromDataBase(){
     $.ajax({
         url: 'getProducts.php',
         type: 'POST',
         dataType: 'json',
         data: {functionname: 'getProducts' , typename: 'all'},
-        success: setProducts,
+        success: getProducts,
     });
 }
 
- function setProducts(data){         
+ function getProducts(data){         
                 
-    let products = data;
+    page.products = data;
+   
+    setProductDetails(page.products);
+    getShuffledProducts();
+             
+}
+function getShuffledProducts(){
     let shuffledProducts = [];
-    let productElements = [];
+    shuffledProducts = shuffleProducts(page.products);
+    getProductsElements(shuffledProducts);
+
+}
+function getProductsElements(shuffledProducts){
+    page.productElements = getProductElements(shuffledProducts);
+    setProducts(page.productElements);
+}
+
+function setProducts(productElements){
+
     let productPlacementId = "product-";
     
-    setProductDetails(products);
-
-    shuffledProducts = shuffleProducts(products);
-    productElements = getProductElements(shuffledProducts);
     for(let i = 1; i < 5; i++){
-        document.getElementById(productPlacementId + i).innerHTML = productElements[i];
-    }                 
-}              
+        
+        if(page.productCounter >= page.products.length){
+            page.productCounter = 0;
+        }else if(page.productCounter < 0){
+            page.productCounter = page.products.length-5;
+        }
+        document.getElementById(productPlacementId + i).innerHTML = productElements[page.productCounter];
+        page.productCounter++;
+    }       
+    console.log(page.productCounter);
+}
+
+function changeProductsRight(){
+    setProducts(page.productElements);
+}
+function changeProductsLeft(){
+    page.productCounter -= 8;
+    setProducts(page.productElements);
+}
+
+
+
+
 
 /* ------------gathers differecnt HTML Elemnts for product details -----------*/
 

@@ -68,9 +68,12 @@ a{
     display: grid;
     justify-content: center;
     align-items: center;
+    
 }
 .btnLeft a, .btnRight a{
     font-size: 150px;
+    cursor: pointer;
+    user-select: none;
 }
 .col-1, .col-2, .col-3{
     display: grid;
@@ -83,8 +86,8 @@ a{
     object-fit: scale-down;
 }
 .col-2 .Image img{
-    width: 250px;
-    height: 250px;
+    width: 450px;
+    height: 450px;
     object-fit: scale-down;
 }
 .col-3 .Image img{

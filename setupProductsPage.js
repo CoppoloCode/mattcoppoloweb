@@ -15,40 +15,14 @@ class Page{
 
 let page = new Page([],1,0,0,0,1,1,0);
 
-function getProductsFromDataBase(sorting,typeSorting){
 
-    
-    let sort;
-    let typeSort;
-    
-    if(sorting == 1){
-        sort = 'getProducts';
-    }
-    if(sorting == 2){
-        sort = 'getProductsSortedPriceAsc';
-    }
-    if(sorting == 3){
-        sort = 'getProductsSortedPriceDesc';
-    }
-    if(sorting == 4){
-        sort = 'getProductsSortedReview';
-    }
-    if(typeSorting == 1){
-        typeSort = 'all';
-    }
-    if(typeSorting == 2){
-        typeSort = 'headset';
-    }
-    if(typeSorting == 3){
-        typeSort = 'keyboard';
-    }
-    if(typeSorting == 4){
-        typeSort = 'mouse';
-    }
-    if(typeSorting == 5){
-        typeSort = 'PC';
-    }
-    
+function getProductsFromDataBase(sortNum, typeSortNum){
+
+    let typeSorting = ['all', 'headset' , 'keyboard', 'mouse' , 'PC'];
+    let sorting = ['getProducts', 'getProductsSortedPriceAsc', 'getProductsSortedPriceDesc', 'getProductsSortedReview'];
+    let typeSort = typeSorting[typeSortNum-1];
+    let sort = sorting[sortNum-1];
+
     $.ajax({
         url: 'getProducts.php',
         type: 'POST',
@@ -56,15 +30,17 @@ function getProductsFromDataBase(sorting,typeSorting){
         data: {functionname: sort, typename: typeSort},
         success: getProducts,
     });
+  
 }  
 
 function getProducts(data){         
-                    
+              
     page.products = data;
+
     let productElements = []; 
     let totalPages = page.products.length/12;
     page.totalPages = Math.ceil(totalPages);
-    
+    page.sortingCounter++; 
     productElements = getProductElements(page.products);
     setupProducts(productElements);
     setPageButtons();

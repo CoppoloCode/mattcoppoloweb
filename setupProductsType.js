@@ -6,7 +6,7 @@ class Page{
     }
 }
 
-let page = new Page(0);
+let page = new Page(0,[]);
 
 
 function setTypeName(){
