@@ -11,7 +11,7 @@
 
 </head>
 
-<body>
+<body onload="getProductsFromDataBase()">
 
     <div class="header">
         <div class="container">
@@ -36,48 +36,16 @@
 
   <!-- cart items details -->
   <div class="small-container">
-    <div class="cart-page">
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="images/frontpagepc.png">
-                        <div>
-                            <p>product Name goes here</p>
-                            <small>Price Goes Here</small>
-                            <br>
-                            <a href="">Remove</a>
-                        </div>
-                    </div>
-                </td>
-                <td class="Quantity"><input type="number" value="1"></td>
-                <td>total Price Goes here</td>
-            </tr>
+    <div id="cart" class="cart-page">
+        <table id="productsTable">
             
         </table>
 
         <div class="total-price">
-            <table>
-                <tr>
-                    <td>Subtotal</td>
-                    <td>subtotal goes here</td>
-                </tr>
-                <tr>
-                    <td>Tax</td>
-                    <td>tax goes here</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>Total goes here</td>
-                </tr>
+            <table id="priceTable" >
+                
             </table>
         </div>
-
     </div>
 </div>
 
@@ -126,7 +94,7 @@
 
 
 <script src="toggleMenu.js"></script>
-
+<script src="setupCart.js"></script>
 
 </body>
 </html>

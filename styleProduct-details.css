@@ -89,11 +89,19 @@ a{
     font-size: 50px;
     text-align: left;
 }
-
-.col-2 .btn{
-    display: block;
-    width: 40%;
+.col-2 .btns{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.col-2 .btn1{
     background-color: #ff523b;
+}
+.col-2 .btn2{
+    background-color: #f8df00ad;
+}
+.col-2 .btn1, .btn2{
+    display: block;
     color: #fff;
     padding: 8px 30px;
     margin: 30px 0px;

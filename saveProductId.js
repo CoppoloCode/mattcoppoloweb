@@ -4,10 +4,13 @@
 
 function saveProductId(productId){
 
-    console.log(productId);
-    let chosenProductId = productId;
-    localStorage.setItem("chosenProductId", chosenProductId);
+
+    localStorage.setItem("chosenProductId", productId);
 
 }
 
-        
+function AddtoCart(){
+
+    localStorage.setItem("Cart",  localStorage.getItem("Cart") + "," + localStorage.getItem("chosenProductId"));
+    
+}

@@ -52,7 +52,6 @@ function setProducts(productElements){
         document.getElementById(productPlacementId + i).innerHTML = productElements[page.productCounter];
         page.productCounter++;
     }       
-    console.log(page.productCounter);
 }
 
 function changeProductsRight(){

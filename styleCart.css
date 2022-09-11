@@ -51,8 +51,9 @@ a{
 .small-container{
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-top: 100px;
-    padding-bottom: 300px;
+    padding-bottom: 510px;
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
 }
 th{
