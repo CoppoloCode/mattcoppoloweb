@@ -10,10 +10,15 @@ let page = new Page(0,[]);
 
 
 function setTypeName(){
+    let typeName;
     typeName = localStorage.getItem("chosenProductId");
     typeName = typeName.toString();
-    document.getElementById("title").innerText = "All " + typeName + 's';
+    setTypeTitle(typeName);
     getProductsFromDataBase(typeName);
+}
+
+function setTypeTitle(typeName){
+    document.getElementById("title").innerText = "All " + typeName + 's';
 }
 
 function getProductsFromDataBase(typeName){

@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Products</title>
-    <link rel="stylesheet" href="styleProducts.css">
+    <link rel="stylesheet" href="styleCart.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body onload="getProductsFromDataBase(1,1)">
+
+<body>
+
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -21,85 +23,64 @@
                     <ul id="MenuItems">
                         <li><a href="index.html">Back to CoppoloCode</a></li>
                         <li><a href="store.html">Home</a></li>
-                        <li><a href="Products.html">Products</a></li>
+                        <li><a href="Products.html">Products</a></li>                  
                         <li><a href="">Account</a></li>
                         <a href="cart.html"><img src="images/checkouticon.png"></a>
                     </ul>
+                
                 </nav>
                 <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
     </div>
-    
 
-    <!---------- products ----------->
-    <div class="small-container">
-        <div class="sort-row">
-            <h2>All Products</h2>
-            <select class="sorting" id="selectBox" onchange="changeSorting()">
-                <option value="1">Sort by Featured</option>
-                <option value="2">Sort by price asc</option>
-                <option value="3">Sort by price desc</option>
-                <option value="4">Sort by rating</option>              
-                </option>
-            </select>
-            <select class="typesorting" id="selectTypeBox" onchange="changeTypeSorting()">
-                <option value="1">Sort by All</option>
-                <option value="2">Sort by headsets</option>
-                <option value="3">Sort by keyboards</option>
-                <option value="4">Sort by mouses</option>      
-                <option value="5">Sort by PCs</option>        
-                </option>
-            </select>
-        </div>
-        <div class="row">
-            <div class="col" id="product-1">
-             
-            </div>
-            <div class="col" id="product-2">
-                
-            </div>
-            <div class="col" id="product-3">
-                
-            </div>
-            <div class="col" id="product-4">
-                
-            </div>
-        </div>
-        <div class="row">
-            <div class="col" id="product-5">
-                
-            </div>
-            <div class="col" id="product-6">
-                
-            </div>
-            <div class="col" id="product-7">
-
-            </div>
-            <div class="col" id="product-8">
-                
-            </div>
-         </div> 
-         <div class="row">
-            <div class="col" id="product-9">
-                
-            </div>
-            <div class="col" id="product-10">
-                
-            </div>
-            <div class="col" id="product-11">
-               
-            </div>
-            <div class="col" id="product-12">
-                
-            </div>
-         </div>   
-         <div class="page-btn" id="page-btn">
+  <!-- cart items details -->
+  <div class="small-container">
+    <div class="cart-page">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <img src="images/frontpagepc.png">
+                        <div>
+                            <p>product Name goes here</p>
+                            <small>Price Goes Here</small>
+                            <br>
+                            <a href="">Remove</a>
+                        </div>
+                    </div>
+                </td>
+                <td class="Quantity"><input type="number" value="1"></td>
+                <td>total Price Goes here</td>
+            </tr>
             
-         </div>
-    </div>
+        </table>
 
-    
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Subtotal</td>
+                    <td>subtotal goes here</td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>tax goes here</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>Total goes here</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
 
     <!---------- Footer ----------->
 
@@ -142,11 +123,10 @@
         </div>
     </div>
 
-    
-    <script src="insertProduct.js"></script>
-    <script src="saveProductId.js"></script>
-    <script src="toggleMenu.js"></script>
-    <script src="setupProductsPage.js"></script>
+
+
+<script src="toggleMenu.js"></script>
+
 
 </body>
 </html>
