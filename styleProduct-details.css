@@ -45,7 +45,9 @@ a{
     color: rgb(31, 29, 29);
     display: inline-block;
 }
-
+#cart-icon{
+    cursor:pointer;
+}
 /*--------------------Product-details-------------------------*/
 
 .row{
@@ -99,6 +101,7 @@ a{
 }
 .col-2 .btn2{
     background-color: #f8df00ad;
+    cursor: pointer;
 }
 .col-2 .btn1, .btn2{
     display: block;

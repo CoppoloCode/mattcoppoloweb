@@ -45,6 +45,9 @@ a{
     color: rgb(31, 29, 29);
     display: inline-block;
 }
+#cart-icon{
+    cursor: pointer;
+}
 
 /*--------------------Cart Items-------------------------*/
 
@@ -92,6 +95,7 @@ td input{
 td a{
     color:#ce0f28;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .total-price{

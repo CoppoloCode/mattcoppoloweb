@@ -44,7 +44,9 @@ a{
     color: rgb(31, 29, 29);
     display: inline-block;
 }
-
+#cart-icon{
+    cursor: pointer;
+}
 
 
 /*--------------------Products-------------------------*/

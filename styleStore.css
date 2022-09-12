@@ -42,6 +42,9 @@ nav ul a{
     color: rgb(31, 29, 29);
 }
 
+#cart-icon{
+    cursor: pointer;
+}
 /*--------------------Header-------------------------*/
 
 .row{
