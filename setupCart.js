@@ -28,7 +28,6 @@ function getProductsFromDataBase(){
 function getSelectedProducts(){
 
     let chosenProducts = [];
-
     chosenProducts = localStorage.getItem("Cart").split(',');
     allProducts.selectedProductIds = chosenProducts;
 
@@ -53,7 +52,7 @@ function matchProduct(){
                 if(allProducts.products[j][0] == allProducts.selectedProductIds[i]){
                     allProducts.selectedProducts[productCount] = allProducts.products[j];
                     productCount++;
-                    productElements = setupProduct(allProducts.products[j]);
+                    productElements = setupCartProduct(allProducts.products[j]);
                     document.getElementById("productsTable").innerHTML += productElements;
                 }
             }
@@ -62,7 +61,7 @@ function matchProduct(){
     }
 }
 
-function setupProduct(product){
+function setupCartProduct(product){
 
     product[4] = parseFloat(product[4]);
 

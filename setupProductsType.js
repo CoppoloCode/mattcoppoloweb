@@ -11,31 +11,31 @@ let page = new Page(0,[]);
 
 function setTypeName(){
     let typeName;
-    typeName = localStorage.getItem("chosenProductId");
+    typeName = localStorage.getItem("chosenProductType");
     typeName = typeName.toString();
     setTypeTitle(typeName);
-    getProductsFromDataBase(typeName);
+    getProductsFromDataBaseReview(typeName);
 }
 
 function setTypeTitle(typeName){
     document.getElementById("title").innerText = "All " + typeName + 's';
 }
 
-function getProductsFromDataBase(typeName){
+function getProductsFromDataBaseReview(typeName){
 
     $.ajax({
         url: 'getProductsType.php',
         type: 'POST',
         dataType:'json',
         data: {functionname: 'getProductsSortedReview', typename: typeName},
-        success: getProducts,
+        success: getProductsbyReview,
     });
 }  
 
-function getProducts(data){         
-                    
+function getProductsbyReview(data){         
+    
     page.products = data;
-    sendProduct();                  
+    sendProduct();
 }
 
 function productIncrease(){
@@ -99,9 +99,14 @@ function setupProduct(product,productNum){
     document.getElementById("showReview-" + productNumString).innerHTML = productReviewElement;
     document.getElementById("showPrice-" + productNumString).innerHTML = productPriceElement;
     
+    if(productNum == 2){
+        saveProductId(product[0]);
+    }
    
     
 }
+
+
 
 /* ------------gets the Name of a product  -----------*/
  
