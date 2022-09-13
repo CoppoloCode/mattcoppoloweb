@@ -115,6 +115,8 @@
         $i++;
     }
 
+    
+
     echo json_encode($products);
 
     $conn->close();

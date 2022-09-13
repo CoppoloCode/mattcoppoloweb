@@ -6,8 +6,17 @@ function getProductsFromDataBase(){
         dataType: 'json',
         data: {functionname: 'getProducts' , typename: 'all'},
         success: setProducts,
+       
     });
 }
+
+function getProductsFromCookie(data){
+
+    let products = data;
+    console.log(products);
+
+}
+
 function setProducts(data){         
                         
     let products = data;
@@ -20,4 +29,4 @@ function setProducts(data){
     for(let i = 1; i < 9; i++){
         document.getElementById(productPlacementId + i).innerHTML = productElements[i];
     }                 
-}              
+}

@@ -42,7 +42,7 @@ function matchProduct(){
     allProducts.selectedProductIds = [...allProducts.selectedProductIds];
 
     if(allProducts.selectedProductIds[1] == null){
-        document.getElementById("cart").innerHTML = "<h2> Your Cart is Empty </h2>"
+        document.getElementById("cart").innerHTML = "<h2> Your Cart is Empty </h2>";
     }else{
 
         document.getElementById("productsTable").innerHTML = "<tr><th>Product</th><th>Quantity</th><th>Subtotal</th></tr>";
@@ -68,7 +68,7 @@ function setupCartProduct(product){
     let productElements = "<tr><td><div class='cart-info'><img src='images/" + product[2] + "'" +
      "><div><p>" + product[1] + "</p><small>$" + product[4] +
      "</small><br><a id='" + product[0] + "'" + " onclick='removeProduct(id)'>Remove</a></div></div></td><td class='Quantity'><input id='"
-     + product[0] + "'" + "onchange='getQuantity(id,value)' type='number' value='1' min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null'></td><td id='subtotal-"
+     + product[0] + "'" + "onchange='getQuantity(id,value)' type='number' value='1' min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></td><td id='subtotal-"
     + product[0] +"'>$" + product[4]+ "</td></tr>";
 
      return productElements;
