@@ -1,78 +1,41 @@
 
 class Products{
-    constructor(selectedProductsIds, products, selectedProducts){
-        this.selectedProductIds = selectedProductsIds;
-        this.products = products;
+    constructor(selectedProducts){
         this.selectedProducts = selectedProducts;
     }
 }
 
-let allProducts = new Products([],[],[]);
+let allProducts = new Products([]);
 
-function getProductsFromDataBase(){
-    $.ajax({
-        url: 'getProducts.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {functionname: 'getProducts' , typename: 'all'},
-        success: getProducts,
-    });
-}
 
- function getProducts(data){         
-                
-    allProducts.products = data;
-    getSelectedProducts();
-}
+function getSelectedProducts(data){
 
-function getSelectedProducts(){
-
-    let chosenProducts = [];
-    chosenProducts = localStorage.getItem("Cart").split(',');
-    allProducts.selectedProductIds = chosenProducts;
-
-    matchProduct();
-}
-
-function matchProduct(){
-
-    let productCount = 0;
-    
-    allProducts.selectedProductIds = new Set(allProducts.selectedProductIds);
-    allProducts.selectedProductIds = [...allProducts.selectedProductIds];
-
-    if(allProducts.selectedProductIds[1] == null){
+    allProducts.selectedProducts = data;
+    document.getElementById("productsTable").innerHTML = "<tr><th>Product</th><th>Quantity</th><th>Subtotal</th></tr>";
+    if(allProducts.selectedProducts == null){
         document.getElementById("cart").innerHTML = "<h2> Your Cart is Empty </h2>";
     }else{
-
-        document.getElementById("productsTable").innerHTML = "<tr><th>Product</th><th>Quantity</th><th>Subtotal</th></tr>";
-
-        for(let i = 0; i < allProducts.selectedProductIds.length; i++){
-            for(let j = 0; j < allProducts.products.length; j++){
-                if(allProducts.products[j][0] == allProducts.selectedProductIds[i]){
-                    allProducts.selectedProducts[productCount] = allProducts.products[j];
-                    productCount++;
-                    productElements = setupCartProduct(allProducts.products[j]);
-                    document.getElementById("productsTable").innerHTML += productElements;
-                }
-            }
+        for(i = 0; i < allProducts.selectedProducts.length; i++){
+            setupCartProduct(allProducts.selectedProducts[i]);
         }
         setupTotalPrice();
     }
 }
 
+
 function setupCartProduct(product){
 
-    product[4] = parseFloat(product[4]);
+       
+    product[3] = parseFloat(product[3]);
 
     let productElements = "<tr><td><div class='cart-info'><img src='images/" + product[2] + "'" +
-     "><div><p>" + product[1] + "</p><small>$" + product[4] +
-     "</small><br><a id='" + product[0] + "'" + " onclick='removeProduct(id)'>Remove</a></div></div></td><td class='Quantity'><input id='"
-     + product[0] + "'" + "onchange='getQuantity(id,value)' type='number' value='1' min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></td><td id='subtotal-"
-    + product[0] +"'>$" + product[4]+ "</td></tr>";
+    "><div><p>" + product[1] + "</p><small>$" + product[3] +
+    "</small><br><a class='RemoveFromCart' id='" + product[0] + "'" + ">Remove</a></div></div></td><td class='Quantity'><input id='"
+    + product[0] + "'" + "onchange='getQuantity(id,value)' type='number' value='"+product[4]+"' min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></td><td id='subtotal-"
+    + product[0] +"'>$" + product[3]+ "</td></tr>";
 
-     return productElements;
-
+    document.getElementById("productsTable").innerHTML += productElements;
+    
 
 }
 
@@ -82,25 +45,13 @@ function getQuantity(id,value){
     let cost = 0.0;
     for(let i = 0; i < allProducts.selectedProducts.length; i++){
         if(allProducts.selectedProducts[i][0] == id){
-            cost = allProducts.selectedProducts[i][4];
+            cost = allProducts.selectedProducts[i][3];
         }
     }
     cost = cost * quantity;
     cost = cost.toFixed(2);
     document.getElementById('subtotal-' + id).innerHTML = '$' + cost;    
     setupTotalPrice();
-}
-    
-function removeProduct(id){
-
-    for(let i = 0; i < allProducts.selectedProductIds.length; i++){
-        if(allProducts.selectedProductIds[i] == id){
-            allProducts.selectedProductIds.splice(i,1);
-        }
-    }
-    localStorage.setItem("Cart", allProducts.selectedProductIds);
-    matchProduct();
-
 }
 
 
@@ -120,11 +71,11 @@ function setupTotalPrice(){
 }
 
 function getSubTotal(){
-    let subTotalList = [];
+    let subTotalList;
     let subTotal = 0.0;
 
-    for(i = 1; i < allProducts.selectedProductIds.length; i++){
-        subTotalList += document.getElementById("subtotal-" + allProducts.selectedProductIds[i]).innerHTML.split('$');
+    for(i = 0; i < allProducts.selectedProducts.length; i++){
+        subTotalList += document.getElementById("subtotal-" + allProducts.selectedProducts[i][0]).innerHTML.split('$');
     }
     subTotalList = subTotalList.split(',');
 

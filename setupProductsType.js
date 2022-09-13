@@ -114,7 +114,7 @@ function getNameElement(product){
 
     let productName = product[1];
 
-    productNameElement = '<p>'+ productName +'</p>';
+    productNameElement = '<p id="'+product[0]+'">'+ productName +'</p>';
 
     return productNameElement;
 }

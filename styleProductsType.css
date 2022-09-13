@@ -98,7 +98,7 @@ a{
     height: 150px;
     object-fit: scale-down;
 }
-.btn{
+.btn, .AddtoCart{
     cursor: pointer;
 }
 

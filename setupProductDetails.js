@@ -93,13 +93,14 @@ function setProductDetails(products){
     
 }
 
+
 /* ------------gets the Name of a product  -----------*/
 
 function getNameElement(products, productId){
 
     let productName = products[productId-1][1]
 
-    productNameElement = '<p>'+productName +'</p>';
+    productNameElement = '<p id="'+productId+'">'+ productName +'</p>';
 
     return productNameElement;
 }
