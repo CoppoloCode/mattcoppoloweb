@@ -24,16 +24,31 @@
                         <li><a href="store.html">Home</a></li>
                         <li><a href="Products.html">Products</a></li>
                         <li><a href="">Account</a></li>
-                        <a href="cart.html"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i></a>
+                        <a href="#0" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
                     </ul>
-                </nav>
+                 </nav>
                 <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
-    </div>
-    
-        
-    
+    </div> 
+
+    <!-------------- Cart ------------------>
+    <div class="cart-container">
+        <div class="shopping-cart">
+          <div class="shopping-cart-header">
+            <i class="fa fa-shopping-cart cart-icon"></i><span id="badge2"></span>
+            <div id="shopping-cart-total">
+                
+            </div>
+          </div> <!--end shopping-cart-header -->
+      
+          <ul id="shopping-cart-items">
+           
+          </ul>
+      
+          <a href="#" class="button">Checkout</a>
+        </div> <!--end shopping-cart -->
+    </div> <!--end container -->
 
     <!---------- products ----------->
     <div class="products-container">
@@ -55,7 +70,7 @@
                 <div class="Name" id="showName-2"></div>
                 <div class="Review" id="showReview-2"></div>
                 <div class="Price" id="showPrice-2" ></div>
-                <a href="cart.html" class="btn"> Buy Now </a>
+                <a class="btn"> Buy Now </a>
                 <a class="AddtoCart"> Add to Cart </a>
             </div>
             <div class="col-3">

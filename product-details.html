@@ -21,17 +21,35 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Back to CoppoloCode</a></li>
-                        <li><a href="store.html">Home</a></li>
-                        <li><a href="Products.html">Products</a></li>                  
-                        <li><a href="">Account</a></li>
-                        <a href="cart.html"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i></a>
+                        <a href="index.html">Back to CoppoloCode</a>
+                        <a href="store.html">Home</a>
+                        <a href="Products.html">Products</a>
+                        <a href="">Account</a>
+                        <a href="#0" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
                     </ul>
                  </nav>
                 <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
-    </div>
+    </div> 
+
+    <!-------------- Cart ------------------>
+    <div class="cart-container">
+        <div class="shopping-cart">
+          <div class="shopping-cart-header">
+            <i class="fa fa-shopping-cart cart-icon"></i><span id="badge2"></span>
+            <div id="shopping-cart-total">
+                
+            </div>
+          </div> <!--end shopping-cart-header -->
+      
+          <ul id="shopping-cart-items">
+           
+          </ul>
+      
+          <a href="#" class="button">Checkout</a>
+        </div> <!--end shopping-cart -->
+    </div> <!--end container -->
    
     <!---------- product details ----------->
 
