@@ -4,10 +4,16 @@
     box-sizing: border-box;
 }
 body{
+    position: relative;
     font-family: 'Poppins', sans-serif;
+    z-index: -3;
 }
 .header{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    position: sticky;
+    top:0;
+    align-self: flex-start;
+    z-index: 1;
 }
 .container{
     max-width: auto;
@@ -51,7 +57,11 @@ a{
 }
 .cart-container {
     margin: auto;
-    width: 95%;
+    width: 90%;
+    position: sticky;
+    top: 70px;
+    align-self: flex-start;
+    
 }
   
 #badge1,#badge2 {
@@ -68,7 +78,7 @@ a{
 }
   
 .shopping-cart {
-    margin: 0 55px;
+    margin: 20px 50px;
     background: white;
     width: 320px;
     position: absolute;
@@ -173,6 +183,8 @@ a{
     max-width: auto;
     text-align: center;
     padding: 10px;
+    position: relative;
+    z-index: -1;
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
 }
 .sort-row{
@@ -210,6 +222,9 @@ a{
 }
 .col img:hover{
     transform: translateY(-5px);
+}
+.AddtoCart{
+    cursor: pointer;
 }
 
 /*--------------------Sorting and Page Buttons-------------------------*/

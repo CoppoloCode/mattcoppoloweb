@@ -101,6 +101,7 @@ function setupProduct(product,productNum){
     
     if(productNum == 2){
         saveProductId(product[0]);
+        document.getElementById("btn").innerHTML = "</p><a id=" + "'" + product[0] + "'" + "class='AddtoCart'><i class='fa fa-cart-plus' aria-hidden='true'></i></a>";
     }
    
     

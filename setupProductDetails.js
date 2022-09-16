@@ -78,6 +78,7 @@ function setProductDetails(products){
     let productPriceElement;
     let productReviewElement;
     let productNameElement;
+    let addtoCartElement;
 
     
     productNameElement = getNameElement(products, chosenProductId);
@@ -90,6 +91,7 @@ function setProductDetails(products){
     document.getElementById("showInfo").innerHTML = productDescriptionElement;
     document.getElementById("showReview").innerHTML = productReviewElement;
     document.getElementById("showPrice").innerHTML = productPriceElement;
+    document.getElementsByClassName("AddtoCart")[0].outerHTML = "<a id ='"+chosenProductId+"'class=AddtoCart> Add to Cart &#8594; </a>";
     
 }
 

@@ -6,9 +6,14 @@
 }
 body{
     font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: -3;
 }
 .header{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 .container{
     max-width: auto;
@@ -39,7 +44,7 @@ nav ul li{
     display: inline-block;
     padding: 10px;
 }
-a{
+nav a{
     text-decoration: none;
     font-size: 20px;
     color: rgb(31, 29, 29);
@@ -55,6 +60,9 @@ a{
 .cart-container {
     margin: auto;
     width: 95%;
+    position: sticky;
+    top: 90px;
+    z-index: 1;
 }
   
 #badge1,#badge2 {
@@ -71,7 +79,7 @@ a{
 }
   
 .shopping-cart {
-    margin: 0px 60px;
+    margin: 0px 20px;
     background: white;
     width: 320px;
     position: absolute;
@@ -215,19 +223,12 @@ margin: 25px 0 15px 0;
     text-align: left;
 }
 .col-2 .btns{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.col-2 .btn1{
-    background-color: #ff523b;
+    text-align: left;
+    margin: 10px;
 }
 .col-2 .AddtoCart{
-    background-color: #f8df00ad;
+    background-color: goldenrod;
     cursor: pointer;
-}
-.col-2 .btn1, .AddtoCart{
-    display: block;
     color: #fff;
     padding: 8px 30px;
     margin: 30px 0px;
@@ -269,6 +270,9 @@ margin: 25px 0 15px 0;
 }
 .col:hover{
     transform: translateY(-5px);
+}
+.AddtoCart i{
+    cursor: pointer;
 }
 
 

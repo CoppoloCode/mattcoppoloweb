@@ -48,10 +48,9 @@ function getProductElements(products){
         review = getReview(productReview);
 
         productElements[i] = "<a href='product-details.html'>" + "<img src='images/" 
-        + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='saveProductId(id)'></a><h4>" 
-        + productName + "</h4><div>" + review + "</div><p>$" + productCost + "</p>";
+        + productImage + "'" +" "+ "id=" + "'" + productID + "'" + " " + "onclick='saveProductId(id)'></a><p>" 
+        + productName + "</p><div>" + review + "</div><p>$" + productCost + "</p><a id=" + "'" + productID + "'" + "class='AddtoCart'><i class='fa fa-cart-plus' aria-hidden='true'></i></a>";
     }
-
     return productElements;
 }
 

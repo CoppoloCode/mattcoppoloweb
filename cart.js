@@ -1,7 +1,7 @@
 $(document).ready(function($){
 
-  $(".AddtoCart").click(function(){
-    let id = $(".Name p").attr("id");
+  $(document).on("click", ".AddtoCart", function(){
+    let id = $(this).attr("id");
     $.ajax({
       url: 'cart.php',
       type: 'POST',
