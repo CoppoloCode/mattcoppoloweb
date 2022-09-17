@@ -6,8 +6,11 @@ $(document).ready(function($){
       url: 'cart.php',
       type: 'POST',
       data: {addToCart: 1  , productID: id},
-      success: function(){
-        getCartProducts(); 
+      success: function(data){
+        getCartProducts();
+        if(data == "Product is already in cart"){
+          alert("Product is already in cart");
+        }
       },
       error: function(err){
         console.log(err.responseText);

@@ -9,59 +9,56 @@ body{
     position: relative;
     z-index: -3;
 }
+/*--------------------Navbar-------------------------*/
 .header{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
     position: sticky;
     top: 0;
+    align-self: flex-start;
     z-index: 1;
 }
 .container{
-    max-width: auto;
     margin: auto;
 }
-/*--------------------Navbar-------------------------*/
 .navbar{
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    
+}
+.navbar .menu-icon{
+    width: 30px;
+    padding-right: 10px;
 }
 .logo img{
-    width: 75px;
+    width: 50px;
     padding: 2px;
 }
 nav img{
     width: 20px;
 }
 nav{
-    flex: 1;
-    text-align: right;
-    padding-right: 20px;
+    padding-right: 10px;
 }
-nav ul{
-    display:  inline-block;
-    list-style-type: none;
-}
-nav ul li{
-    display: inline-block;
+nav ul a{
     padding: 10px;
-}
-nav a{
     text-decoration: none;
     font-size: 20px;
     color: rgb(31, 29, 29);
-    display: inline-block;
-    padding: 10px;
 }
 
 /*------------------------------Cart------------------------------*/
 #cart-icon{
     cursor:pointer;
+    padding-right: 5px;
 }
 
 .cart-container {
     margin: auto;
     width: 95%;
     position: sticky;
-    top: 90px;
+    top: 55px;
+    align-self: flex-start;
     z-index: 1;
 }
   
@@ -79,7 +76,7 @@ nav a{
 }
   
 .shopping-cart {
-    margin: 0px 20px;
+    margin: 10px 15px;
     background: white;
     width: 320px;
     position: absolute;
@@ -137,7 +134,7 @@ nav a{
   
 .shopping-cart:after {
     bottom: 100%;
-    left: 89%;
+    left: 93%;
     border: solid transparent;
     content: " ";
     height: 0;

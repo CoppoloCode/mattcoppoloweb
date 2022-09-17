@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Home</title>
+    <link rel="stylesheet" href="styleAccount.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="images/Storelogo.png">
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <a href="index.html">Back to CoppoloCode</a>
+                        <a href="store.html">Home</a>
+                        <a href="Products.html">Products</a>
+                        <a href="account.html">Account</a>
+                        <a href="#0" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
+                    </ul>
+                 </nav>
+                <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+        </div>
+    </div> 
+
+<!------------------- Cart----------------------->
+
+    <div class="cart-container">
+        <div class="shopping-cart">
+          <div class="shopping-cart-header">
+            <i class="fa fa-shopping-cart cart-icon"></i><span id="badge2"></span>
+            <div id="shopping-cart-total">
+                
+            </div>
+          </div> <!--end shopping-cart-header -->
+      
+          <ul id="shopping-cart-items">
+           
+          </ul>
+      
+          <a href="#" class="button">Checkout</a>
+        </div> <!--end shopping-cart -->
+    </div> <!--end container -->
+
+<!---------------------- Account ----------------------->
+
+    <div class="account">
+        <div class="account-container">
+            <div class="account-title">
+                <h1>Sign In to Your Account</h1>
+            </div>
+            <div class="input-row">
+                <div class="email">
+                    <label>Email:</label><input type="text" id="email">
+                </div>
+                <div class="password">
+                    <label>Pass:</label><input type="password" id="password">
+                </div>
+           </div>
+           <div class="button-row">
+                <button id="Create-New-Account">Create New Account</button>
+                <button id="Sign-In">Sign In</button>
+           </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+<script src="account.js"></script>
+<script src="cart.js"></script>
+
+</body>
+</html>
+

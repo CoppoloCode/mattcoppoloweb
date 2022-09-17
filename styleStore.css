@@ -11,6 +11,9 @@ body{
     font-family: 'Poppins', sans-serif;
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
 }
+
+
+/*--------------------Navbar-------------------------*/
 .header{
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
     position: sticky;
@@ -21,7 +24,6 @@ body{
 .container{
     margin: auto;
 }
-/*--------------------Navbar-------------------------*/
 .navbar{
     display: flex;
     justify-content: space-between;
@@ -48,11 +50,14 @@ nav ul a{
     font-size: 20px;
     color: rgb(31, 29, 29);
 }
-
 #cart-icon{
     cursor: pointer;
+    padding-right: 5px;
 }
+
 /* ----------------------------Intro----------------------------- */
+
+
 .row{
     display: flex;
     align-items: center;
@@ -107,7 +112,6 @@ p{
     border-radius: 3px;
     padding: 20px;
     z-index: 1;
-   
 }
     
 .shopping-cart-header {
@@ -160,7 +164,7 @@ p{
   
 .shopping-cart:after {
     bottom: 100%;
-    left: 89%;
+    left: 93%;
     border: solid transparent;
     content: " ";
     height: 0;

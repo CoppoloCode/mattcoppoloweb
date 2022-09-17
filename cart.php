@@ -17,14 +17,14 @@ if(isset($_POST['addToCart'])){
     $count = mysqli_num_rows($result);
     
     if($count > 0){
-        echo "product is already added";
+        echo "Product is already in cart";
     }else{
         $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$p_id', '1' ,'-1')";
         
         $result = $conn->query($sql);
 
         if($result){
-            echo "Product is Added..!";
+            echo "Product is Added!";
         }
     }
 
