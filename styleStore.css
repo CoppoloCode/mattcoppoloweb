@@ -234,8 +234,7 @@ p{
     transition: transform 0.5s;
     
 }
-.col-3:hover img{
-    
+.col-3:hover{
     transform: translateY(-5px); 
 }
 .col-3 img{
@@ -280,6 +279,7 @@ p{
 .col-4:hover{
     transform: translateY(-5px);
 }
+
 /*--------------------Exclusive-------------------------*/
 .offer{
     position: relative;

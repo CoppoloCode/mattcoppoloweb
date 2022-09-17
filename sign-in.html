@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store Home</title>
-    <link rel="stylesheet" href="styleAccount.css">
+    <link rel="stylesheet" href="styleSign-in.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
 </head>
-<body onload="setupAccountInfo()">
+<body>
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -23,7 +23,6 @@
                         <a href="store.html">Home</a>
                         <a href="Products.html">Products</a>
                         <a href="sign-in.html">Account</a>
-                        <a onclick="signOut()">Sign Out</a>
                         <a href="#0" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
                     </ul>
                  </nav>
@@ -55,7 +54,21 @@
 
     <div class="account">
         <div class="account-container">
-            
+            <div class="account-title">
+                <h1>Sign In to Your Account</h1>
+            </div>
+            <div class="input-row">
+                <div class="email">
+                    <label>Email:</label><input type="text" id="email">
+                </div>
+                <div class="password">
+                    <label>Pass:</label><input type="password" id="password">
+                </div>
+           </div>
+           <div class="button-row">
+                <button id="Create-New-Account">Create New Account</button>
+                <button id="Sign-In">Sign In</button>
+           </div>
         </div>
     </div>
 
@@ -64,7 +77,9 @@
 
 
 
-<script src="account.js"></script>
+
+
+<script src="sign-in.js"></script>
 <script src="cart.js"></script>
 
 </body>

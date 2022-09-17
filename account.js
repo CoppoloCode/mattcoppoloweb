@@ -1,158 +1,96 @@
-$(document).ready(function(){
-
-    $.ajax({
-        url: "account.php",
-        type: "POST",
-        success: function(data){
-            console.log(data);
-        },
-        error: function(err){
-            console.log(err.responseText);
-        }
-    })
 
 
-    $(document).on("click","#Sign-In", function(){
+userId = document.cookie.split('user=')[1];
 
-        let email = $("#email").val();
-        let password = $("#password").val();
+class accountInfo{
+    constructor(accountInfo){
+        this.accountInfo = accountInfo;
+    }
+}
 
-        $.ajax({
-            url: "account.php",
-            type: "POST",
-            data: {signIn: 1, email, password},
-            success: function(data){
-                console.log(data);
-            },
-            error: function(err){
-                console.log(err.responseText);
-            }
-        })
+let account = new accountInfo([]);
 
-    })
+$.ajax({
 
-    $(document).on("click","#Create-New-Account", function(){
-
-        createAccountPage();
-
-    })
-    $(document).on("click","#Create-Account", function(){
-
-        let email = $("#email").val();
-        let password = $("#password1").val();
-        let confirmPass = $("#confirmPassword").val();
-        let address = $("#address").val();
-        let firstName = $("#firstName").val();
-        let lastName = $("#lastName").val();
-
-        if((checkPasswords(password,confirmPass) == true) && (checkBlankInputs(email,password,address,firstName,lastName) == true)){
-            $.ajax({
-                url: "account.php",
-                type: "POST",
-                data: {createAccount: 1, email, password, address, firstName, lastName},
-                success: function(data){
-                    accountCreated(data);
-                },
-                error: function(err){
-                    console.log(err.responseText);
-                }
-            })
-        }
-        
-    })
-
-    $(document).on("change", "#confirmPassword, #password1", function(){
-
-        let pass = $("#password1").val();
-        let confirmPass = $("#confirmPassword").val();
-
-       checkPasswords(pass, confirmPass);
-
-    })
+    url: "account.php",
+    type: "POST",
+    data: {userId: userId},
+    dataType: "json",
+    success: function(data){
+        account.accountInfo = (JSON.stringify((data)));
+    },
+    error: function(err){
+        console.log(err.responseText);
+    }
 
 })
 
-function checkPasswords(pass, confirmPass){
-    
-    console.log(pass, confirmPass);
-    if(pass != confirmPass){
-        if(document.getElementById("noMatch") != null){
-            document.getElementById("noMatch").outerHTML = null;
-            document.getElementsByClassName("confirm-password")[0].insertAdjacentHTML("afterEnd", "<small id='noMatch'>Passwords do not match.</small>");
-        }else{
-            document.getElementsByClassName("confirm-password")[0].insertAdjacentHTML("afterEnd", "<small id='noMatch'>Passwords do not match.</small>");
-        }
-        return false;
+
+
+function signOut(){
+    document.cookie = "user=0; expires= time() + 86400; path=/;";
+    location.assign("sign-in.html");
+}
+
+function setupAccountInfo(){
+
+    let accountInfo = account.accountInfo.split(",");
+
+    for(i = 0; i < accountInfo.length; i++){
+        accountInfo[i] = accountInfo[i].split(":");
     }
-    else{
-        if(document.getElementById("noMatch") != null){
-            document.getElementById("noMatch").outerHTML = null;
-        }
-        return true;
+    for(i = 0; i < accountInfo.length; i++){
+        accountInfo[i] = accountInfo[i][1].replaceAll('"',"");
     }
+    accountInfo[5] = accountInfo[5].replaceAll("}","");
+    account.accountInfo = accountInfo;
+ 
+
+    let accountElement = ` <div class="account-title">
+                                <h1>Welcome back `+ accountInfo[4] +`</h1>
+                            </div>
+                            <div class="buttons">
+                                <button id="orders" onclick="orders()">Your Orders</button>
+                                <button id="login-security" onclick="accountModify()">Login & Security</button> 
+                                <button id="payments" onclick="payments()">Your Payments</button>   
+                            </div>`;
+
+
+    document.getElementsByClassName("account-container")[0].innerHTML = accountElement;
 
 }
 
-function checkBlankInputs(email,password,address,firstName,lastName){
+function accountModify(){
 
-    if((email == '') || (password == '') || (address == '') || (firstName == '') || (lastName == '')){
-        alert("All fields must be filled out.");
-        return false;
-    }else{
-        return true;
-    }
+    let accountInfo = account.accountInfo;
 
-}
-
-
-function createAccountPage(){
-
-    let createAccountElement = `<div class="email">
-                                    <label>Email:</label><input type="text" id="email">
+    let accountModifyElement = `<div class="account-title">
+                                    <h1>Your Account Info</h1>
                                 </div>
-                                <div class="password">
-                                    <label>Pass:</label><input type="password" id="password1">
-                                </div>
-                                <div class="confirm-password">
-                                    <label>Confirm Pass:</label><input type="password" id="confirmPassword">
-                                </div>
-                                <div class="address">
-                                    <label>Address:</label><input type="text" id="address">
-                                </div>
-                                <div class="firstName">
-                                    <label>First Name:</label><input type="text" id="firstName">
-                                </div>
-                                <div class="lastName">
-                                    <label>Last Name:</label><input type="text" id="lastName">
+                                <div class="accountModify">
+                                    <div class="accountInfo">
+                                        <div class="email"> 
+                                            <h2>Email:   </h2>
+                                            <p>`+accountInfo[1]+`</p>
+                                            <button>Change</button>
+                                        </div>
+                                        <div class="password"> 
+                                            <h2>password:</h2>
+                                            <p id = 'password'>`+accountInfo[2]+`</p>
+                                            <button>Change</button>
+                                        </div>
+                                        <div class="firstName">
+                                            <h2>First Name:    </h2>
+                                            <p>`+accountInfo[4]+`</p>
+                                            <button>Change</button>
+                                        </div>
+                                        <div class="lastName">
+                                            <h2>Last Name:</h2>
+                                            <p>`+accountInfo[5]+`</p>
+                                            <button>Change</button>
+                                        </div>
+                                    </div>
                                 </div>`;
+    document.getElementsByClassName("account-container")[0].innerHTML = accountModifyElement;
 
-    let createAccountButtonElement = '<button id="Create-Account">Create New Account</button>';
-
-    document.getElementsByClassName("account-title")[0].innerHTML = "<h1>Create Account</h1>";
-    document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement;
-    document.getElementsByClassName("button-row")[0].innerHTML  = createAccountButtonElement;
-
-}
-
-function accountCreated(msg){
-
-    console.log(msg);
-
-    let createAccountElement = `<div class="email">
-                                    <label>Email:</label><input type="text" id="email">
-                                </div>
-                                <div class="password">
-                                    <label>Pass:</label><input type="password" id="password">
-                                </div>`;
-
-    let createAccountButtonElement = '<button id="Create-New-Account">Create New Account</button><button id="Sign-In">Sign In</button>';
-
-    if(msg == "You already have an account with that email."){
-        alert(msg); 
-    }
-
-    document.getElementsByClassName("account-title")[0].innerHTML = "<h1>Sign in to Your Account</h1>";
-    document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement;
-    document.getElementsByClassName("button-row")[0].innerHTML  = createAccountButtonElement;
-    
 }
