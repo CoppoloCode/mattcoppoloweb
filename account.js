@@ -2,7 +2,7 @@
 
 userId = document.cookie.split('user=')[1];
 
-if(userId == undefined){
+if((userId == undefined) || (userId == '0') || (userId == '')){
     location.assign("sign-in.html");
 }
 
@@ -66,7 +66,7 @@ function setupAccountInfo(){
                             <div class="buttons">
                                 <button id="orders" onclick="orders()">Your Orders</button>
                                 <button id="login-security" onclick="accountModify()">Login & Security</button> 
-                                <button id="payments" onclick="payments()">Your Payments</button>   
+                                <button id="payments" onclick="payments()">Your Payment Methods</button>   
                             </div>`;
 
 
@@ -145,7 +145,7 @@ function updateEmail(email){
 
 }
 
-$(document).on("change","#passInput1, #passInput2",function(){
+$(document).on("click","#passwordBtn",function(){
 
     let pass1 = $("#passInput1").val();
     let pass2 = $("#passInput2").val();
@@ -157,13 +157,13 @@ $(document).on("change","#passInput1, #passInput2",function(){
         document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value="`+pass1+`"></input>
                                                                 <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button onClick="updatePassword(document.getElementById('passInput1').value)">Save</button>`
+                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`
         document.getElementsByClassName("password")[0].outerHTML += `<div class="noMatch"><small>Passwords do not match</small></div>`;
     }else{
         document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value="`+pass1+`"></input>
                                                                 <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button onClick="updatePassword(document.getElementById('passInput1').value)">Save</button>`;
+                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
         document.getElementsByClassName("noMatch")[0].innerHTML = '';
     }
     if((pass1 == '') || (pass2 == '')){
@@ -174,14 +174,14 @@ $(document).on("change","#passInput1, #passInput2",function(){
         document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value="`+pass1+`"></input>
                                                                 <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button onClick="updatePassword(document.getElementById('passInput1').value)">Save</button>`
+                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`
         document.getElementsByClassName("password")[0].outerHTML += `<div class="blank"><small>Password cannot be blank</small></div>`;
 
     }else{
         document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value="`+pass1+`"></input>
                                                                 <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button onClick="updatePassword(document.getElementById('passInput1').value)">Save</button>`;
+                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
         if(document.getElementsByClassName("blank")[0] != null){
             document.getElementsByClassName("blank")[0].innerHTML = '';
         }                                                        
@@ -193,30 +193,32 @@ function changePassword(){
     document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value=""></input>
                                                                 <input id="passInput2" type="password" value=""></input>
-                                                                <button onclick="updatePassword(document.getElementById('passInput1').value)">Save</button>`;
+                                                                <button id='passwordBtn' onclick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
 }
 
-function updatePassword(password){                            
+function updatePassword(password1, password2){                            
 
-    account.accountInfo[2] = password;
-    userId = account.accountInfo[0];
+    if((password1 == password2) && (password1 != '') && (password2 != '')){
 
-    $.ajax({
-        url: "account.php",
-        type: "POST",
-        data: {changePassword: password, user_Id: userId},
-        success: function(){
-            document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                  <p id='password'>`+account.accountInfo[2]+`</p>
-                                                                  <button onclick="changePassword()">Change</button>`;
-        },
-        error: function(err){
-            console.log(err.responseText);
-        }
+        account.accountInfo[2] = password1;
+        userId = account.accountInfo[0];
 
-    })
+        $.ajax({
+            url: "account.php",
+            type: "POST",
+            data: {changePassword: password1, user_Id: userId},
+            success: function(){
+                document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
+                                                                    <p id='password'>`+account.accountInfo[2]+`</p>
+                                                                    <button onclick="changePassword()">Change</button>`;
+            },
+            error: function(err){
+                console.log(err.responseText);
+            }
+
+        })
     
-
+    }
 }
 
 function changeAddress(){
