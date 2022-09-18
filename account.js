@@ -110,14 +110,29 @@ function accountModify(){
 function changeEmail(){
 
     document.getElementsByClassName("email")[0].innerHTML = `<h2>Email:</h2>
-                                                             <input type="text" value="`+account.accountInfo[1]+`"></input>
-                                                             <button onClick="updateEmail()">Save</button>`
+                                                             <input id="changeEmail"type="text" value="`+account.accountInfo[1]+`"></input>
+                                                             <button onClick="updateEmail(document.getElementById('changeEmail').value)">Save</button>`;
 
 }
 
-function updateEmail(){
+function updateEmail(email){
+
+    account.accountInfo[1] = email;
+
+    $.ajax({
+        url: "account.php",
+        type: "POST",
+        data: {changeEmail: email},
+        success: function(data){
+            
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
 
 
+
+    })
 
 }
 
@@ -127,8 +142,20 @@ $(document).on("change","#passInput1, #passInput2",function(){
     let pass2 = $("#passInput2").val();
 
     if(pass1 != pass2){
-        document.getElementsByClassName("password")[0].outerHTML = '';
-        document.getElementsByClassName("password")[0].outerHTML += `<div><small>Passwords do not match</small></div>`;
+        if(document.getElementsByClassName("noMatch")[0] != null){
+            document.getElementsByClassName("noMatch")[0].innerHTML = '';
+        }
+        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
+                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
+                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
+                                                                <button onClick="updatePassword()">Save</button>`
+        document.getElementsByClassName("password")[0].outerHTML += `<div class="noMatch"><small>Passwords do not match</small></div>`;
+    }else{
+        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
+                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
+                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
+                                                                <button onClick="updatePassword()">Save</button>`;
+        document.getElementsByClassName("noMatch")[0].innerHTML = '';
     }
 
 })
@@ -138,10 +165,10 @@ function changePassword(){
     document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
                                                                 <input id="passInput1" type="password" value=""></input>
                                                                 <input id="passInput2" type="password" value=""></input>
-                                                                <button onClick="updatePassword()">Save</button>`
+                                                                <button onClick="updatePassword()">Save</button>`;
 }
 
-function updtaePassword(){
+function updatePassword(){
 
     
 
@@ -149,6 +176,9 @@ function updtaePassword(){
 
 function changeFirstName(){
 
+    document.getElementsByClassName("firstName")[0].innerHTML = `<h2>First Name:</h2>
+                                                                <input type="text" value="`+account.accountInfo[4]+`"></input>
+                                                                <button onclick="changeFirstName()">Save</button>`;
 }
 
 function updateFirstName(){
@@ -157,6 +187,9 @@ function updateFirstName(){
 
 function changeLastName(){
 
+    document.getElementsByClassName("lastName")[0].innerHTML = `<h2>Last Name:</h2>
+                                                                <input type="text" value="`+account.accountInfo[5]+`"></input>
+                                                                <button onclick="changeFirstName()">Save</button>`;
 
 }
 
