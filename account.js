@@ -2,28 +2,39 @@
 
 userId = document.cookie.split('user=')[1];
 
+if(userId == undefined){
+    location.assign("sign-in.html");
+}
+
 class accountInfo{
     constructor(accountInfo){
         this.accountInfo = accountInfo;
     }
 }
 
+
 let account = new accountInfo([]);
 
-$.ajax({
+getAccountData();
+setupAccountInfo();
 
-    url: "account.php",
-    type: "POST",
-    data: {userId: userId},
-    dataType: "json",
-    success: function(data){
-        account.accountInfo = (JSON.stringify((data)));
-    },
-    error: function(err){
-        console.log(err.responseText);
-    }
+function getAccountData(){
+    $.ajax({
 
-})
+        url: "account.php",
+        type: "POST",
+        data: {userId: userId},
+        dataType: "json",
+        success: function(data){
+            account.accountInfo = (JSON.stringify((data)));
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
+
+    })
+}
+
 
 
 
