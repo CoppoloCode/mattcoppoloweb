@@ -226,14 +226,14 @@ nav ul a{
     border-style: none;
     border-color:transparent;
 }
-.email, .password, .firstName, .lastName{
+.email, .password, .address, .firstName, .lastName{
     display:flex;
     align-items: center;
     justify-content: space-between;
     padding-left: 50px;
     padding-right: 50px;
 }
-.accountModify button{
+.accountModify button, .account-title button{
     width: 80px;
     height: 30px;
     cursor: pointer;
