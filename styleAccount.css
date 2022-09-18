@@ -245,7 +245,21 @@ nav ul a{
     border-style: none;
     border-color:transparent;
 }
-
+input{
+    width: 250px;
+    height: 20px;
+}
+#passInput1 , #passInput2{
+    width: 100px;
+    height: 20px;
+}
+.accountInfo{
+    text-align: center;
+}
+small{
+    color: red;
+    text-align: center;
+}
 #password{
     -webkit-text-security: disc;
 }

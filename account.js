@@ -16,17 +16,18 @@ class accountInfo{
 let account = new accountInfo([]);
 
 getAccountData();
-setupAccountInfo();
 
 function getAccountData(){
+    
     $.ajax({
-
+        
         url: "account.php",
         type: "POST",
         data: {userId: userId},
         dataType: "json",
         success: function(data){
             account.accountInfo = (JSON.stringify((data)));
+            setupAccountInfo();
         },
         error: function(err){
             console.log(err.responseText);
@@ -81,27 +82,85 @@ function accountModify(){
                                 <div class="accountModify">
                                     <div class="accountInfo">
                                         <div class="email"> 
-                                            <h2>Email:   </h2>
+                                            <h2>Email:</h2>
                                             <p>`+accountInfo[1]+`</p>
-                                            <button>Change</button>
+                                            <button onclick="changeEmail()">Change</button>
                                         </div>
                                         <div class="password"> 
                                             <h2>password:</h2>
                                             <p id = 'password'>`+accountInfo[2]+`</p>
-                                            <button>Change</button>
+                                            <button onclick="changePassword()">Change</button>
                                         </div>
                                         <div class="firstName">
-                                            <h2>First Name:    </h2>
+                                            <h2>First Name:</h2>
                                             <p>`+accountInfo[4]+`</p>
-                                            <button>Change</button>
+                                            <button onclick="changeFirstName()">Change</button>
                                         </div>
                                         <div class="lastName">
                                             <h2>Last Name:</h2>
                                             <p>`+accountInfo[5]+`</p>
-                                            <button>Change</button>
+                                            <button onclick="changeLastName()">Change</button>
                                         </div>
                                     </div>
                                 </div>`;
     document.getElementsByClassName("account-container")[0].innerHTML = accountModifyElement;
+
+}
+
+function changeEmail(){
+
+    document.getElementsByClassName("email")[0].innerHTML = `<h2>Email:</h2>
+                                                             <input type="text" value="`+account.accountInfo[1]+`"></input>
+                                                             <button onClick="updateEmail()">Save</button>`
+
+}
+
+function updateEmail(){
+
+
+
+}
+
+$(document).on("change","#passInput1, #passInput2",function(){
+
+    let pass1 = $("#passInput1").val();
+    let pass2 = $("#passInput2").val();
+
+    if(pass1 != pass2){
+        document.getElementsByClassName("password")[0].outerHTML = '';
+        document.getElementsByClassName("password")[0].outerHTML += `<div><small>Passwords do not match</small></div>`;
+    }
+
+})
+
+function changePassword(){
+
+    document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
+                                                                <input id="passInput1" type="password" value=""></input>
+                                                                <input id="passInput2" type="password" value=""></input>
+                                                                <button onClick="updatePassword()">Save</button>`
+}
+
+function updtaePassword(){
+
+    
+
+}
+
+function changeFirstName(){
+
+}
+
+function updateFirstName(){
+
+}
+
+function changeLastName(){
+
+
+}
+
+function updateLastName(){
+
 
 }
