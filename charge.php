@@ -2,6 +2,7 @@
 require_once 'configPayPal.php';
 
 if(isset($_POST['submit'])){
+
     try{
         $response = $gateway->purchase(array(
 
@@ -12,10 +13,9 @@ if(isset($_POST['submit'])){
             'cancelUrl' => PAYPAL_CANCEL_URL,
             'items' => array(
                 array(
-                    'name' => 'Product Name',
+                    'name' => $_POST['name'],
                     'price' => $_POST['amount'],
-                    'description' => 'product description',
-                    'quantity' => 1,
+                    'quantity' => $_POST['quantity'],
                 )
             )
         ))-> send();

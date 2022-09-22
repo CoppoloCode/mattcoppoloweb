@@ -10,13 +10,13 @@ body{
     z-index: -3;
     font-family: 'Poppins', sans-serif;
     margin: auto;
-    background: radial-gradient(rgb(220, 230, 236), rgb(69, 81, 247));
+    background: radial-gradient(rgb(220, 230, 236), rgb(1, 1, 5));
 }
 
 
 /*--------------------Navbar-------------------------*/
 .header{
-    background: radial-gradient(rgb(227, 234, 238), rgb(69, 81, 247));
+    background: radial-gradient(rgb(227, 234, 238), rgb(0, 0, 0));
     position: sticky;
     top: 0;
     align-self: flex-start;
@@ -200,23 +200,42 @@ nav ul a{
     -webkit-box-shadow: 0px 0px 16px 6px rgba(0,0,0,0.82); 
     box-shadow: 0px 0px 16px 6px rgba(0,0,0,0.82);
     border-width: 8px;
-    border-style: none;
+    border-style: solid;
     border-color: transparent;
     border-radius: 40px;
+    border-color: brown;
+}
+.checkout-container small{
+    color: blue;
 }
 .title{
     text-align: center;
+    border-bottom: solid;
+    border-color: brown;
 }
 .products{
     display: flex;
     flex-direction: column;
     gap: 20px;
+    
 }
 .product{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    border-bottom: solid;
+    border-color: brown;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
+}
+.product .quantityPrice{
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
+
 .product input{
     width: 35px;
     height: 25px
@@ -226,8 +245,31 @@ nav ul a{
     height: 250px;
     object-fit: scale-down;
 }
-
-
+.products .RemoveFromCheckout{
+    color: red;
+    cursor: pointer;
+    font-size: 30px;
+}
+.total{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: solid;
+    border-color: brown;
+}
+.pay-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+.pay-btn input{
+    border-radius: 8px;
+    border-style: none;
+    background-color: brown;
+    padding: 10px;
+    cursor: pointer;
+}
 
 /*--------- media query for menu < 800 square size----------*/
 
