@@ -9,17 +9,21 @@ if($conn->connect_error){
 if(isset($_POST['addToCart'])){
 
     $p_id = $_POST["productID"];
+    
+    $user_id = $_COOKIE['user'];
 
-    $sql = "SELECT * FROM cart WHERE product_ID = '$p_id'";
+    $sql = "SELECT * FROM cart WHERE product_ID = '$p_id' AND user_ID = '$user_id'";
 
     $result = $conn->query($sql);
     
     $count = mysqli_num_rows($result);
+
+    
     
     if($count > 0){
         echo "Product is already in cart";
     }else{
-        $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$p_id', '1' ,'-1')";
+        $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$p_id', '1' , '$user_id')";
         
         $result = $conn->query($sql);
 
@@ -36,7 +40,9 @@ if(isset($_POST['removeFromCart'])){
 
         $productID = $_POST['productID'];
 
-        $sql = "DELETE FROM cart WHERE product_ID = $productID";
+        $user_id = $_COOKIE['user'];
+
+        $sql = "DELETE FROM cart WHERE product_ID = $productID AND user_id = '$user_id'";
 
         $result = $conn->query($sql);
 
@@ -50,9 +56,11 @@ if(isset($_POST['changeQty'])){
     if(isset($_POST['productID'])){
 
         $productID = $_POST['productID'];
+        $user_id = $_COOKIE['user'];
+
         $qty = $_POST['changeQty'];
 
-        $sql = "UPDATE cart SET qty = $qty WHERE product_ID = $productID";
+        $sql = "UPDATE cart SET qty = $qty WHERE product_ID = $productID AND user_id = '$user_id'";
 
         $result = $conn->query($sql);
 
@@ -62,7 +70,9 @@ if(isset($_POST['changeQty'])){
 
 if(isset($_POST['getCartItems'])){
 
-    $sql = "SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID";
+    $user_id = $_COOKIE['user'];
+
+    $sql = "SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID and cart.user_ID = '$user_id'";
 
     $result = $conn->query($sql);
     

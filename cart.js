@@ -1,40 +1,53 @@
 $(document).ready(function($){
 
-  $(document).on("click", ".AddtoCart", function(){
-    let id = $(this).attr("id");
-    $.ajax({
-      url: 'cart.php',
-      type: 'POST',
-      data: {addToCart: 1  , productID: id},
-      success: function(data){
-        getCartProducts();
-        if(data == "Product is already in cart"){
-          alert("Product is already in cart");
-        }
-      },
-      error: function(err){
-        console.log(err.responseText);
-      }
+  if(document.cookie == ''){
+    document.cookie = "user=0; expires= time() + 86400; path=/;";
+  }
 
-    });
+  $(document).on("click", ".AddtoCart", function(){
+
+    if(document.cookie.split('user=')[1] == '0'){
+      location.assign("sign-in.html");
+    }else{
+      
+      let id = $(this).attr("id");
+      $.ajax({
+        url: 'cart.php',
+        type: 'POST',
+        data: {addToCart: 1  , productID: id},
+        success: function(data){
+          getCartProducts();
+          if(data == "Product is already in cart"){
+            alert("Product is already in cart");
+          }
+        },
+        error: function(err){
+          console.log(err.responseText);
+        }
+
+      });
+    }
+
   });
+
 
   $(document).on("click", ".RemoveFromCart", function(){
 
-        let id = $(this).attr("id");
+      let id = $(this).attr("id");
 
-        $.ajax({
-          url: 'cart.php',
-          type: 'POST',
-          data: {removeFromCart: 1  , productID: id},
-          success: function(){
-            getCartProducts(); 
-          },
-          error: function(err){
-            console.log(err.responseText);
-          }
+      $.ajax({
+        url: 'cart.php',
+        type: 'POST',
+        data: {removeFromCart: 1  , productID: id},
+        success: function(){
+          getCartProducts(); 
+        },
+        error: function(err){
+          console.log(err.responseText);
+        }
 
-        });
+      });
+
     });
 
     $(document).on("change", ".item-quantity", function(){
