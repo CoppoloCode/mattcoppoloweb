@@ -30,13 +30,13 @@
             ('".$user_id."', '". $payment_id."', '". $payer_id . "', '". $payer_email. "', '". $amount . "', '". $currency. "', '".$payment_status."')");
 
            
-            header("Location: http://localhost/mattcoppoloweb/account.html", true, 301);
+            header("Location: http://localhost/mattcoppoloweb/store.html", true, 301);
 
         }else{
             echo $response->getMessage();
         }
      }else{
-        header("Location: http://localhost/mattcoppoloweb/account.html", true, 301);
+        header("Location: http://localhost/mattcoppoloweb/store.html", true, 301);
      }
 
      $db->close();

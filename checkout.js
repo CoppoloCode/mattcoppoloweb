@@ -65,6 +65,28 @@ $(document).on("click", ".RemoveFromCheckout", function(){
 
   });
 
+  $(document).on("change", ".quantity", function(){
+
+    let id = $(this).attr("id");
+    let value = $(this).val();
+    $.ajax({
+      url: 'cart.php',
+      type: 'POST',
+      data: {changeQty: value , productID: id},
+      success: function(){
+        for(i = 0; i < selectedProducts.products.length; i++){
+          if(selectedProducts.products[i][0] == id){
+            selectedProducts.products[i][4] = value;
+          }
+        }
+        setupTotal();
+      },
+      error: function(err){
+        console.log(err.responseText);
+      }
+
+    });
+});
 
 function setupCheckout(){
 

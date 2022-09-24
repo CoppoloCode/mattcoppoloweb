@@ -35,14 +35,14 @@ if(isset($_POST['submit'])){
     }
 
     $total = 0.00;
-   
+    $i = 0;
     foreach($products as $product){
        
-        $total += $product['Cost']; 
-        echo $total;
+        $total += (float)$product['Cost'] * (int)$quantity[$i]; 
+        $i++;
         
     }
-   
+    echo json_encode( $quantity).$total;
     $items = array();
     $i = 0;
     foreach($products as $row){
