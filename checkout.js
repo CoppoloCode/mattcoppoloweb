@@ -144,12 +144,3 @@ function setupTotal(){
 function setupBuyButton(){
     document.getElementsByClassName("pay-btn")[0].innerHTML = `<input type="submit" name="submit" value="submit"></input>`;
 }
-
-function buyProducts(){
-    
-    
-    
-                                                  
-                                                               
-
-}

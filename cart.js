@@ -1,7 +1,9 @@
 $(document).ready(function($){
 
   if(document.cookie == ''){
-    document.cookie = "user=0; expires= time() + 86400; path=/;";
+    document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
+  }else{
+    document.cookie = document.cookie + "; expires= date.setDate(date.getDate() + 1); path=/;"
   }
 
   $(document).on("click", ".AddtoCart", function(){

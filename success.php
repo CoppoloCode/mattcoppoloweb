@@ -26,11 +26,12 @@
             $payment_status = $arr_body['state'];
             $user_id = USER_ID;
 
+
             $db->query("INSERT INTO payments(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
             ('".$user_id."', '". $payment_id."', '". $payer_id . "', '". $payer_email. "', '". $amount . "', '". $currency. "', '".$payment_status."')");
 
-           
-            header("Location: http://localhost/mattcoppoloweb/store.html", true, 301);
+            
+            header("Location: http://localhost/mattcoppoloweb/successPage.html", true, 301);
 
         }else{
             echo $response->getMessage();

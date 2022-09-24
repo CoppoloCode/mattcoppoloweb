@@ -46,21 +46,25 @@ if(isset($_POST['submit'])){
     $items = array();
     $i = 0;
     foreach($products as $row){
-        $items []= array ('name' => $row['Name'], 
-                          'price' => (float)$row['Cost'], 
+        $items []= array (
+                          'name' => $row['Name'], 
+                          'price' => (float)$row['Cost'],
                           'description' => '',
-                          'quantity' => (int)$quantity[$i]);
+                          'quantity' => (int)$quantity[$i],
+                          'product_id' => $row['ID']);
         $i++;
     }
-   
-    
-    try{
-        $response = $gateway->purchase(array(
+    $order_details = array(
             'amount' => $total,
             'currency' => PAYPAL_CURRENCY,
             'returnUrl' => PAYPAL_RETURN_URL,
             'cancelUrl' => PAYPAL_CANCEL_URL,
-        ))->setItems($items)->send();
+    );
+   
+    
+    try{
+        $purchase = $gateway->purchase($order_details)->setItems($items);
+        $response = $purchase->send();
         
        
         if($response -> isRedirect()){

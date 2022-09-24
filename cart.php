@@ -104,9 +104,5 @@ if(isset($_POST['getCartItems'])){
     
 }
 
-
-
-
-
 $conn->close();
 ?>

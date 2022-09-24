@@ -1,6 +1,10 @@
 
-
-userId = document.cookie.split('user=')[1];
+if(document.cookie != ''){
+    userId = document.cookie.split('user=')[1];
+}else{
+    document.cookie = "user=0; expires= time() + 86400; path=/;";
+    userId = document.cookie.split('user=')[1];
+}
 
 if((userId == undefined) || (userId == '0') || (userId == '')){
     location.assign("sign-in.html");
