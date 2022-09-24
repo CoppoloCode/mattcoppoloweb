@@ -11,17 +11,12 @@
     define('PAYPAL_CANCEL_URL', 'http://localhost/mattcoppoloweb/cancel.php');
     define('PAYPAL_CURRENCY', 'USD');
     define('USER_ID' , $_COOKIE['user']);
-
-    $db = new mysqli('localhost', 'root','', 'mattcoppolodatabase');
-    if($db->connect_errno){
-        die("connect failed: ". $db->connect_error);
-    }
+    
 
     $gateway = Omnipay::create('PayPal_Rest');
     $gateway->setClientId(CLIENT_ID);
     $gateway->setSecret(CLIENT_SECRET);
     $gateway->setTestMode(true);
-
 
 
 ?>

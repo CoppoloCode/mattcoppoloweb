@@ -81,7 +81,8 @@ function setupCheckout(){
             for(let i = 0; i < cartItems.length; i++){
                 let cost = (cartItems[i][3]*cartItems[i][4]).toFixed(2);
                 document.getElementsByClassName("products")[0].innerHTML += `<div class="product"><div class="titleImg"><p>`+cartItems[i][1]+`</p><img src="images/`+ cartItems[i][2]+ `"></div>`
-                +`<div class="quantityPrice"><p>Quantity: <input class="quantity"id="`+cartItems[i][0]+`"type="number" value="`+cartItems[i][4]+`" min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></p><p>Price:
+                +`<div class="quantityPrice"><p>Quantity: <input class="quantity"id="`+cartItems[i][0]+`"type="number" value="`
+                +cartItems[i][4]+`" min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></p><p>Price:
                 <small>$`+cost+`</small></p><a class="RemoveFromCheckout" id="`+cartItems[i][0]+`"><i class="fa fa-trash" aria-hidden="true"></i></a></div></div>`;
             }
             setupTotal();
@@ -119,12 +120,13 @@ function setupTotal(){
 }
 
 function setupBuyButton(){
+    document.getElementsByClassName("pay-btn")[0].innerHTML = `<input type="submit" name="submit" value="submit"></input>`;
+}
+
+function buyProducts(){
     
     
-    document.getElementsByClassName('payForm')[0].innerHTML = `<input hidden type="text" name="name" value="`+cart.cartItems[0][1]+`">
-                                                                <input hidden type="text" name="quantity" value="`+cart.cartItems[0][4]+`">
-                                                                <input hidden type="text" name="amount" value="`+cart.total+`">
-                                                                <input type="submit" name="submit" value="Buy Now">`;
+    
                                                   
                                                                
 

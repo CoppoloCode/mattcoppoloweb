@@ -2,6 +2,11 @@
 
     require_once 'configPayPal.php';
 
+    $db = new mysqli('localhost', 'root','', 'mattcoppolodatabase');
+    if($db->connect_errno){
+        die("connect failed: ". $db->connect_error);
+    }
+
     if(array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)){
         $transaction = $gateway->completePurchase(array(
             'payer_id' => $_GET['PayerID'],
@@ -34,4 +39,6 @@
         header("Location: http://localhost/mattcoppoloweb/account.html", true, 301);
      }
 
+     $db->close();
+     
 ?>
