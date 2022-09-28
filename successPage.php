@@ -9,14 +9,14 @@ if($db->connect_errno){
 if(isset($_POST['storeProducts'])){
     $products = $_POST['storeProducts'];
     $userID = $_COOKIE['user'];
-    echo json_encode($products);
+    $date = date('Y-m-d');
 
     foreach($products as $product){
         $productID = $product[0];
-        $sql = "INSERT INTO purchased (user_ID, product_id) VALUES ($userID ,$productID)";
+        $sql = "INSERT INTO purchased (user_ID, product_id, Date) VALUES ('$userID' , '$productID' , '$date' )";
         $result = $db->query($sql);
     }
-
+   echo ($result);
 }
 
 if(isset($_POST['removeFromCart'])){

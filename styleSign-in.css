@@ -192,9 +192,7 @@ nav ul a{
     margin-top: 200px;
     margin-bottom: 300px;
 }
-.account h1{
-    padding: 30px;
-}
+
 .account-container{
     width: auto;
     height: auto;
@@ -206,10 +204,29 @@ nav ul a{
     border-color: transparent;
     border-radius: 40px 40px 40px 40px;
 }
+.account-title{
+    display: flex;
+    flex-direction: column;
+}
 .account-title h1{
     text-align: center;
-    padding-bottom: 40px;
+    padding: 25px;
 }
+.account-title small{
+    color: red;
+    text-align: center;
+    justify-content: center; 
+    padding-bottom: 40px;
+    animation: horizontal-shaking 0.35s;
+}
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+}
+
 .input-row{
     display: flex;
     gap: 30px;

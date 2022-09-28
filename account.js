@@ -68,7 +68,7 @@ function setupAccountInfo(){
                                 <h1>Welcome back `+ accountInfo[4] +`</h1>
                             </div>
                             <div class="buttons">
-                                <button id="orders" onclick="orders()">Your Orders</button>
+                                <button id="orders" onclick="getOrders()">Your Orders</button>
                                 <button id="login-security" onclick="accountModify()">Login & Security</button> 
                                 <button id="payments" onclick="payments()">Your Payment Methods</button>   
                             </div>`;
@@ -83,7 +83,7 @@ function accountModify(){
     let accountInfo = account.accountInfo;
 
     let accountModifyElement = `<div class="account-title">
-                                    <button onclick="setupAccountInfo()">Go Back</button>
+                                    <button id='smallBtn' onclick="setupAccountInfo()">Go Back</button>
                                     <h1>Your Account Info</h1>
                                 </div>
                                 <div class="accountModify">
@@ -91,27 +91,27 @@ function accountModify(){
                                         <div class="email"> 
                                             <h2>Email:</h2>
                                             <p>`+accountInfo[1]+`</p>
-                                            <button onclick="changeEmail()">Change</button>
+                                            <button id='smallBtn' onclick="changeEmail()">Change</button>
                                         </div>
                                         <div class="password"> 
                                             <h2>password:</h2>
                                             <p id = 'password'>`+accountInfo[2]+`</p>
-                                            <button onclick="changePassword()">Change</button>
+                                            <button id='smallBtn' onclick="changePassword()">Change</button>
                                         </div>
                                         <div class="address"> 
                                             <h2>address:</h2>
                                             <p id = 'address'>`+accountInfo[3]+`</p>
-                                            <button onclick="changeAddress()">Change</button>
+                                            <button id='smallBtn' onclick="changeAddress()">Change</button>
                                         </div>
                                         <div class="firstName">
                                             <h2>First Name:</h2>
                                             <p>`+accountInfo[4]+`</p>
-                                            <button onclick="changeFirstName()">Change</button>
+                                            <button id='smallBtn' onclick="changeFirstName()">Change</button>
                                         </div>
                                         <div class="lastName">
                                             <h2>Last Name:</h2>
                                             <p>`+accountInfo[5]+`</p>
-                                            <button onclick="changeLastName()">Change</button>
+                                            <button id='smallBtn' onclick="changeLastName()">Change</button>
                                         </div>
                                     </div>
                                 </div>`;
@@ -309,6 +309,45 @@ function updateLastName(lastName){
             console.log(err.responseText);
         }
 
-    })
+    });
 
+}
+
+function getOrders(){
+
+    $.ajax({
+        url: "account.php",
+        type: "POST",
+        data: {getOrders: 1},
+        success: function(data){
+           orders(data);
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
+
+    });
+
+}
+
+function orders(data){
+    
+    let products = [];
+    products = JSON.parse(data);
+    if(products.length > 0){
+
+        document.getElementsByClassName("account-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccountInfo()">Go Back</button><div class="title"><h1> Your Previous Orders </h1></div>`;
+    
+        let i = 0;
+        products.forEach(product =>{
+            i++;
+            document.getElementsByClassName("account-container")[0].innerHTML += `<div class="product"><img src="images/`+ product.Image + `"></img>
+                                                                                <small>`+ product.Description + `</small>
+                                                                               <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
+                                                                                <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div></div>`;
+        });
+
+    }else{
+        document.getElementsByClassName("account-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccountInfo()">Go Back</button><div class="title"><h1> You Have not purchased anything yet...</h1></div>`;
+    }
 }

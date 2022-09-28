@@ -30,6 +30,8 @@ $(document).ready(function(){
                 success: function(data){
                     if (data != 0){
                         location.assign("account.html");
+                    }else{
+                        wrongEmailorPassword();
                     }
                 },
                 error: function(err){
@@ -85,7 +87,7 @@ $(document).ready(function(){
 
 function checkPasswords(pass, confirmPass){
     
-    console.log(pass, confirmPass);
+    
     if(pass != confirmPass){
         if(document.getElementById("noMatch") != null){
             document.getElementById("noMatch").outerHTML = null;
@@ -113,6 +115,11 @@ function checkBlankInputs(email,password,address,firstName,lastName){
         return true;
     }
 
+}
+
+function wrongEmailorPassword(){
+    document.getElementsByClassName("account-title")[0].innerHTML = `<h1>Sign In to Your Account</h1>`;
+    document.getElementsByClassName("account-title")[0].innerHTML += `<small> Wrong Email or Password </small>`;
 }
 
 
@@ -146,8 +153,6 @@ function createAccountPage(){
 }
 
 function accountCreated(msg){
-
-    console.log(msg);
 
     let createAccountElement = `<div class="email">
                                     <label>Email:</label><input type="text" id="email">

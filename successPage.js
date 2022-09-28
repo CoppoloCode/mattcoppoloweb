@@ -18,7 +18,7 @@ function getCartProducts(){
       data: {getCartItems: 'getCartItems'},
       success: function(data){
         if(data != null){
-            storeBoughtProducts();
+            storeBoughtProducts(data);
         }
       },
       error: function(err){
@@ -27,7 +27,7 @@ function getCartProducts(){
     });
       
   }
-
+  
   function storeBoughtProducts(data){
 
     let products = data;
@@ -35,9 +35,11 @@ function getCartProducts(){
     $.ajax({
         url: 'successPage.php',
         type: 'POST',
-        dataType: 'json',
         data: {storeProducts: products},
-        success: removeCartItems,
+        success: function(data){
+          console.log(data);
+          removeCartItems();
+        },
         error: function(err){
           console.log(err.responseText);
         },
@@ -52,6 +54,9 @@ function getCartProducts(){
       url: 'successPage.php',
       type: 'POST',
       data: {removeFromCart: 'all'},
+      success: function(){
+        window.location = "successPage.html";
+      },
       error: function(err){
         console.log(err.responseText);
       }

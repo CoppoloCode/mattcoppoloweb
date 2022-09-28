@@ -84,6 +84,33 @@
 
     }
 
+    if(isset($_POST['getOrders'])){
+
+        $user_id = $_COOKIE['user'];
+
+
+        $sql = "SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
+        purchased.product_id = products.ID and purchased.user_id = '$user_id'";
+
+        $result = $conn->query($sql);
+
+        if($result == true){
+
+            $products = [];
+
+            $i = 0;
+            while($row = $result->fetch_assoc()){
+                $products[$i] = $row;
+                $i++;
+            }
+
+            echo json_encode($products);
+
+        }else{
+            echo json_encode($result);
+        }
+    }
+
     $conn->close();
 
 ?>
