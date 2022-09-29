@@ -1,14 +1,9 @@
 
-if(document.cookie != ''){
-    userId = document.cookie.split('user=')[1];
-}else{
-    document.cookie = "user=0; expires= time() + 86400; path=/;";
-    userId = document.cookie.split('user=')[1];
-}
-
-if((userId == undefined) || (userId == '0') || (userId == '')){
-    location.assign("sign-in.html");
-}
+if(document.cookie == ''){
+    document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
+  }else{
+    document.cookie = document.cookie + "; expires= date.setDate(date.getDate() + 1); path=/;"
+  }
 
 class accountInfo{
     constructor(accountInfo){
@@ -17,30 +12,45 @@ class accountInfo{
 }
 
 
-let account = new accountInfo([]);
+const account = new accountInfo([]);
+const accountButtonsElement =  `<div class="buttons">
+                                <button id="orders" onclick="getOrders()">Your Orders</button>
+                                <button id="login-security" onclick="accountModify()">Login & Security</button> 
+                                <button id="payments" onclick="payments()">Your Payment Methods</button>   
+                                </div>`;
+const accountModifyElement =`<div class="account-title">
+                                <button id='smallBtn' onclick="setupAccount()">Go Back</button>
+                                <h1>Your Account Info</h1>
+                            </div>
+                            <div class="accountModify">
+                                <div class="accountInfo">
+                                    <div class="email"></div>
+                                    <div class="password"></div>
+                                    <div class="address"></div>
+                                    <div class="firstName"></div>
+                                    <div class="lastName"></div>
+                                </div>
+                            </div>`;
+const previousOrdersElement = `<button id='smallBtn'onclick="setupAccount()">Go Back</button><div class="title"><h1> Your Previous Orders </h1></div>`;
+const noPreviousOrdersElement = `<button id='smallBtn'onclick="setupAccount()">Go Back</button><div class="title"><h1> You Have not purchased anything yet...</h1></div>`;
+const passwordElement = `<h2>Password:</h2>
+                         <input id="passInput1" type="password" value=""></input>
+                         <input id="passInput2" type="password" value=""></input>
+                         <button id='passwordBtn' onclick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
+const passwordsMatchElement = `<div class="noMatch"><small>Passwords do not match</small></div>`;
+const passwordsBlankElement = `<div class="blank"><small>Password cannot be blank</small></div>`;
+
 
 getAccountData();
-
 function getAccountData(){
     
     $.ajax({
-        
         url: "account.php",
         type: "POST",
-        data: {getUserId: userId},
-        dataType: "json",
+        data: {getAccountData: 1},
         success: function(data){
-            account.accountInfo = (JSON.stringify((data)));
-            account.accountInfo = account.accountInfo.split(",");
-            for(i = 0; i < account.accountInfo.length; i++){
-                account.accountInfo[i] = account.accountInfo[i].split(":");
-            }
-            for(i = 0; i < account.accountInfo.length; i++){
-                account.accountInfo[i] = account.accountInfo[i][1].replaceAll('"',"");
-            }
-            account.accountInfo[5] = account.accountInfo[5].replaceAll("}","");
-            account.accountInfo = account.accountInfo;
-            setupAccountInfo();
+            account.accountInfo = (JSON.parse(data));
+            setupAccount();
         },
         error: function(err){
             console.log(err.responseText);
@@ -48,8 +58,6 @@ function getAccountData(){
 
     })
 }
-
-
 
 
 function signOut(){
@@ -57,22 +65,8 @@ function signOut(){
     location.assign("sign-in.html");
 }
 
-function setupAccountInfo(){
-
-    let accountInfo = account.accountInfo;
-
-    
- 
-
-    let accountElement = ` <div class="account-title">
-                                <h1>Welcome back `+ accountInfo[4] +`</h1>
-                            </div>
-                            <div class="buttons">
-                                <button id="orders" onclick="getOrders()">Your Orders</button>
-                                <button id="login-security" onclick="accountModify()">Login & Security</button> 
-                                <button id="payments" onclick="payments()">Your Payment Methods</button>   
-                            </div>`;
-
+function setupAccount(){
+    let accountElement = `<div class="account-title"><h1>Welcome back `+ account.accountInfo.first_name +`</h1></div>`+accountButtonsElement;
 
     document.getElementsByClassName("account-container")[0].innerHTML = accountElement;
 
@@ -80,66 +74,50 @@ function setupAccountInfo(){
 
 function accountModify(){
 
-    let accountInfo = account.accountInfo;
+    let accountEmailElement =      `<h2>Email:</h2>
+                                        <p>`+account.accountInfo.email+`</p>
+                                        <button id='smallBtn' onclick="changeEmail()">Change</button>`;
+    let accountPasswordElement =   `<h2>password:</h2>
+                                        <p id = 'password'>`+account.accountInfo.password+`</p>
+                                        <button id='smallBtn' onclick="changePassword()">Change</button>`;
+    let accountAddressElement =    `<h2>address:</h2>
+                                        <p id = 'address'>`+account.accountInfo.address+`</p>
+                                        <button id='smallBtn' onclick="changeAddress()">Change</button>`;
+    let accountFirstNameElement =  `<h2>First Name:</h2>
+                                        <p>`+account.accountInfo.first_name+`</p>
+                                        <button id='smallBtn' onclick="changeFirstName()">Change</button>`;
 
-    let accountModifyElement = `<div class="account-title">
-                                    <button id='smallBtn' onclick="setupAccountInfo()">Go Back</button>
-                                    <h1>Your Account Info</h1>
-                                </div>
-                                <div class="accountModify">
-                                    <div class="accountInfo">
-                                        <div class="email"> 
-                                            <h2>Email:</h2>
-                                            <p>`+accountInfo[1]+`</p>
-                                            <button id='smallBtn' onclick="changeEmail()">Change</button>
-                                        </div>
-                                        <div class="password"> 
-                                            <h2>password:</h2>
-                                            <p id = 'password'>`+accountInfo[2]+`</p>
-                                            <button id='smallBtn' onclick="changePassword()">Change</button>
-                                        </div>
-                                        <div class="address"> 
-                                            <h2>address:</h2>
-                                            <p id = 'address'>`+accountInfo[3]+`</p>
-                                            <button id='smallBtn' onclick="changeAddress()">Change</button>
-                                        </div>
-                                        <div class="firstName">
-                                            <h2>First Name:</h2>
-                                            <p>`+accountInfo[4]+`</p>
-                                            <button id='smallBtn' onclick="changeFirstName()">Change</button>
-                                        </div>
-                                        <div class="lastName">
-                                            <h2>Last Name:</h2>
-                                            <p>`+accountInfo[5]+`</p>
-                                            <button id='smallBtn' onclick="changeLastName()">Change</button>
-                                        </div>
-                                    </div>
-                                </div>`;
+    let accountLastNameElement =  `<h2>Last Name:</h2>
+                                        <p>`+account.accountInfo.last_name+`</p>
+                                        <button id='smallBtn' onclick="changeFirstName()">Change</button>`;                                    
+
     document.getElementsByClassName("account-container")[0].innerHTML = accountModifyElement;
+    document.getElementsByClassName("email")[0].innerHTML = accountEmailElement;
+    document.getElementsByClassName("password")[0].innerHTML = accountPasswordElement;
+    document.getElementsByClassName("address")[0].innerHTML = accountAddressElement;
+    document.getElementsByClassName("firstName")[0].innerHTML = accountFirstNameElement;
+    document.getElementsByClassName("lastName")[0].innerHTML = accountLastNameElement;
 
 }
 
 function changeEmail(){
 
     document.getElementsByClassName("email")[0].innerHTML = `<h2>Email:</h2>
-                                                             <input id="changeEmail"type="text" value="`+account.accountInfo[1]+`"></input>
-                                                             <button onClick="updateEmail(document.getElementById('changeEmail').value)">Save</button>`;
+                                                             <input id="changeEmail"type="text" value="`+account.accountInfo.email+`"></input>
+                                                             <button id='smallBtn' onClick="updateEmail(document.getElementById('changeEmail').value)">Save</button>`;
 
 }
 
 function updateEmail(email){
 
-    account.accountInfo[1] = email;
-    userId = account.accountInfo[0];
+    account.accountInfo.email = email;
 
     $.ajax({
         url: "account.php",
         type: "POST",
-        data: {changeEmail: email, user_Id: userId},
+        data: {changeEmail: email},
         success: function(){
-            document.getElementsByClassName("email")[0].innerHTML = `<h2>Email:</h2>
-                                                                  <p>`+account.accountInfo[1]+`</p>
-                                                                  <button onclick="changeEmail()">Change</button>`;
+            placeEmail(email);
         },
         error: function(err){
             console.log(err.responseText);
@@ -149,72 +127,33 @@ function updateEmail(email){
 
 }
 
-$(document).on("click","#passwordBtn",function(){
-
-    let pass1 = $("#passInput1").val();
-    let pass2 = $("#passInput2").val();
-
-    if(pass1 != pass2){
-        if(document.getElementsByClassName("noMatch")[0] != null){
-            document.getElementsByClassName("noMatch")[0].innerHTML = '';
-        }
-        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
-                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`
-        document.getElementsByClassName("password")[0].outerHTML += `<div class="noMatch"><small>Passwords do not match</small></div>`;
-    }else{
-        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
-                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
-        document.getElementsByClassName("noMatch")[0].innerHTML = '';
-    }
-    if((pass1 == '') || (pass2 == '')){
-
-        if(document.getElementsByClassName("blank")[0] != null){
-            document.getElementsByClassName("blank")[0].innerHTML = '';
-        }
-        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
-                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`
-        document.getElementsByClassName("password")[0].outerHTML += `<div class="blank"><small>Password cannot be blank</small></div>`;
-
-    }else{
-        document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <input id="passInput1" type="password" value="`+pass1+`"></input>
-                                                                <input id="passInput2" type="password" value="`+pass2+`"></input>
-                                                                <button id='passwordBtn' onClick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
-        if(document.getElementsByClassName("blank")[0] != null){
-            document.getElementsByClassName("blank")[0].innerHTML = '';
-        }                                                        
-    }
-})
+function placeEmail(email){
+    document.getElementsByClassName("email")[0].innerHTML = `<h2>Email:</h2>
+                                                                  <p>`+email+`</p>
+                                                                  <button id='smallBtn' onclick="changeEmail()">Change</button>`;
+}
 
 function changePassword(){
 
-    document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <input id="passInput1" type="password" value=""></input>
-                                                                <input id="passInput2" type="password" value=""></input>
-                                                                <button id='passwordBtn' onclick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
+    document.getElementsByClassName("password")[0].innerHTML = passwordElement;
+    
 }
 
-function updatePassword(password1, password2){                            
+function updatePassword(password1, password2){
+    
+    let passwordStatus = checkPasswords(password1, password2);
 
-    if((password1 == password2) && (password1 != '') && (password2 != '')){
+    if(passwordStatus){
 
-        account.accountInfo[2] = password1;
-        userId = account.accountInfo[0];
+        account.accountInfo.password = password2;
+        
 
         $.ajax({
             url: "account.php",
             type: "POST",
-            data: {changePassword: password1, user_Id: userId},
+            data: {changePassword: password2},
             success: function(){
-                document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                    <p id='password'>`+account.accountInfo[2]+`</p>
-                                                                    <button onclick="changePassword()">Change</button>`;
+                placePassword(password2);
             },
             error: function(err){
                 console.log(err.responseText);
@@ -225,26 +164,60 @@ function updatePassword(password1, password2){
     }
 }
 
+function placePassword(password){
+
+    document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
+                                                                <p id='password'>`+password+`</p>
+                                                                <button id='smallBtn' onclick="changePassword()">Change</button>`;
+}
+
+
+function checkPasswords(pass1, pass2){
+
+    if(pass1 != pass2){
+        if(document.getElementsByClassName("noMatch")[0] == null){
+            document.getElementsByClassName("password")[0].outerHTML = passwordsMatchElement;
+            
+        }
+        return false;
+    }else{
+        if(document.getElementsByClassName("noMatch")[0] != null){
+            document.getElementsByClassName("noMatch")[0].parentNode.removeChild(document.getElementsByClassName("noMatch")[0]);
+        }
+    }
+    if((pass1 == '') || (pass2 == '')){
+        if(document.getElementsByClassName("blank")[0] == null){
+            document.getElementsByClassName("password")[0].outerHTML = passwordsBlankElement;
+            
+        }
+        return false;
+    }else{
+        if(document.getElementsByClassName("blank")[0] != null){
+            document.getElementsByClassName("blank")[0].parentNode.removeChild(document.getElementsByClassName("blank")[0]);
+        }                                                        
+    }
+
+    return true;
+}
+
 function changeAddress(){
 
     document.getElementsByClassName("address")[0].innerHTML = `<h2>Address:</h2>
-                                                                <input id="addressInput" type="text" value="`+account.accountInfo[3]+`"></input>
-                                                                <button onclick="updateAddress(document.getElementById('addressInput').value)">Save</button>`;
+                                                                <input id="addressInput" type="text" value="`+account.accountInfo.address+`"></input>
+                                                                <button id='smallBtn' onclick="updateAddress(document.getElementById('addressInput').value)">Save</button>`;
 }
 
 function updateAddress(address){
 
-    account.accountInfo[3] = address;
-    userId = account.accountInfo[0];
+    account.accountInfo.address = address;
+    
 
     $.ajax({
         url: "account.php",
         type: "POST",
-        data: {changeAddress: address, user_Id: userId},
+        data: {changeAddress: address},
         success: function(){
-            document.getElementsByClassName("address")[0].innerHTML = `<h2>Address:</h2>
-                                                                    <p>`+account.accountInfo[3]+`</p>
-                                                                    <button onclick="changeAddress()">Change</button>`;
+            placeAddress(address);
         },
         error: function(err){
             console.log(err.responseText);
@@ -253,57 +226,61 @@ function updateAddress(address){
     })
 
 }
-
+function placeAddress(address){
+    document.getElementsByClassName("address")[0].innerHTML = `<h2>Address:</h2>
+                                                               <p>`+address+`</p>
+                                                               <button id='smallBtn' onclick="changeAddress()">Change</button>`;
+}
 
 function changeFirstName(){
 
     document.getElementsByClassName("firstName")[0].innerHTML = `<h2>First Name:</h2>
-                                                                <input id='firstNameInput' type="text" value="`+account.accountInfo[4]+`"></input>
-                                                                <button onclick="updateFirstName(document.getElementById('firstNameInput').value)">Save</button>`;
+                                                                 <input id='firstNameInput' type="text" value="`+account.accountInfo.first_name+`"></input>
+                                                                 <button id='smallBtn' onclick="updateFirstName(document.getElementById('firstNameInput').value)">Save</button>`;
 }
 
 function updateFirstName(firstName){
 
-    account.accountInfo[4] = firstName;
-    userId = account.accountInfo[0];
+    account.accountInfo.first_name = firstName;
+    
 
     $.ajax({
         url: "account.php",
         type: "POST",
-        data: {changeFirstName: firstName, user_Id: userId},
+        data: {changeFirstName: firstName},
         success: function(){
-            document.getElementsByClassName("firstName")[0].innerHTML = `<h2>First Name:</h2>
-                                                                    <p>`+account.accountInfo[4]+`</p>
-                                                                    <button onclick="changeFirstName()">Change</button>`;
+            placeFirstName(firstName);
         },
         error: function(err){
             console.log(err.responseText);
         }
 
     })
+}
+function placeFirstName(firstName){
+    document.getElementsByClassName("firstName")[0].innerHTML = `<h2>First Name:</h2>
+                                                                 <p>`+firstName+`</p>
+                                                                 <button id='smallBtn' onclick="changeFirstName()">Change</button>`;
 }
 
 function changeLastName(){
 
     document.getElementsByClassName("lastName")[0].innerHTML = `<h2>Last Name:</h2>
-                                                                <input id ='lastNameInput' type="text" value="`+account.accountInfo[5]+`"></input>
-                                                                <button onclick="updateLastName(document.getElementById('lastNameInput').value)">Save</button>`;
+                                                                <input id ='lastNameInput' type="text" value="`+account.accountInfo.last_name+`"></input>
+                                                                <button id='smallBtn' onclick="updateLastName(document.getElementById('lastNameInput').value)">Save</button>`;
 
 }
 
 function updateLastName(lastName){
 
-    account.accountInfo[5] = lastName;
-    userId = account.accountInfo[0];
+    account.accountInfo.last_name = lastName;
 
     $.ajax({
         url: "account.php",
         type: "POST",
-        data: {changeLastName: lastName, user_Id: userId},
+        data: {changeLastName: lastName},
         success: function(){
-            document.getElementsByClassName("lastName")[0].innerHTML = `<h2>Last Name:</h2>
-                                                                    <p>`+account.accountInfo[5]+`</p>
-                                                                    <button onclick="changeLastName()">Change</button>`;
+            placeLastName(lastName);
         },
         error: function(err){
             console.log(err.responseText);
@@ -311,6 +288,12 @@ function updateLastName(lastName){
 
     });
 
+}
+
+function placeLastName(lastName){
+    document.getElementsByClassName("lastName")[0].innerHTML = `<h2>Last Name:</h2>
+                                                                <p>`+lastName+`</p>
+                                                                <button id='smallBtn' onclick="changeLastName()">Change</button>`;
 }
 
 function getOrders(){
@@ -329,25 +312,22 @@ function getOrders(){
     });
 
 }
-
 function orders(data){
     
     let products = [];
     products = JSON.parse(data);
     if(products.length > 0){
 
-        document.getElementsByClassName("account-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccountInfo()">Go Back</button><div class="title"><h1> Your Previous Orders </h1></div>`;
-    
-        let i = 0;
+        document.getElementsByClassName("account-container")[0].innerHTML = previousOrdersElement;
+
         products.forEach(product =>{
-            i++;
             document.getElementsByClassName("account-container")[0].innerHTML += `<div class="product"><img src="images/`+ product.Image + `"></img>
-                                                                                <small>`+ product.Description + `</small>
-                                                                               <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
-                                                                                <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div></div>`;
+                                                                                  <small>`+ product.Description + `</small>
+                                                                                  <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
+                                                                                  <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div></div>`;
         });
 
     }else{
-        document.getElementsByClassName("account-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccountInfo()">Go Back</button><div class="title"><h1> You Have not purchased anything yet...</h1></div>`;
+        document.getElementsByClassName("account-container")[0].innerHTML = noPreviousOrdersElement;
     }
 }

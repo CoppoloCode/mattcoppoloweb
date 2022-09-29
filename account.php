@@ -6,12 +6,13 @@
     if($conn->connect_error){
         die("Connection Failed: " . $conn->connect_error);
     }
+
+    $userId = $_COOKIE['user'];
     
-    if(isset($_POST['getUserId'])){
+    if(isset($_POST['getAccountData'])){
 
-        $userId = $_POST['getUserId'];
 
-        $sql = "SELECT * FROM accounts WHERE user_id = $userId";
+        $sql = "SELECT * FROM accounts WHERE user_id = '$userId'";
         
         $result = $conn->query($sql);
 
@@ -22,12 +23,11 @@
 
     }
 
-    if(isset($_POST['changeEmail'])){
+    else if(isset($_POST['changeEmail'])){
 
         $email = $_POST['changeEmail'];
-        $userId = $_POST['user_Id'];
 
-        $sql = "UPDATE accounts SET email = '$email' WHERE user_id = $userId";
+        $sql = "UPDATE accounts SET email = '$email' WHERE user_id = '$userId'";
 
         $result = $conn->query($sql);
 
@@ -35,48 +35,44 @@
 
     }
 
-    if(isset($_POST['changePassword'])){
+    else if(isset($_POST['changePassword'])){
 
         $password = $_POST['changePassword'];
-        $userId = $_POST['user_Id'];
 
-        $sql = "UPDATE accounts SET password = '$password' WHERE user_id = $userId";
+        $sql = "UPDATE accounts SET password = '$password' WHERE user_id = '$userId'";
 
         $result = $conn->query($sql);
 
         echo $result;
 
     }
-    if(isset($_POST['changeAddress'])){
+    else if(isset($_POST['changeAddress'])){
 
         $address = $_POST['changeAddress'];
-        $userId = $_POST['user_Id'];
 
-        $sql = "UPDATE accounts SET address = '$address' WHERE user_id = $userId";
+        $sql = "UPDATE accounts SET address = '$address' WHERE user_id = '$userId'";
 
         $result = $conn->query($sql);
 
         echo $result;
 
     }
-    if(isset($_POST['changeFirstName'])){
+    else if(isset($_POST['changeFirstName'])){
 
         $firstName = $_POST['changeFirstName'];
-        $userId = $_POST['user_Id'];
 
-        $sql = "UPDATE accounts SET first_name = '$firstName' WHERE user_id = $userId";
+        $sql = "UPDATE accounts SET first_name = '$firstName' WHERE user_id = '$userId'";
 
         $result = $conn->query($sql);
 
         echo $result;
 
     }
-    if(isset($_POST['changeLastName'])){
+    else if(isset($_POST['changeLastName'])){
 
         $lastName = $_POST['changeLastName'];
-        $userId = $_POST['user_Id'];
 
-        $sql = "UPDATE accounts SET last_name = '$lastName' WHERE user_id = $userId";
+        $sql = "UPDATE accounts SET last_name = '$lastName' WHERE user_id = '$userId'";
 
         $result = $conn->query($sql);
 
@@ -84,13 +80,12 @@
 
     }
 
-    if(isset($_POST['getOrders'])){
+    else if(isset($_POST['getOrders'])){
 
-        $user_id = $_COOKIE['user'];
 
 
         $sql = "SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
-        purchased.product_id = products.ID and purchased.user_id = '$user_id'";
+        purchased.product_id = products.ID and purchased.user_id = '$userId'";
 
         $result = $conn->query($sql);
 
