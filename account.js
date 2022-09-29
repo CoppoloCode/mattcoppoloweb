@@ -77,10 +77,10 @@ function accountModify(){
     let accountEmailElement =      `<h2>Email:</h2>
                                         <p>`+account.accountInfo.email+`</p>
                                         <button id='smallBtn' onclick="changeEmail()">Change</button>`;
-    let accountPasswordElement =   `<h2>password:</h2>
+    let accountPasswordElement =   `<h2>Password:</h2>
                                         <p id = 'password'>`+account.accountInfo.password+`</p>
                                         <button id='smallBtn' onclick="changePassword()">Change</button>`;
-    let accountAddressElement =    `<h2>address:</h2>
+    let accountAddressElement =    `<h2>Address:</h2>
                                         <p id = 'address'>`+account.accountInfo.address+`</p>
                                         <button id='smallBtn' onclick="changeAddress()">Change</button>`;
     let accountFirstNameElement =  `<h2>First Name:</h2>
@@ -89,7 +89,7 @@ function accountModify(){
 
     let accountLastNameElement =  `<h2>Last Name:</h2>
                                         <p>`+account.accountInfo.last_name+`</p>
-                                        <button id='smallBtn' onclick="changeFirstName()">Change</button>`;                                    
+                                        <button id='smallBtn' onclick="changeLastName()">Change</button>`;                                    
 
     document.getElementsByClassName("account-container")[0].innerHTML = accountModifyElement;
     document.getElementsByClassName("email")[0].innerHTML = accountEmailElement;
@@ -176,7 +176,7 @@ function checkPasswords(pass1, pass2){
 
     if(pass1 != pass2){
         if(document.getElementsByClassName("noMatch")[0] == null){
-            document.getElementsByClassName("password")[0].outerHTML = passwordsMatchElement;
+            document.getElementsByClassName("password")[0].outerHTML += passwordsMatchElement;
             
         }
         return false;
@@ -187,7 +187,7 @@ function checkPasswords(pass1, pass2){
     }
     if((pass1 == '') || (pass2 == '')){
         if(document.getElementsByClassName("blank")[0] == null){
-            document.getElementsByClassName("password")[0].outerHTML = passwordsBlankElement;
+            document.getElementsByClassName("password")[0].outerHTML += passwordsBlankElement;
             
         }
         return false;
