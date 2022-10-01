@@ -59,7 +59,7 @@ if(isset($_POST["signIn"])){
     if($count == 0){
         echo 0;
     }else{
-        $row =  $result-> fetch_assoc();
+        $row =  $result->fetch_assoc();
         setcookie('user', $row['user_id'], time() + (86400), "/");
         echo $row['user_id'];
     }

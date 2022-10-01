@@ -1,18 +1,27 @@
+$(document).ready(function(){
 
-if(document.cookie == ''){
-    document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
-  }else{
-    document.cookie = document.cookie + "; expires= date.setDate(date.getDate() + 1); path=/;"
-  }
+    if(document.cookie == ''){
+        document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
+        document.cookie = "cart=; expires= date.setDate(date.getDate() + 1); path=/;";
+    }
+    
+});
 
+let userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
+
+if(userID == '0'){
+        location.assign("sign-in.html");
+    }else{
+        getAccountData();
+    }
 class accountInfo{
     constructor(accountInfo){
         this.accountInfo = accountInfo;
     }
 }
 
-
 const account = new accountInfo([]);
+
 const accountButtonsElement =  `<div class="buttons">
                                 <button id="orders" onclick="getOrders()">Your Orders</button>
                                 <button id="login-security" onclick="accountModify()">Login & Security</button> 
@@ -41,7 +50,7 @@ const passwordsMatchElement = `<div class="noMatch"><small>Passwords do not matc
 const passwordsBlankElement = `<div class="blank"><small>Password cannot be blank</small></div>`;
 
 
-getAccountData();
+
 function getAccountData(){
     
     $.ajax({
@@ -50,6 +59,7 @@ function getAccountData(){
         data: {getAccountData: 1},
         success: function(data){
             account.accountInfo = (JSON.parse(data));
+            console.log(account.accountInfo);
             setupAccount();
         },
         error: function(err){

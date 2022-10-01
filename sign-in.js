@@ -1,17 +1,11 @@
 $(document).ready(function(){
-
-    $.ajax({
-        url: "sign-in.php",
-        type: "POST",
-        error: function(err){
-            console.log(err.responseText);
-        }
-    })
     if(document.cookie == ''){
-        userId = 0;
+        document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
+        document.cookie = "cart=; expires= date.setDate(date.getDate() + 1); path=/;";
     }else{
-        userId = document.cookie.split('user=')[1];
-        if(userId != 0){
+        let userId = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
+        
+        if(userId != '0'){
             location.assign("account.html");
         }
     }

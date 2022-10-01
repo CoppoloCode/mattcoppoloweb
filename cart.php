@@ -6,20 +6,47 @@ if($conn->connect_error){
     die("Connection Failed: " . $conn->connect_error);
 }
 
+$user_id = $_COOKIE['user'];
+
+if(isset($_POST['getProducts'])){
+
+    $productIds = $_POST['getProducts'];
+
+   
+    for($i = 0; $i<count($productIds); $i++){
+
+        $id = $productIds[$i];
+
+        $sql = "SELECT ID, Name, Image, Cost FROM products WHERE ID = '$id'";
+        $result = $conn->query($sql);
+        
+        while($row = $result->fetch_assoc()){
+           
+            $products[$i][0] = $row['ID'];
+            $products[$i][1] = $row['Name']; 
+            $products[$i][2] = $row['Image']; 
+            $products[$i][3] = $row['Cost']; 
+            $products[$i][4] = '';
+           
+        }
+        
+    }
+    echo json_encode($products);
+
+
+
+}
+
 if(isset($_POST['addToCart'])){
 
     $p_id = $_POST["productID"];
     
-    $user_id = $_COOKIE['user'];
-
     $sql = "SELECT * FROM cart WHERE product_ID = '$p_id' AND user_ID = '$user_id'";
 
     $result = $conn->query($sql);
     
     $count = mysqli_num_rows($result);
 
-    
-    
     if($count > 0){
         echo "Product is already in cart";
     }else{
@@ -40,8 +67,6 @@ if(isset($_POST['removeFromCart'])){
 
         $productID = $_POST['productID'];
 
-        $user_id = $_COOKIE['user'];
-
         $sql = "DELETE FROM cart WHERE product_ID = $productID AND user_id = '$user_id'";
 
         $result = $conn->query($sql);
@@ -56,7 +81,6 @@ if(isset($_POST['changeQty'])){
     if(isset($_POST['productID'])){
 
         $productID = $_POST['productID'];
-        $user_id = $_COOKIE['user'];
 
         $qty = $_POST['changeQty'];
 
@@ -69,8 +93,6 @@ if(isset($_POST['changeQty'])){
 }
 
 if(isset($_POST['getCartItems'])){
-
-    $user_id = $_COOKIE['user'];
 
     $sql = "SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID and cart.user_ID = '$user_id'";
 
