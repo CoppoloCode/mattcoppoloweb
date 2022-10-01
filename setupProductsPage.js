@@ -29,6 +29,9 @@ function getProductsFromDataBase(sortNum, typeSortNum){
         dataType:'json',
         data: {functionname: sort, typename: typeSort},
         success: getProducts,
+        error: function(err){
+            console.log(err.responseText);
+        }
     });
   
 }  
@@ -36,7 +39,6 @@ function getProductsFromDataBase(sortNum, typeSortNum){
 function getProducts(data){         
               
     page.products = data;
-
     let productElements = []; 
     let totalPages = page.products.length/12;
     page.totalPages = Math.ceil(totalPages);

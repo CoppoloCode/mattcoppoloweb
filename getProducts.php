@@ -1,6 +1,10 @@
 
 <?php
+    $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
 
+    if($conn->connect_error){
+        die("Connection Failed: " . $conn->connect_error);
+    }
     if($_POST['typename']){
 
         if($_POST['typename'] == 'all'){
@@ -24,12 +28,6 @@
     }
 
     if($_POST['functionname']){
-
-        $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
-
-        if($conn->connect_error){
-            die("Connection Failed: " . $conn->connect_error);
-        }
 
         if($_POST['typename'] != 'all'){
 

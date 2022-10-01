@@ -1,11 +1,12 @@
-$(document).ready(function(){
 
-    if(document.cookie == ''){
-        document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
-        document.cookie = "cart=; expires= date.setDate(date.getDate() + 1); path=/;";
-    }
-    
-});
+
+if(document.cookie == ''){
+    document.cookie = "user=0; path=/;";
+    document.cookie = "cart=; path=/;";
+    document.cookie = "qty=; path=/;";
+}
+
+
 
 let userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
 
@@ -59,7 +60,6 @@ function getAccountData(){
         data: {getAccountData: 1},
         success: function(data){
             account.accountInfo = (JSON.parse(data));
-            console.log(account.accountInfo);
             setupAccount();
         },
         error: function(err){
@@ -71,7 +71,8 @@ function getAccountData(){
 
 
 function signOut(){
-    document.cookie = "user=0; expires= time() + 86400; path=/;";
+    document.cookie = "user=0; path=/;";
+    
     location.assign("sign-in.html");
 }
 

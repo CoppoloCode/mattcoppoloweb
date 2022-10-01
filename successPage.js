@@ -63,5 +63,8 @@ function getCartProducts(){
 
     });
 
+    document.cookie = "cart=; path=/;";
+    document.cookie = "qty=; path=/;";
+
   }
 

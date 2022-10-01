@@ -36,13 +36,25 @@ if(isset($_POST['createAccount'])){
     $count = mysqli_num_rows($result);
 
     if($count > 0){
-        echo "You already have an account with that email.";
+        echo 0;
     }else{
         $sql = "INSERT INTO accounts (email, password, address, first_name, last_name) VALUES ('$email', '$password' ,'$address', '$firstName', '$lastName')";
         $result = $conn->query($sql);
-        echo "Account Created Successfully";
-    }
+        
+        $sql = "SELECT * FROM accounts WHERE email = '$email' AND BINARY password = '$password'";
 
+        $result = $conn->query($sql);
+
+        $count = mysqli_num_rows($result);
+
+        if($count == 0){
+            echo "account not found";
+        }else{
+            $row =  $result->fetch_assoc();
+            echo $row['user_id'];
+        }
+
+    }
 }
 
 if(isset($_POST["signIn"])){
@@ -57,10 +69,9 @@ if(isset($_POST["signIn"])){
     $count = mysqli_num_rows($result);
 
     if($count == 0){
-        echo 0;
+        echo "account not found";
     }else{
         $row =  $result->fetch_assoc();
-        setcookie('user', $row['user_id'], time() + (86400), "/");
         echo $row['user_id'];
     }
 

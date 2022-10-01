@@ -8,10 +8,10 @@ if($conn->connect_error){
 
 $user_id = $_COOKIE['user'];
 
-if(isset($_POST['getProducts'])){
+if(isset($_POST['getProductsForCookie'])){
 
-    $productIds = $_POST['getProducts'];
-
+    $productIds = $_POST['getProductsForCookie'];
+    $products = [];
    
     for($i = 0; $i<count($productIds); $i++){
 
@@ -125,6 +125,34 @@ if(isset($_POST['getCartItems'])){
     }
     
 }
+
+if(isset($_POST['Cart'])){
+
+    $productIds = $_POST['Cart'];
+    $qtys = $_POST['Quantity'];
+    $i = 0;
+
+    while($i < count($productIds)){
+        $qty = $qtys[$i];
+        $productId = $productIds[$i];
+
+        $sql = "SELECT * FROM cart WHERE product_ID = '$productId' AND user_ID = '$user_id'";
+        $result = $conn->query($sql);
+        $count = mysqli_num_rows($result);
+
+        if($count == 0){
+            $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$productId', '$qty' , '$user_id')";
+            $result = $conn->query($sql);
+        }
+
+        $i++;
+
+    }
+    
+    echo json_encode($result);
+
+}
+
 
 $conn->close();
 ?>

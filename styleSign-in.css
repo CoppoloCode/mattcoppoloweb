@@ -196,18 +196,20 @@ nav ul a{
 .account-container{
     width: auto;
     height: auto;
-    padding: 0px 20px 20px 20px;
+    padding: 20px;
     -webkit-box-shadow: 0px 0px 16px 6px rgba(0,0,0,0.82); 
     box-shadow: 0px 0px 16px 6px rgba(0,0,0,0.82);
     border-width: 8px;
     border-style: none;
     border-color: transparent;
     border-radius: 40px 40px 40px 40px;
+    text-align: center;
 }
 .account-title{
     display: flex;
     flex-direction: column;
 }
+
 .account-title h1{
     text-align: center;
     padding: 25px;
@@ -262,7 +264,6 @@ nav ul a{
     align-items: center;
     justify-content: space-around;
     padding-top: 20px;
-
 }
 .button-row button{
     padding: 10px;

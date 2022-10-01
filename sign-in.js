@@ -1,14 +1,16 @@
 $(document).ready(function(){
+
     if(document.cookie == ''){
-        document.cookie = "user=0; expires= date.setDate(date.getDate() + 1); path=/;";
-        document.cookie = "cart=; expires= date.setDate(date.getDate() + 1); path=/;";
-    }else{
-        let userId = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
-        
-        if(userId != '0'){
-            location.assign("account.html");
-        }
+        document.cookie = "user=0; path=/;";
+        document.cookie = "cart=; path=/;";
+        document.cookie = "qty=; path=/;";
     }
+    userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
+        
+    if(userID != '0'){
+        location.assign("account.html");
+    }
+    
 
 
     $(document).on("click","#Sign-In", function(){
@@ -22,7 +24,9 @@ $(document).ready(function(){
                 type: "POST",
                 data: {signIn: 1, email, password},
                 success: function(data){
-                    if (data != 0){
+                    if (data != "account not found"){
+                        document.cookie = "user="+data+"; path=/;";
+                        createCart();
                         location.assign("account.html");
                     }else{
                         wrongEmailorPassword();
@@ -43,6 +47,13 @@ $(document).ready(function(){
         createAccountPage();
 
     })
+    $(document).on("click","#back", function(){
+
+        location.assign('sign-in.html');
+
+    })
+
+
     $(document).on("click","#Create-Account", function(){
 
         let email = $("#email").val();
@@ -58,7 +69,14 @@ $(document).ready(function(){
                 type: "POST",
                 data: {createAccount: 1, email, password, address, firstName, lastName},
                 success: function(data){
-                    accountCreated(data);
+                    if(data == 0){
+                        accountCreated(data);
+                    }else{
+                        document.cookie = "user="+data+"; path=/;";
+                        accountCreated(data);
+                        createCart();
+                    }
+                    
                 },
                 error: function(err){
                     console.log(err.responseText);
@@ -73,7 +91,7 @@ $(document).ready(function(){
         let pass = $("#password1").val();
         let confirmPass = $("#confirmPassword").val();
 
-       checkPasswords(pass, confirmPass);
+        checkPasswords(pass, confirmPass);
 
     })
 
@@ -138,8 +156,7 @@ function createAccountPage(){
                                     <label>Last Name:</label><input type="text" id="lastName">
                                 </div>`;
 
-    let createAccountButtonElement = '<button id="Create-Account">Create New Account</button>';
-
+    let createAccountButtonElement = '<button id="back">Back to Sign In</button><button id="Create-Account">Create New Account</button>';
     document.getElementsByClassName("account-title")[0].innerHTML = "<h1>Create Account</h1>";
     document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement;
     document.getElementsByClassName("button-row")[0].innerHTML  = createAccountButtonElement;
@@ -147,22 +164,35 @@ function createAccountPage(){
 }
 
 function accountCreated(msg){
-
-    let createAccountElement = `<div class="email">
-                                    <label>Email:</label><input type="text" id="email">
-                                </div>
-                                <div class="password">
-                                    <label>Pass:</label><input type="password" id="password">
-                                </div>`;
-
-    let createAccountButtonElement = '<button id="Create-New-Account">Create New Account</button><button id="Sign-In">Sign In</button>';
-
-    if(msg == "You already have an account with that email."){
-        alert(msg); 
+    if(msg == 0){
+        alert("You already have an account with that email."); 
+    }else{
+       location.assign('account.html');
     }
 
-    document.getElementsByClassName("account-title")[0].innerHTML = "<h1>Sign in to Your Account</h1>";
-    document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement;
-    document.getElementsByClassName("button-row")[0].innerHTML  = createAccountButtonElement;
+}
+
+function createCart(){
+
+    let cart = document.cookie.split('cart=')[1].split(';')[0];
+    let qty = document.cookie.split('qty=')[1].split(';')[0];
+    cart = cart.split(',');
+    cart.length = cart.length - 1;
+    qty = qty.split(',');
+    qty.length = qty.length - 1;
     
+
+    $.ajax({
+        url: "cart.php",
+        type: "POST",
+        data: {Cart: cart, Quantity: qty},
+        success: function(data){
+           
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
+    })
+
+
 }
