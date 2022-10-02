@@ -1,11 +1,4 @@
 $(document).ready(function(){
-
-    if(document.cookie == ''){
-        document.cookie = "user=0; path=/;";
-        document.cookie = "cart=; path=/;";
-        document.cookie = "qty=; path=/;";
-    }
-    userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
         
     if(userID != '0'){
         location.assign("account.html");
@@ -26,7 +19,7 @@ $(document).ready(function(){
                 success: function(data){
                     if (data != "account not found"){
                         document.cookie = "user="+data+"; path=/;";
-                        createCart();
+                        mergeCart();
                         location.assign("account.html");
                     }else{
                         wrongEmailorPassword();
@@ -74,7 +67,7 @@ $(document).ready(function(){
                     }else{
                         document.cookie = "user="+data+"; path=/;";
                         accountCreated(data);
-                        createCart();
+                        mergeCart();
                     }
                     
                 },
@@ -169,30 +162,5 @@ function accountCreated(msg){
     }else{
        location.assign('account.html');
     }
-
-}
-
-function createCart(){
-
-    let cart = document.cookie.split('cart=')[1].split(';')[0];
-    let qty = document.cookie.split('qty=')[1].split(';')[0];
-    cart = cart.split(',');
-    cart.length = cart.length - 1;
-    qty = qty.split(',');
-    qty.length = qty.length - 1;
-    
-
-    $.ajax({
-        url: "cart.php",
-        type: "POST",
-        data: {Cart: cart, Quantity: qty},
-        success: function(data){
-           
-        },
-        error: function(err){
-            console.log(err.responseText);
-        }
-    })
-
 
 }

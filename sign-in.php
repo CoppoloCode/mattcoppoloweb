@@ -57,7 +57,7 @@ if(isset($_POST['createAccount'])){
     }
 }
 
-if(isset($_POST["signIn"])){
+else if(isset($_POST["signIn"])){
 
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -75,6 +75,8 @@ if(isset($_POST["signIn"])){
         echo $row['user_id'];
     }
 
+}else{
+    echo "improper POST request";
 }
 
 $conn->close();

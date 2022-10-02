@@ -37,7 +37,7 @@ if(isset($_POST['getProductsForCookie'])){
 
 }
 
-if(isset($_POST['addToCart'])){
+else if(isset($_POST['addToCart'])){
 
     $p_id = $_POST["productID"];
     
@@ -61,7 +61,7 @@ if(isset($_POST['addToCart'])){
 
 }
 
-if(isset($_POST['removeFromCart'])){
+else if(isset($_POST['removeFromCart'])){
 
     if(isset($_POST['productID'])){
 
@@ -77,7 +77,7 @@ if(isset($_POST['removeFromCart'])){
 
 }
 
-if(isset($_POST['changeQty'])){
+else if(isset($_POST['changeQty'])){
     if(isset($_POST['productID'])){
 
         $productID = $_POST['productID'];
@@ -92,7 +92,7 @@ if(isset($_POST['changeQty'])){
     }
 }
 
-if(isset($_POST['getCartItems'])){
+else if(isset($_POST['getCartItems'])){
 
     $sql = "SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID and cart.user_ID = '$user_id'";
 
@@ -126,7 +126,7 @@ if(isset($_POST['getCartItems'])){
     
 }
 
-if(isset($_POST['Cart'])){
+else if(isset($_POST['Cart'])){
 
     $productIds = $_POST['Cart'];
     $qtys = $_POST['Quantity'];
@@ -151,6 +151,8 @@ if(isset($_POST['Cart'])){
     
     echo json_encode($result);
 
+}else{
+    echo "Improper Post request";
 }
 
 

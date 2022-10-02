@@ -15,25 +15,16 @@ function getProductsFromDataBase(){
         type: 'POST',
         dataType: 'json',
         data: {functionname: 'getProducts' , typename: 'all'},
-        success: getProducts,
+        success: setProductDetails,
     });
 }
 
- function getProducts(data){         
+ function setProductDetails(data){         
                 
     page.products = data;
    
-    setProductDetails(page.products);
-    getShuffledProducts();
-             
-}
-function getShuffledProducts(){
-    let shuffledProducts = [];
+    setProductDetailsElements(page.products);
     shuffledProducts = shuffleProducts(page.products);
-    getProductsElements(shuffledProducts);
-
-}
-function getProductsElements(shuffledProducts){
     page.productElements = getProductElements(shuffledProducts);
     setProducts(page.productElements);
 }
@@ -41,6 +32,7 @@ function getProductsElements(shuffledProducts){
 function setProducts(productElements){
 
     let productPlacementId = "product-";
+    console.log(page.productCounter);
     
     for(let i = 1; i < 5; i++){
         
@@ -51,7 +43,8 @@ function setProducts(productElements){
         }
         document.getElementById(productPlacementId + i).innerHTML = productElements[page.productCounter];
         page.productCounter++;
-    }       
+    }      
+    console.log(page.productCounter);
 }
 
 function changeProductsRight(){
@@ -68,7 +61,7 @@ function changeProductsLeft(){
 
 /* ------------gathers differecnt HTML Elemnts for product details -----------*/
 
-function setProductDetails(products){
+function setProductDetailsElements(products){
 
     
     
@@ -78,7 +71,6 @@ function setProductDetails(products){
     let productPriceElement;
     let productReviewElement;
     let productNameElement;
-    let addtoCartElement;
 
     
     productNameElement = getNameElement(products, chosenProductId);

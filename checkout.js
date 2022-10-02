@@ -1,28 +1,8 @@
 
-if(document.cookie == ''){
-  document.cookie = "user=0; path=/;";
-  document.cookie = "cart=; path=/;";
-  document.cookie = "qty=; path=/;";
-}
-
-let userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
-
-
 if(userID == '0'){
     location.assign("sign-in.html");
 }
 
-class Cart{
-    constructor(cartItems, total){
-        cartItems = this.cartItems;
-        total = this.total;
-    }
-}
-
-let cart = new Cart([],0.0);
-
-
-getCartItems();
 function getCartItems(){
     
     $.ajax({
@@ -31,7 +11,7 @@ function getCartItems(){
       dataType: 'json',
       data: {getCartItems: 'getCartItems'},
       success: function(data){
-        cart.cartItems = data;
+        cart.products = data;
         setupCheckout();
       },
       error: function(err){
@@ -41,9 +21,12 @@ function getCartItems(){
       
   }
 
-  $(document).on("click", ".RemoveFromCart", function(){
-      location.assign('checkout.html');
-  });
+$(document).on("click", ".RemoveFromCart", function(){
+    getCartItems();
+});
+$(document).on("change", ".item-quantity", function(){
+    setupCheckout();
+});
 
 $(document).on("click", ".RemoveFromCheckout", function(){
 
@@ -62,27 +45,12 @@ $(document).on("click", ".RemoveFromCheckout", function(){
 
     });
 
-    let cart = document.cookie.split('cart=')[1].split(';')[0];
-    let qty = document.cookie.split('qty=')[1].split(';')[0];
-    cart = cart.split(',');
-    cart.length = cart.length - 1;
-    qty = qty.split(',');
-    qty.length = qty.length - 1;
-
-
-    for(i = 0; i < cart.length; i++){
-      if(cart[i] == id){
-        cart[i] = '0';
-        qty[i] = '0';
+    for(i = 0; i < cookieCart.productIds.length; i++){
+      if(cookieCart.productIds[i] == id){
+        cookieCart.productIds.splice(i,1);
+        cookieCart.qty.splice(i,1);
       }
     }
-
-    cart = cart.join() + ',';
-    cart = cart.replace('0,', '');
-    qty = qty.join() + ',';
-    qty = qty.replace('0,', '');
-    document.cookie = "cart="+cart+"; path=/;";
-    document.cookie = "qty="+qty+"; path=/;";
 
   });
 
@@ -90,14 +58,15 @@ $(document).on("click", ".RemoveFromCheckout", function(){
 
     let id = $(this).attr("id");
     let value = $(this).val();
+
     $.ajax({
       url: 'cart.php',
       type: 'POST',
       data: {changeQty: value , productID: id},
       success: function(){
-        for(i = 0; i < cart.cartItems.length; i++){
-          if(cart.cartItems[i][0] == id){
-            cart.cartItems[i][4] = value;
+        for(i = 0; i < cart.products.length; i++){
+          if(cart.products[i][0] == id){
+            cart.products[i][4] = value;
           }
         }
         setupTotal();
@@ -108,31 +77,19 @@ $(document).on("click", ".RemoveFromCheckout", function(){
 
     });
 
-    let cookieCart = document.cookie.split('cart=')[1].split(';')[0];
-    let qty = document.cookie.split('qty=')[1].split(';')[0];
-    cookieCart = cookieCart.split(',');
-    cookieCart.length = cookieCart.length - 1;
-    qty = qty.split(',');
-    qty.length = qty.length - 1;
-
-
-    for(i = 0; i < cookieCart.length; i++){
-      if(cookieCart[i] == id){
-        qty[i] = value;
+    
+    for(i = 0; i < cookieCart.productIds.length; i++){
+      if(cookieCart.productIds[i] == id){
+        cookieCart.qty[i] = value;
       }
     }
-
-    qty = qty.join() + ',';
-    document.cookie = "qty="+qty+"; path=/;";
-
-
 
 });
 
 function setupCheckout(){
 
     let cartItems;
-    cartItems = cart.cartItems;
+    cartItems = cart.products;
     setupBadge(cartItems);
     if(cartItems != null){
         if (cartItems.length > 0){
@@ -166,8 +123,8 @@ function setupTotal(){
     let total = 0.0;
     let tax = .06;
 
-    for(i = 0; i < cart.cartItems.length; i++){
-        prices[i] = (cart.cartItems[i][3]*cart.cartItems[i][4]).toFixed(2);
+    for(i = 0; i < cart.products.length; i++){
+        prices[i] = (cart.products[i][3]*cart.products[i][4]).toFixed(2);
     }
     for(i = 0; i < prices.length; i++){
         subTotal += parseFloat(prices[i]);
@@ -177,7 +134,7 @@ function setupTotal(){
     tax = tax.toFixed(2);
     subTotal = subTotal.toFixed(2);
     total = total.toFixed(2);
-    cart.total = total;
+    cart.subTotal = total;
     document.getElementsByClassName('total')[0].innerHTML = `<p>Sub-Total: <small>$`+subTotal+`</small></p><p>Tax: <small>$`+tax+`</small></p><p>Total: <small>$`+total+`</small></p>`;
 }
 

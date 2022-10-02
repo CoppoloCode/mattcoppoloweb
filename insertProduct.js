@@ -10,11 +10,8 @@ function shuffleProducts(products){
 
   
     while (currentIndex != 0) {
-
-        
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
         [products[currentIndex], products[randomIndex]] = [products[randomIndex], products[currentIndex]];
     }
 

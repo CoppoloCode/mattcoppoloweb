@@ -1,15 +1,4 @@
 
-
-if(document.cookie == ''){
-    document.cookie = "user=0; path=/;";
-    document.cookie = "cart=; path=/;";
-    document.cookie = "qty=; path=/;";
-}
-
-
-
-let userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
-
 if(userID == '0'){
         location.assign("sign-in.html");
     }else{
