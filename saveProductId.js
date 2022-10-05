@@ -3,8 +3,6 @@
 
 
 function saveProductId(productId){
-
-
     localStorage.setItem("chosenProductId", productId);
 
 }

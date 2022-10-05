@@ -1,10 +1,9 @@
 
 
 class Page{
-    constructor(products, currentPage, totalPages, clickCount, buttonNum, sorting, typeSorting, productStart){
-        this.products = products;
+    constructor(productElements, currentPage, clickCount, buttonNum, sorting, typeSorting, productStart){
+        this.productElements = productElements;
         this.currentPage = currentPage;
-        this.totalPages = totalPages;
         this.clickCount = clickCount;
         this.buttonNum = buttonNum;
         this.sorting = sorting;
@@ -13,13 +12,13 @@ class Page{
     } 
 }
 
-let page = new Page([],1,0,0,0,1,1,0);
+let page = new Page([],1,0,0,1,1,0);
 
 
 function getProductsFromDataBase(sortNum, typeSortNum){
 
-    let typeSorting = ['all', 'headset' , 'keyboard', 'mouse' , 'PC'];
-    let sorting = ['getProducts', 'getProductsSortedPriceAsc', 'getProductsSortedPriceDesc', 'getProductsSortedReview'];
+    const typeSorting = ['all', 'headset' , 'keyboard', 'mouse' , 'PC'];
+    const sorting = ['getProducts', 'getProductsSortedPriceAsc', 'getProductsSortedPriceDesc', 'getProductsSortedReview'];
     let typeSort = typeSorting[typeSortNum-1];
     let sort = sorting[sortNum-1];
 
@@ -28,7 +27,11 @@ function getProductsFromDataBase(sortNum, typeSortNum){
         type: 'POST',
         dataType:'json',
         data: {functionname: sort, typename: typeSort},
-        success: getProducts,
+        success: function(data){
+            page.productElements = getProductElements(data);
+            setupProducts(page.productElements);
+            setPageButtons();
+        },
         error: function(err){
             console.log(err.responseText);
         }
@@ -36,26 +39,12 @@ function getProductsFromDataBase(sortNum, typeSortNum){
   
 }  
 
-function getProducts(data){         
-              
-    page.products = data;
-    let productElements = []; 
-    let totalPages = page.products.length/12;
-    page.totalPages = Math.ceil(totalPages);
-    page.sortingCounter++; 
-    productElements = getProductElements(page.products);
-    setupProducts(productElements);
-    setPageButtons();
-                      
-}
-
-
 function setupProducts(productElements){
 
     let productPlacementId = "product-";
 
     for(let i = 0; i < 12; i++){  
-        if(page.productStart != page.products.length){
+        if(page.productStart < productElements.length){
             document.getElementById(productPlacementId + (i+1)).innerHTML = productElements[page.productStart];
             page.productStart++;
         }else{
@@ -71,15 +60,15 @@ function pageSwap(pageNumberSelected,currentPage){
     if(pageNumberSelected != currentPage){
         page.currentPage = pageNumberSelected;
         page.productStart = (page.currentPage * 12) - 12;
-        let productElements = getProductElements(page.products);
-        setupProducts(productElements);
+        setupProducts(page.productElements);
     }
                     
 }
 
 function setPageButtons(direction){
 
-    document.getElementById("page-btn").innerHTML = null;  
+    let totalPages = page.productElements.length/12;
+    totalPages = Math.ceil(totalPages); 
 
     if(direction == "forward"){
         page.clickCount++;
@@ -93,31 +82,28 @@ function setPageButtons(direction){
             page.buttonNum = page.buttonNum-5;
         }
     }
-
+    document.getElementById('page-btn').innerHTML = '';
     if(page.clickCount >= 1){
         document.getElementById("page-btn").innerHTML += '<a id="backward" onclick="setPageButtons(id)"><span>&#8592;</span></a>';
     }
-    if(page.totalPages < 4){
-        
-        for(i = 0; i < page.totalPages; i++){
+    if(totalPages < 4){
+        for(i = 0; i < totalPages; i++){
             page.buttonNum = i+1;
             document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";        
         }
     }else{
         for(i = 0; i < 4; i++){
-        page.buttonNum++;
-        document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";        
+            page.buttonNum++;
+            document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";  
+        }
     }
-    }
-    
-    if(page.totalPages != page.buttonNum){
+    if(totalPages != page.buttonNum){
         document.getElementById("page-btn").innerHTML += '<a id="forward" onclick="setPageButtons(id)"><span>&#8594;</span></a>';
     }
     
 }
 
 function changeSorting(){
-
     let selectBox = document.getElementById("selectBox");
     let selectedValue = selectBox.options[selectBox.selectedIndex].value;
     page.sorting = selectedValue;
@@ -129,7 +115,6 @@ function changeSorting(){
     getProductsFromDataBase(selectedValue , page.typeSorting);
 }
 function changeTypeSorting(){
-
     let selectBox = document.getElementById("selectTypeBox");
     let selectedValue = selectBox.options[selectBox.selectedIndex].value;
     page.typeSorting = selectedValue;

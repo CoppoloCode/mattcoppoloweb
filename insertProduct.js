@@ -3,19 +3,15 @@
 /*--------------------setting the products in their place ---------------*/
 
 function shuffleProducts(products){
-
-    
     let currentIndex = products.length;
     let randomIndex;
 
-  
     while (currentIndex != 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
         [products[currentIndex], products[randomIndex]] = [products[randomIndex], products[currentIndex]];
     }
 
-    
     return products;
 
 }
@@ -54,14 +50,14 @@ function getProductElements(products){
 /*--------creates Review Element of products --------------------*/
 
 function getReview(productReview){
-    productReview = parseInt(productReview);
+    let review = parseInt(productReview);
     let starElement = '<i class="fa fa-star" aria-hidden="true"></i>';
     let emptyStarElement = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     let result = "";
-    for(i=0; i<productReview; i++){
+    for(i=0; i<review; i++){
        result += starElement;
     }
-    for(i=productReview; i<5; i++){
+    for(i=review; i<5; i++){
         result += emptyStarElement;
     }
     return result;
