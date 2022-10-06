@@ -1,9 +1,10 @@
 
 if(userID == '0'){
         location.assign("sign-in.html");
-    }else{
-        getAccountData();
-    }
+}else{
+    getAccountData();
+}
+
 class accountInfo{
     constructor(accountInfo){
         this.accountInfo = accountInfo;
@@ -48,8 +49,14 @@ function getAccountData(){
         type: "POST",
         data: {getAccountData: 1},
         success: function(data){
-            account.accountInfo = (JSON.parse(data));
-            setupAccount();
+            if(data != 0){
+                account.accountInfo = (JSON.parse(data));
+                setupAccount();
+            }
+            else{
+                document.cookie = "user=0; path=/;"
+                location.assign("sign-in.html")
+            }
         },
         error: function(err){
             console.log(err.responseText);

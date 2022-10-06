@@ -17,12 +17,11 @@ $(document).ready(function(){
                 type: "POST",
                 data: {signIn: 1, email, password},
                 success: function(data){
-                    if (data != "account not found"){
-                        document.cookie = "user="+data+"; path=/;";
-                        mergeCart();
-                        location.assign("account.html");
-                    }else{
+                    console.log(data);
+                    if (data == "account not found"){
                         wrongEmailorPassword();
+                    }else{
+                        accountCreated(data);
                     }
                 },
                 error: function(err){
@@ -55,19 +54,31 @@ $(document).ready(function(){
         let address = $("#address").val();
         let firstName = $("#firstName").val();
         let lastName = $("#lastName").val();
-
-        if((checkPasswords(password,confirmPass) == true) && (checkBlankInputs(email,password,address,firstName,lastName) == true)){
+        let createAccount = false;
+        if((checkPasswords(password,confirmPass) == true)){
+            createAccount = true;
+        }
+        if(checkBlankInputs(email,password,confirmPass,address,firstName,lastName) == true){
+            createAccount = true;
+        }else{
+            createAccount = false;
+        }
+        if(checkEmail(email) == true){
+            createAccount = true;
+        }else{
+            createAccount = false;
+        }
+        if(createAccount == true){
             $.ajax({
                 url: "sign-in.php",
                 type: "POST",
                 data: {createAccount: 1, email, password, address, firstName, lastName},
                 success: function(data){
+                    console.log(data);
                     if(data == 0){
-                        accountCreated(data);
+                        alert("You already have an account with that email."); 
                     }else{
-                        document.cookie = "user="+data+"; path=/;";
                         accountCreated(data);
-                        mergeCart();
                     }
                     
                 },
@@ -111,9 +122,17 @@ function checkPasswords(pass, confirmPass){
 
 }
 
-function checkBlankInputs(email,password,address,firstName,lastName){
+function checkEmail(email){
+    let goodEmail = false;
+    if(email.includes('@')){
+        goodEmail = true;
+    }
+    return goodEmail;
+}
 
-    if((email == '') || (password == '') || (address == '') || (firstName == '') || (lastName == '')){
+function checkBlankInputs(email,password,confirmPass,address,firstName,lastName){
+
+    if((email == '') || (password == '') || (confirmPass == '') || (address == '') || (firstName == '') || (lastName == '')){
         alert("All fields must be filled out.");
         return false;
     }else{
@@ -157,10 +176,8 @@ function createAccountPage(){
 }
 
 function accountCreated(msg){
-    if(msg == 0){
-        alert("You already have an account with that email."); 
-    }else{
-       location.assign('account.html');
-    }
+    document.cookie = "user="+msg+"; path=/;";
+    mergeCart();
+    location.assign('account.html');
 
 }

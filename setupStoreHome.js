@@ -10,13 +10,6 @@ function getProductsFromDataBase(){
     });
 }
 
-function getProductsFromCookie(data){
-
-    let products = data;
-    console.log(products);
-
-}
-
 function setProducts(data){         
                         
     let products = data;

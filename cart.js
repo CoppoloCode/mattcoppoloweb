@@ -6,7 +6,7 @@
     document.cookie = "qty=; path=/;";
   }
 
-  let userID = document.cookie.replace("cart=",'').split('user=')[1].split(';')[0];
+  let userID = document.cookie.split('user=')[1].split(';')[0];
 
   class Cart{
     constructor(products,subTotal){

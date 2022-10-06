@@ -16,10 +16,13 @@
         
         $result = $conn->query($sql);
 
-        $result = $result->fetch_assoc();
-
-
-        echo json_encode($result);
+        $row = $result->fetch_assoc();
+        if($row == null){
+            echo json_encode(0);
+        }else{
+            echo json_encode($row);
+        }
+        
 
     }
 

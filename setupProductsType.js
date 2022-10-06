@@ -90,7 +90,7 @@ function setupProduct(product,productNum){
     
     productNameElement = getNameElement(product);
     productImageElement = getImageElement(product);
-    productReviewElement = getReviewElement(product);
+    productReviewElement = getReview(product[3]);
     productPriceElement = getPriceELement(product);
 
     
@@ -109,7 +109,7 @@ function setupProduct(product,productNum){
 
 
 
-/* ------------gets the Name of a product  -----------*/
+/* ------------creates the Name Element of a product  -----------*/
  
 function getNameElement(product){
 
@@ -120,7 +120,7 @@ function getNameElement(product){
     return productNameElement;
 }
 
-/* ------------gets the image of a product  -----------*/
+/* -----------creates the Image Element of a product  -----------*/
 
 function getImageElement(product){
 
@@ -131,32 +131,7 @@ function getImageElement(product){
 
 }
 
-
-/* ------------gets the Review of a product  -----------*/
-
-function getReviewElement(product){
-    let productReviewElement;
-    let productReview = product[3];
-    productReviewElement = setReviewElement(productReview);
-    return productReviewElement;
-}
-
-/* ------------sets the Review Elements based on raiting of a product  -----------*/
-
-function setReviewElement(productReview){
-    productReview = parseInt(productReview);
-    let starElement = '<i class="fa fa-star" aria-hidden="true"></i>';
-    let emptyStarElement = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    let result = "";
-    for(i=0; i<productReview; i++){
-       result += starElement;
-    }
-    for(i=productReview; i<5; i++){
-        result += emptyStarElement;
-    }
-    return result;
-}
-/* ------------gets the Price of a product  -----------*/
+/* ------------creates the price Element of a product  -----------*/
 
 function getPriceELement(product){
 

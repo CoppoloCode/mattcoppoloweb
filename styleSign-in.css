@@ -246,6 +246,7 @@ nav ul a{
     text-align: center;
     justify-content: center;
     color: red;
+    animation: horizontal-shaking 0.35s;
 }
 .input-row label{
     padding-right: 20px;

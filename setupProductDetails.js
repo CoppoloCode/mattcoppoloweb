@@ -59,7 +59,7 @@ function changeProductsLeft(){
 
 
 
-/* ------------gathers differecnt HTML Elemnts for product details -----------*/
+/* ------------gathers different HTML Elements for product details -----------*/
 
 function setProductDetailsElements(products){
 
@@ -69,15 +69,15 @@ function setProductDetailsElements(products){
     let productImageElement;
     let productDescriptionElement;
     let productPriceElement;
-    let productReviewElement;
+    let productReviewElement = products[chosenProductId-1][3];
     let productNameElement;
 
     
     productNameElement = getNameElement(products, chosenProductId);
     productImageElement = getImageElement(products, chosenProductId);
-    productDescriptionElement = getDescription(products, chosenProductId);
-    productReviewElement = getReviewElement(products, chosenProductId);
-    productPriceElement = getPriceELement(products, chosenProductId);
+    productDescriptionElement = getDescriptionElement(products, chosenProductId);
+    productReviewElement = getReview(productReviewElement);
+    productPriceElement = getPriceElement(products, chosenProductId);
     document.getElementById("showName").innerHTML = productNameElement;
     document.getElementById("showImage").innerHTML = productImageElement;
     document.getElementById("showInfo").innerHTML = productDescriptionElement;
@@ -114,7 +114,7 @@ function getImageElement(products, productId){
 /* ------------gets the description of a product -----------*/
 
 
-function getDescription(products, productId){
+function getDescriptionElement(products, productId){
 
     let productDescription = products[productId-1][5];
     let productDescriptionElement;
@@ -123,33 +123,10 @@ function getDescription(products, productId){
     
 
 }
-/* ------------gets the Review of a product  -----------*/
 
-function getReviewElement(products, productId){
-    let productReviewElement;
-    let productReview = products[productId-1][3];
-    productReviewElement = setReviewElement(productReview);
-    return productReviewElement;
-}
-
-/* ------------sets the Review Elements based on raiting of a product  -----------*/
-
-function setReviewElement(productReview){
-    productReview = parseInt(productReview);
-    let starElement = '<i class="fa fa-star" aria-hidden="true"></i>';
-    let emptyStarElement = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    let result = "";
-    for(i=0; i<productReview; i++){
-       result += starElement;
-    }
-    for(i=productReview; i<5; i++){
-        result += emptyStarElement;
-    }
-    return result;
-}
 /* ------------gets the Price of a product  -----------*/
 
-function getPriceELement(products, productId){
+function getPriceElement(products, productId){
 
     let productPriceElement;
     productPriceElement = '<p>' + '$' + products[productId-1][4] + '</p>';
