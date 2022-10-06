@@ -1,7 +1,9 @@
 <?php
 
 
-    $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+    $conn->set_charset('utf8mb4');
 
     if($conn->connect_error){
         die("Connection Failed: " . $conn->connect_error);
@@ -11,12 +13,14 @@
     
     if(isset($_POST['getAccountData'])){
 
-
-        $sql = "SELECT * FROM accounts WHERE user_id = '$userId'";
-        
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
+        $stmt->bind_param('s', $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $row = $result->fetch_assoc();
+        $row['password'] = "password";
+
         if($row == null){
             echo json_encode(0);
         }else{
@@ -30,9 +34,10 @@
 
         $email = $_POST['changeEmail'];
 
-        $sql = "UPDATE accounts SET email = '$email' WHERE user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE accounts SET email = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $email, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
 
@@ -41,10 +46,12 @@
     else if(isset($_POST['changePassword'])){
 
         $password = $_POST['changePassword'];
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-        $sql = "UPDATE accounts SET password = '$password' WHERE user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE accounts SET password = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $passwordHash, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
 
@@ -53,9 +60,10 @@
 
         $address = $_POST['changeAddress'];
 
-        $sql = "UPDATE accounts SET address = '$address' WHERE user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE accounts SET address = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $address, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
 
@@ -64,9 +72,10 @@
 
         $firstName = $_POST['changeFirstName'];
 
-        $sql = "UPDATE accounts SET first_name = '$firstName' WHERE user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE accounts SET first_name = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $firstName, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
 
@@ -75,9 +84,10 @@
 
         $lastName = $_POST['changeLastName'];
 
-        $sql = "UPDATE accounts SET last_name = '$lastName' WHERE user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE accounts SET last_name = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $lastName, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
 
@@ -85,12 +95,11 @@
 
     else if(isset($_POST['getOrders'])){
 
-
-
-        $sql = "SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
-        purchased.product_id = products.ID and purchased.user_id = '$userId'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
+        purchased.product_id = products.ID and purchased.user_id = ?");
+        $stmt->bind_param('s', $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if($result == true){
 

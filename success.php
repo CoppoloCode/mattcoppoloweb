@@ -2,7 +2,10 @@
 
     require_once 'configPayPal.php';
 
-    $db = new mysqli('localhost', 'root','', 'mattcoppolodatabase');
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+    $db->set_charset('utf8mb4');
+
     if($db->connect_errno){
         die("connect failed: ". $db->connect_error);
     }
@@ -26,11 +29,12 @@
             $payment_status = $arr_body['state'];
             $user_id = USER_ID;
 
+            $stmt = $db->prepare("INSERT INTO payments(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
+            (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param('sssssss', $user_id, $payment_id, $payer_id, $payer_email, $amount, $currency, $payment_status);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            $db->query("INSERT INTO payments(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
-            ('".$user_id."', '". $payment_id."', '". $payer_id . "', '". $payer_email. "', '". $amount . "', '". $currency. "', '".$payment_status."')");
-
-            
             header("Location: http://localhost/mattcoppoloweb/successPage.html", true, 301);
 
         }else{

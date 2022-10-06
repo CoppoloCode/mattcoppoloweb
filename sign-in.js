@@ -21,7 +21,7 @@ $(document).ready(function(){
                     if (data == "account not found"){
                         wrongEmailorPassword();
                     }else{
-                        accountCreated(data);
+                        //accountCreated(data);
                     }
                 },
                 error: function(err){

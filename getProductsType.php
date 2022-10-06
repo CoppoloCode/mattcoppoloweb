@@ -1,5 +1,12 @@
 
 <?php
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+    $conn->set_charset('utf8mb4');
+
+    if($conn->connect_error){
+        die("Connection Failed: " . $conn->connect_error);
+    }
 
     if($_POST['typename']){
 
@@ -22,20 +29,15 @@
 
     if($_POST['functionname'] == 'getProductsSortedReview'){
 
-        $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
-
-        if($conn->connect_error){
-            die("Connection Failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " ."'". $typeName ."'" . " ORDER BY Review Desc";
-        
+        $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Review Desc");
+        $stmt->bind_param('s', $typeName);
         
     }else{
         die("Error: function name not supported" . $_POST['functionname']);
     }
 
-    $result = $conn->query($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $i = 0;
     while($row = $result->fetch_assoc()){

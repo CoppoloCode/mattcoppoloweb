@@ -1,6 +1,8 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+$conn->set_charset('utf8mb4');
 
 if($conn->connect_error){
     die("Connection Failed: " . $conn->connect_error);
@@ -16,9 +18,11 @@ if(isset($_POST['getProductsForCookie'])){
     for($i = 0; $i < count($productIds); $i++){
 
         $id = $productIds[$i];
-
-        $sql = "SELECT ID, Name, Image, Cost FROM products WHERE ID = '$id'";
-        $result = $conn->query($sql);
+        
+        $stmt = $conn->prepare("SELECT ID, Name, Image, Cost FROM products WHERE ID = ?");
+        $stmt->bind_param('s', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         
         while($row = $result->fetch_assoc()){
            
@@ -38,19 +42,22 @@ if(isset($_POST['getProductsForCookie'])){
 }else if(isset($_POST['addToCart'])){
 
     $p_id = $_POST["productID"];
-    
-    $sql = "SELECT * FROM cart WHERE product_ID = '$p_id' AND user_ID = '$user_id'";
 
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT * FROM cart WHERE product_ID = ? AND user_ID = ?");
+    $stmt->bind_param('ss', $p_id, $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     $count = mysqli_num_rows($result);
 
     if($count > 0){
         echo "Product is already in cart";
     }else{
-        $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$p_id', '1' , '$user_id')";
         
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("INSERT INTO cart (product_ID, qty, user_ID) VALUES (?, '1' , ?)");
+        $stmt->bind_param('ss', $p_id, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if($result){
             echo "Product is Added!";
@@ -63,9 +70,10 @@ if(isset($_POST['getProductsForCookie'])){
 
         $productID = $_POST['productID'];
 
-        $sql = "DELETE FROM cart WHERE product_ID = $productID AND user_id = '$user_id'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("DELETE FROM cart WHERE product_ID = ? AND user_id = ?");
+        $stmt->bind_param('ss', $productID, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo "Product Removed from Cart.";
 
@@ -79,17 +87,20 @@ if(isset($_POST['getProductsForCookie'])){
 
         $qty = $_POST['changeQty'];
 
-        $sql = "UPDATE cart SET qty = $qty WHERE product_ID = $productID AND user_id = '$user_id'";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("UPDATE cart SET qty = ? WHERE product_ID = ? AND user_id = ?");
+        $stmt->bind_param('sss', $qty, $productID, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         echo $result;
     }
 }else if(isset($_POST['getCartItems'])){
 
-    $sql = "SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID and cart.user_ID = '$user_id'";
-
-    $result = $conn->query($sql);
+    $sql = 
+    $stmt = $conn->prepare("SELECT product_ID, products.Name, products.Image, products.Cost, cart.qty FROM cart INNER JOIN products ON products.ID = cart.product_ID and cart.user_ID = ?");
+    $stmt->bind_param('s', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     $i = 0;
     while($row = $result->fetch_assoc()){
@@ -110,8 +121,8 @@ if(isset($_POST['getProductsForCookie'])){
         $i++;
     }
     if(mysqli_num_rows($result) == 0){
-        $sql = "ALTER TABLE cart AUTO_INCREMENT  = 1";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("ALTER TABLE cart AUTO_INCREMENT = 1");
+        $stmt->execute();
         echo json_encode(null);
     }else{
         echo json_encode($products);
@@ -127,13 +138,17 @@ if(isset($_POST['getProductsForCookie'])){
         $qty = $qtys[$i];
         $productId = $productIds[$i];
 
-        $sql = "SELECT * FROM cart WHERE product_ID = '$productId' AND user_ID = '$user_id'";
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare("SELECT * FROM cart WHERE product_ID = ? AND user_ID = ?");
+        $stmt->bind_param('ss', $productId, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         $count = mysqli_num_rows($result);
 
         if($count == 0){
-            $sql = "INSERT INTO cart (product_ID, qty, user_ID) VALUES ('$productId', '$qty' , '$user_id')";
-            $result = $conn->query($sql);
+            $stmt = $conn->prepare("INSERT INTO cart (product_ID, qty, user_ID) VALUES (?, ?, ?)");
+            $stmt->bind_param('sss', $productId, $qty, $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
         }
 
         $i++;

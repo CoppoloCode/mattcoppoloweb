@@ -3,15 +3,20 @@ require_once 'configPayPal.php';
 
 if(isset($_POST['submit'])){
 
-    $db = new mysqli('localhost', 'root','', 'mattcoppolodatabase');
-    if($db->connect_errno){
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+    $db->set_charset('utf8mb4');
+
+    if($db->connect_error){
         die("connect failed: ". $db->connect_error);
     }
 
     $user_id = USER_ID;
-    $sql = "SELECT * FROM cart WHERE user_ID = $user_id";
-    
-    $result = $db->query($sql); 
+
+    $stmt = $db->prepare("SELECT * FROM cart WHERE user_ID = ?");
+    $stmt->bind_param('s', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
     $i = 0;
     while($row = $result->fetch_assoc()){
@@ -24,9 +29,13 @@ if(isset($_POST['submit'])){
     
     $result = '';
     for($i = 0; $i < sizeof($productId); $i++){
+
         $id = $productId[$i];
-        $sql2[$i] = "SELECT * FROM products WHERE ID = $id";
-        $result = $db->query($sql2[$i]);
+        $stmt = $db->prepare("SELECT * FROM products WHERE ID = ?");
+        $stmt->bind_param('s', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         while($row = $result->fetch_assoc()){
 
             $products[$i] = $row;
@@ -42,7 +51,7 @@ if(isset($_POST['submit'])){
         $i++;
         
     }
-    echo json_encode( $quantity).$total;
+    
     $items = array();
     $i = 0;
     foreach($products as $row){

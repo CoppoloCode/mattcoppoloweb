@@ -1,32 +1,36 @@
 <?php
 
 
-$db = new mysqli('localhost', 'root','', 'mattcoppolodatabase');
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+$db->set_charset('utf8mb4');
 if($db->connect_errno){
     die("connect failed: ". $db->connect_error);
 }
 
+$userID = $_COOKIE['user'];
+
 if(isset($_POST['storeProducts'])){
     $products = $_POST['storeProducts'];
-    $userID = $_COOKIE['user'];
+    
     $date = date('Y-m-d');
 
     foreach($products as $product){
         $productID = $product[0];
-        $sql = "INSERT INTO purchased (user_ID, product_id, Date) VALUES ('$userID' , '$productID' , '$date' )";
-        $result = $db->query($sql);
+        $stmt = $db->prepare("INSERT INTO purchased (user_ID, product_id, Date) VALUES (? , ? , ?)");
+        $stmt->bind_param('sss', $userID, $productID, $date);
+        $stmt->execute();
+        $result = $stmt->get_result();
     }
    echo ($result);
 }
 
 if(isset($_POST['removeFromCart'])){
     
-    $userID = $_COOKIE['user'];
-
-    $sql = "DELETE FROM cart WHERE user_id = '$userID'";
-
-    $result = $db->query($sql);
-    
+    $stmt = $db->prepare("DELETE FROM cart WHERE user_id = ?");
+    $stmt->bind_param('s', $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 }
 

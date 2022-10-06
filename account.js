@@ -68,7 +68,8 @@ function getAccountData(){
 
 function signOut(){
     document.cookie = "user=0; path=/;";
-    
+    document.cookie = "cart=; path=/;";
+    document.cookie = "qty=; path=/;";
     location.assign("sign-in.html");
 }
 

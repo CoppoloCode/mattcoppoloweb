@@ -1,6 +1,8 @@
 
 <?php
-    $conn = mysqli_connect("localhost", "root", "", "mattcoppolodatabase");
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
+    $conn->set_charset('utf8mb4');
 
     if($conn->connect_error){
         die("Connection Failed: " . $conn->connect_error);
@@ -34,24 +36,24 @@
             
             if($_POST['functionname'] == 'getProducts'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " . "'" . $typeName . "'";
-
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ?");
+                $stmt->bind_param('s', $typeName);
             }
 
             if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " ."'". $typeName ."'" . "ORDER BY Cost ASC";
-                
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Cost ASC");
+                $stmt->bind_param('s', $typeName);
             }
             if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " ."'". $typeName ."'" .  "ORDER BY Cost Desc";
-                
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Cost Desc");
+                $stmt->bind_param('s', $typeName);
             }
             if($_POST['functionname'] == 'getProductsSortedReview'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = " ."'". $typeName ."'" . "ORDER BY Review Desc";
-                
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Review Desc");
+                $stmt->bind_param('s', $typeName);
             }
         }
 
@@ -59,22 +61,22 @@
 
             if($_POST['functionname'] == 'getProducts'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products";
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products");
 
             }
             if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost ASC";
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost ASC");
                 
             }
             if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost Desc";
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost Desc");
                 
             }
             if($_POST['functionname'] == 'getProductsSortedReview'){
 
-                $sql = "SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Review Desc";
+                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Review Desc");
                 
             }  
         }
@@ -83,7 +85,8 @@
         die("Error: function name not supported" . $_POST['functionname']);
     }
 
-    $result = $conn->query($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $i = 0;
     while($row = $result->fetch_assoc()){
