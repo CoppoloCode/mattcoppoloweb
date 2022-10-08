@@ -1,6 +1,6 @@
 <?php
 require "mailer.php";
-sendVerificationEmail();
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
 $conn->set_charset('utf8mb4');
@@ -39,20 +39,50 @@ if(isset($_POST['createAccount'])){
     $count = mysqli_num_rows($result);
 
     $count = mysqli_num_rows($result);
-
+    
     if($count > 0){
-        echo 0;
+        echo "email already exists.";
     }else{
-        
+
+        $emailHash = password_hash($email,PASSWORD_DEFAULT);
         $passwordHash = password_hash($password,PASSWORD_DEFAULT);
-        $verification = password_hash("verification",PASSWORD_DEFAULT);
-        $expires = "NOW() + INTERVAL 1 DAY";
-        $stmt = $conn->prepare("INSERT INTO pendingaccounts (email, password, address, first_name, last_name, active, verification, expires) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('ssssssss', $email,$passwordHash,$address,$firstName,$lastName,false,$verification,$expires);
+
+        sendVerificationEmail($email, $emailHash);
+
+        $stmt = $conn->prepare("INSERT INTO pendingaccounts (email, password, address, first_name, last_name, verification) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('ssssss', $email,$passwordHash,$address,$firstName,$lastName,$emailHash);
         $stmt->execute();
         $result = $stmt->get_result();
-        sendVerificationEmail();
-        
+
+
+        echo "verify email";
+
+    }
+}
+else if(isset($_POST["verifyEmail"])){
+
+    $verificationCode = $_POST["verifyEmail"];
+    $expires = "date_sub(now(), interval 1 hour)";
+
+    $stmt = $conn->prepare("SELECT * FROM pendingaccounts WHERE (verification = ?) AND (expires > ?)");
+    $stmt->bind_param('ss', $verificationCode, $expires);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $count = mysqli_num_rows($result);
+    $row = $result->fetch_assoc();
+    
+    $email = $row['email'];
+
+    $password = $row["password"];
+
+    $address = $row["address"];
+
+    $firstName = $row["first_name"];
+
+    $lastName = $row["last_name"];
+
+    if($count > 0){
+
         $alphabet = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
         $alphabetLength = sizeof($alphabet);
         $input = "";
@@ -76,16 +106,20 @@ if(isset($_POST['createAccount'])){
             $stmt->execute();
             $result = $stmt->get_result();
             $count = mysqli_num_rows($result);
-            
+                
         }while($count > 0);
 
         $stmt = $conn->prepare("INSERT INTO accounts (user_id, email, password, address, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('ssssss', $user_id,$email,$passwordHash,$address,$firstName,$lastName);
+        $stmt->bind_param('ssssss', $user_id,$email,$password,$address,$firstName,$lastName);
         $stmt->execute();
         $result = $stmt->get_result();
 
+        $stmt = $conn->prepare("DELETE FROM pendingaccounts WHERE verification = ?");
+        $stmt->bind_param('s', $verificationCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        echo $user_id;
+        echo "VERIFICATION COMPLETE";
     }
 }
 
@@ -94,7 +128,6 @@ else if(isset($_POST["signIn"])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT accounts.password FROM accounts WHERE accounts.email = '$email'";
     $stmt = $conn->prepare("SELECT accounts.password FROM accounts WHERE accounts.email = ?");
     $stmt->bind_param('s', $email);
     $stmt->execute();
@@ -102,7 +135,7 @@ else if(isset($_POST["signIn"])){
     $count = mysqli_num_rows($result);
     
     if($count == 0){
-        echo "account not found";
+        echo "account not found.";
     }else{
 
         $row = $result->fetch_assoc();
@@ -119,7 +152,7 @@ else if(isset($_POST["signIn"])){
             echo $row['user_id'];
         
         }else{
-            echo "account not found";
+            echo "incorrect password.";
         }
     }
 }

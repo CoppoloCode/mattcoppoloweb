@@ -9,26 +9,26 @@ $(document).ready(function(){
     $(document).on("click","#Sign-In", function(){
 
         let email = $("#email").val();
-        let password = $("#password").val();
+        let password = $("#password1").val();
 
-        if(checkBlankInputs(email,password)){
-            $.ajax({
-                url: "sign-in.php",
-                type: "POST",
-                data: {signIn: 1, email, password},
-                success: function(data){
-                    console.log(data);
-                    if (data == "account not found"){
-                        wrongEmailorPassword();
-                    }else{
-                        //accountCreated(data);
-                    }
-                },
-                error: function(err){
-                    console.log(err.responseText);
+        
+        $.ajax({
+            url: "sign-in.php",
+            type: "POST",
+            data: {signIn: 1, email, password},
+            success: function(data){
+                console.log(data);
+                if (data == "account not found." || data == "incorrect password."){
+                    wrongEmailorPassword(data);
+                }else{
+                    accountCreated(data);
                 }
-            })
-        }
+            },
+            error: function(err){
+                console.log(err.responseText);
+            }
+        })
+    
 
         
 
@@ -39,141 +39,124 @@ $(document).ready(function(){
         createAccountPage();
 
     })
-    $(document).on("click","#back", function(){
 
-        location.assign('sign-in.html');
+    $(document).on("change", "#confirmPassword, #password", function(){
 
-    })
-
-
-    $(document).on("click","#Create-Account", function(){
-
-        let email = $("#email").val();
-        let password = $("#password1").val();
-        let confirmPass = $("#confirmPassword").val();
-        let address = $("#address").val();
-        let firstName = $("#firstName").val();
-        let lastName = $("#lastName").val();
-        let createAccount = false;
-        if((checkPasswords(password,confirmPass) == true)){
-            createAccount = true;
-        }
-        if(checkBlankInputs(email,password,confirmPass,address,firstName,lastName) == true){
-            createAccount = true;
-        }else{
-            createAccount = false;
-        }
-        if(checkEmail(email) == true){
-            createAccount = true;
-        }else{
-            createAccount = false;
-        }
-        if(createAccount == true){
-            $.ajax({
-                url: "sign-in.php",
-                type: "POST",
-                data: {createAccount: 1, email, password, address, firstName, lastName},
-                success: function(data){
-                    console.log(data);
-                    if(data == 0){
-                        alert("You already have an account with that email."); 
-                    }else{
-                        accountCreated(data);
-                    }
-                    
-                },
-                error: function(err){
-                    console.log(err.responseText);
-                }
-            })
-        }
-        
-    })
-
-    $(document).on("change", "#confirmPassword, #password1", function(){
-
-        let pass = $("#password1").val();
-        let confirmPass = $("#confirmPassword").val();
-
-        checkPasswords(pass, confirmPass);
+        validatePassword();
 
     })
 
 })
 
-function checkPasswords(pass, confirmPass){
-    
-    
-    if(pass != confirmPass){
-        if(document.getElementById("noMatch") != null){
-            document.getElementById("noMatch").outerHTML = null;
-            document.getElementsByClassName("confirm-password")[0].insertAdjacentHTML("afterEnd", "<small id='noMatch'>Passwords do not match.</small>");
-        }else{
-            document.getElementsByClassName("confirm-password")[0].insertAdjacentHTML("afterEnd", "<small id='noMatch'>Passwords do not match.</small>");
-        }
-        return false;
-    }
-    else{
-        if(document.getElementById("noMatch") != null){
-            document.getElementById("noMatch").outerHTML = null;
-        }
-        return true;
-    }
-
+if(window.location.href.includes("?")){
+    let verificationCode = window.location.href.split("?")[1];
+    verifyEmail(verificationCode);
 }
 
-function checkEmail(email){
-    let goodEmail = false;
-    if(email.includes('@')){
-        goodEmail = true;
-    }
-    return goodEmail;
+function createAccount(){
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let address = document.getElementById("address").value;
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    $.ajax({
+        url: "sign-in.php",
+        type: "POST",
+        data: {createAccount: 1, email, password, address, firstName, lastName},
+        success: function(data){
+            console.log(data);
+            if(data.includes("email already exists.")){
+                emailAlreadyExists();
+            }
+            if(data.includes("verify email")){
+                verifyEmail('');
+            }
+            
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
+    })
 }
 
-function checkBlankInputs(email,password,confirmPass,address,firstName,lastName){
+function validatePassword(){
+    if(document.getElementById("password").value != document.getElementById("confirmPassword").value) {
+        document.getElementById("confirmPassword").setCustomValidity("Passwords Don't Match");
+    } else {
+        document.getElementById("confirmPassword").setCustomValidity('');
+    }
+  }
 
-    if((email == '') || (password == '') || (confirmPass == '') || (address == '') || (firstName == '') || (lastName == '')){
-        alert("All fields must be filled out.");
-        return false;
+
+function wrongEmailorPassword(data){
+    if(data == "account not found."){
+        document.getElementsByClassName("account-title")[0].innerHTML = `<h1>Sign In to Your Account</h1>`;
+        document.getElementsByClassName("account-title")[0].innerHTML += `<small> Email does not exist. </small>`;
     }else{
-        return true;
+        document.getElementsByClassName("account-title")[0].innerHTML = `<h1>Sign In to Your Account</h1>`;
+        document.getElementsByClassName("account-title")[0].innerHTML += `<small> Incorrect Password. </small>`;
     }
-
+   
 }
 
-function wrongEmailorPassword(){
-    document.getElementsByClassName("account-title")[0].innerHTML = `<h1>Sign In to Your Account</h1>`;
-    document.getElementsByClassName("account-title")[0].innerHTML += `<small> Wrong Email or Password </small>`;
+function emailAlreadyExists(){
+    alert("You already have an account with that email.");
 }
-
 
 function createAccountPage(){
 
-    let createAccountElement = `<div class="email">
-                                    <label>Email:</label><input type="text" id="email">
+    let createAccountElement = `<form method="POST" onsubmit="createAccount(); return false"><div class="email">
+                                    <label>Email:</label><input type="email" id="email" name="email" required>
                                 </div>
                                 <div class="password">
-                                    <label>Pass:</label><input type="password" id="password1">
+                                    <label>Pass:</label><input type="password" id="password" name="password" required>
                                 </div>
                                 <div class="confirm-password">
-                                    <label>Confirm Pass:</label><input type="password" id="confirmPassword">
+                                    <label>Confirm Pass:</label><input type="password" id="confirmPassword" required> 
                                 </div>
                                 <div class="address">
-                                    <label>Address:</label><input type="text" id="address">
+                                    <label>Address:</label><input type="text" id="address" name="address" required>
                                 </div>
                                 <div class="firstName">
-                                    <label>First Name:</label><input type="text" id="firstName">
+                                    <label>First Name:</label><input type="text" id="firstName" name="firstName" required>
                                 </div>
                                 <div class="lastName">
-                                    <label>Last Name:</label><input type="text" id="lastName">
+                                    <label>Last Name:</label><input type="text" id="lastName" name="lastName" required>
                                 </div>`;
 
-    let createAccountButtonElement = '<button id="back">Back to Sign In</button><button id="Create-Account">Create New Account</button>';
+    let createAccountButtonElement = '<button onclick="goBack()" id="back">Back to Sign In</button><button type="submit" id="Create-Account">Create New Account</button></form>';
     document.getElementsByClassName("account-title")[0].innerHTML = "<h1>Create Account</h1>";
-    document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement;
-    document.getElementsByClassName("button-row")[0].innerHTML  = createAccountButtonElement;
+    document.getElementsByClassName("input-row")[0].innerHTML = createAccountElement + createAccountButtonElement;
+    document.getElementsByClassName("button-row")[0].innerHTML = '';
 
 }
+
+function verifyEmail(verificationCode){
+    console.log(verificationCode);
+    if(verificationCode == ''){
+        document.getElementsByClassName("account-container")[0].innerHTML = "<h1> Please confirm your email address by clicking the link sent to your email. </h1>";
+    }else{
+        $.ajax({
+            url: "sign-in.php",
+            type: "POST",
+            data: {verifyEmail: verificationCode},
+            success: function(data){
+                console.log(data);
+            },
+            error: function(err){
+                console.log(err.responseText);
+            }
+        })
+    }
+}
+
+function goBack(){
+
+    location.assign('sign-in.html');
+
+}
+
+
 
 function accountCreated(msg){
     document.cookie = "user="+msg+"; path=/;";

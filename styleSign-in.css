@@ -234,7 +234,12 @@ nav ul a{
     gap: 30px;
     flex-direction: column;
     padding-bottom: 25px;
-
+}
+form{
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    padding-bottom: 25px;
 }
 .email, .password, .confirm-password, .address, .firstName, .lastName{
     display: flex;
@@ -260,13 +265,20 @@ nav ul a{
     border-color: transparent;
     border-radius: 40px 40px 40px 40px;
 }
+.input-row button{
+    padding: 10px;
+    border-style: none;
+    border-color: transparent;
+    border-radius: 40px 40px 40px 40px;
+    cursor: pointer;
+}
 .button-row{
     display: flex;
     align-items: center;
     justify-content: space-around;
     padding-top: 20px;
 }
-.button-row button{
+.button-row button {
     padding: 10px;
     border-style: none;
     border-color: transparent;
