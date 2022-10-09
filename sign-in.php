@@ -36,7 +36,6 @@ if(isset($_POST['createAccount'])){
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
-    $count = mysqli_num_rows($result);
 
     $count = mysqli_num_rows($result);
     
@@ -44,18 +43,32 @@ if(isset($_POST['createAccount'])){
         echo "email already exists.";
     }else{
 
-        $emailHash = password_hash($email,PASSWORD_DEFAULT);
-        $passwordHash = password_hash($password,PASSWORD_DEFAULT);
-
-        sendVerificationEmail($email, $emailHash);
-
-        $stmt = $conn->prepare("INSERT INTO pendingaccounts (email, password, address, first_name, last_name, verification) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param('ssssss', $email,$passwordHash,$address,$firstName,$lastName,$emailHash);
+        $stmt = $conn->prepare("SELECT * FROM pendingaccounts WHERE email = ?");
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
+        $count = mysqli_num_rows($result);
 
+        if($count == 0){
+            $count = mysqli_num_rows($result);
+            $emailHash = password_hash($email,PASSWORD_DEFAULT);
+            $passwordHash = password_hash($password,PASSWORD_DEFAULT);
 
-        echo "verify email";
+            $emailSent = sendVerificationEmail($email, $emailHash);
+            if($emailSent){
+                $stmt = $conn->prepare("INSERT INTO pendingaccounts (email, password, address, first_name, last_name, verification) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('ssssss', $email,$passwordHash,$address,$firstName,$lastName,$emailHash);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                echo "verify email";
+            }else{
+                echo "failed to send email";
+            }
+        }else{
+            echo "check email";
+        }
+       
 
     }
 }
@@ -69,45 +82,34 @@ else if(isset($_POST["verifyEmail"])){
     $stmt->execute();
     $result = $stmt->get_result();
     $count = mysqli_num_rows($result);
-    $row = $result->fetch_assoc();
     
-    $email = $row['email'];
-
-    $password = $row["password"];
-
-    $address = $row["address"];
-
-    $firstName = $row["first_name"];
-
-    $lastName = $row["last_name"];
-
+    
     if($count > 0){
 
-        $alphabet = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
-        $alphabetLength = sizeof($alphabet);
-        $input = "";
-        $hash = "";
-        $count = 0;
+        $row = $result->fetch_assoc(); 
 
+        $email = $row['email'];
+
+        $password = $row["password"];
+
+        $address = $row["address"];
+
+        $firstName = $row["first_name"];
+
+        $lastName = $row["last_name"];
+        
         do{
-            for($i = 0; $i < 5; $i++){
-                $input .= random_int(0,(int)$alphabetLength-1);
-            }
-            do{
-                $hash .= $alphabet[$input % $alphabetLength];
-                $input = $input / $alphabetLength;
-                $count++;
-            } while($count < 5);
 
-            $user_id = password_hash($hash,PASSWORD_DEFAULT);
-
+            $user_id = password_hash($email,PASSWORD_DEFAULT);
             $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
             $stmt->bind_param('s', $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $count = mysqli_num_rows($result);
-                
+
         }while($count > 0);
+                
+       
 
         $stmt = $conn->prepare("INSERT INTO accounts (user_id, email, password, address, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('ssssss', $user_id,$email,$password,$address,$firstName,$lastName);
@@ -155,6 +157,46 @@ else if(isset($_POST["signIn"])){
             echo "incorrect password.";
         }
     }
+}
+elseif(isset($_POST['forgotPassword'])){
+
+    $email = $_POST['forgotPassword'];
+    
+    $stmt = $conn->prepare("SELECT * FROM accounts WHERE email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $count = mysqli_num_rows($result);
+    
+    if($count == 0){
+        echo "No account with that email.";
+    }else{ 
+        $row = $result->fetch_assoc();
+        $user_id = $row['user_id'];
+        $emailSent = sendForgotPasswordEmail($email, $user_id);
+        //TODO create new db table to store passwordrequests so user does not send multiple emails.
+    }
+}
+elseif(isset($_POST['updatePassword'])){
+
+    $user_id = $_POST['verificationCode'];
+    $pass = $_POST['pass'];
+
+    $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
+    $stmt->bind_param('s', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $count = mysqli_num_rows($result);
+
+    if($count>0){
+        $stmt = $conn->prepare("UPDATE accounts SET accounts.password = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $pass, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }else{
+        echo "Account not found";
+    }
+
 }
 else{
     echo "improper POST request";
