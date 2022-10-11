@@ -89,12 +89,12 @@ function setPageButtons(direction){
     if(totalPages < 4){
         for(i = 0; i < totalPages; i++){
             page.buttonNum = i+1;
-            document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";        
+            document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "'href='#' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";        
         }
     }else{
         for(i = 0; i < 4; i++){
             page.buttonNum++;
-            document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";  
+            document.getElementById("page-btn").innerHTML += "<a id='"+ (page.buttonNum) + "'href='#' onclick='pageSwap(id,page.currentPage)'><span>"+ (page.buttonNum) +"</span></a>";  
         }
     }
     if(totalPages != page.buttonNum){

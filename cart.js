@@ -213,6 +213,7 @@
       }
       document.getElementById("badge1").innerText = totalProducts;
       document.getElementById("badge2").innerText = totalProducts;
+      document.getElementById("badge3").innerText = totalProducts;
   }
 
 
@@ -221,10 +222,10 @@
     product[3] = parseFloat(product[3]);
 
     let productElements = "<li class='clearfix'> <img src='images/" + product[2] + "'" + " alt='item1' /> <span class='item-name'>"+ product[1] 
-    +"</span><span id='cost-"+product[0]+"' class='item-price'>$"+product[3]+"</span> <td><input class='item-quantity' id='"
+    +"</span><div><span id='cost-"+product[0]+"' class='item-price'>$"+product[3]+"</span> <td><input class='item-quantity' id='"
     + product[0] + "'" + "type='number' value='"+ product[4] +
     "' min='1' oninput='this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : 1'></td><a class='RemoveFromCart' id='" 
-    + product[0] + "'" + "><i class='fa fa-trash' aria-hidden='true'></i></a></li>";
+    + product[0] + "'" + "><i class='fa fa-trash' aria-hidden='true'></i></a></div></li>";
   
     document.getElementById("shopping-cart-items").innerHTML += productElements;
 

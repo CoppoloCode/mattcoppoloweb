@@ -1,12 +1,13 @@
 
 class Page{
-    constructor(productCounter,products){
+    constructor(productCounter,products, view){
         this.productCounter = productCounter;
         this.products = products;
+        this.view = view;
     }
 }
 
-let page = new Page(0,[]);
+let page = new Page(0,[],0);
 
 
 function setTypeName(){
@@ -35,7 +36,11 @@ function getProductsFromDataBaseReview(typeName){
 function getProductsbyReview(data){         
     
     page.products = data;
+    
+    page.view = window.screen.availWidth;
+   
     sendProduct();
+    
 }
 
 function productIncrease(){
@@ -56,23 +61,28 @@ function productDecrease(){
 }
 
 function sendProduct(){
-
-    if(page.productCounter == page.products.length-1){
-        setupProduct(page.products[page.productCounter-1],1);
-        setupProduct(page.products[page.productCounter],2);
-        setupProduct(page.products[0],3);   
-    }
-    else if(page.productCounter == 0){
-        setupProduct(page.products[page.products.length-1],1);
-        setupProduct(page.products[0],2);
-        setupProduct(page.products[1],3);   
-    }else{
-        setupProduct(page.products[page.productCounter-1],1);
-        setupProduct(page.products[page.productCounter],2);   
-        setupProduct(page.products[page.productCounter+1],3);
-    }
-
     
+    if(page.view > 800){
+        if(page.productCounter == page.products.length-1){
+            setupProduct(page.products[page.productCounter-1],1);
+            setupProduct(page.products[page.productCounter],2);
+            setupProduct(page.products[0],3);   
+        }
+        else if(page.productCounter == 0){
+            setupProduct(page.products[page.products.length-1],1);
+            setupProduct(page.products[0],2);
+            setupProduct(page.products[1],3);   
+        }else{
+            setupProduct(page.products[page.productCounter-1],1);
+            setupProduct(page.products[page.productCounter],2);   
+            setupProduct(page.products[page.productCounter+1],3);
+        }
+    }else{
+        
+        setupProduct(page.products[page.productCounter],2);
+      
+    }
+
 }
 
 

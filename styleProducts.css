@@ -25,6 +25,7 @@ body{
     align-items: center;
     
 }
+
 .navbar .menu-icon{
     width: 30px;
     padding-right: 10px;
@@ -37,6 +38,7 @@ nav img{
     width: 20px;
 }
 nav{
+    display: flex;
     padding-right: 10px;
 }
 nav ul a{
@@ -45,10 +47,16 @@ nav ul a{
     font-size: 20px;
     color: rgb(31, 29, 29);
 }
-
+.menu-icon{
+    width: 20px;
+    display: none;
+}
+.cart-icon2{
+    display: none;
+}
 
 /*------------------------------Cart------------------------------*/
-#cart-icon{
+#cart-icon1, #cart-icon2{
     cursor:pointer;
     padding-right: 5px;
 }
@@ -60,7 +68,7 @@ nav ul a{
     align-self: flex-start;
 }
   
-#badge1,#badge2 {
+#badge1,#badge2,#badge3 {
     background-color: #6394F8;
     border-radius: 10px;
     color: white;
@@ -82,7 +90,12 @@ nav ul a{
     border-radius: 3px;
     padding: 20px;
 }
+.clearfix div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
+}   
 .shopping-cart-header {
     border-bottom: 1px solid #E8E8E8;
     padding-bottom: 15px;
@@ -118,7 +131,6 @@ nav ul a{
       
 .item-price {
     color: blue;
-    margin-right: 8px;
 }
       
 .item-quantity {
@@ -127,6 +139,7 @@ nav ul a{
 .RemoveFromCart{
     cursor: pointer;
     color:red;
+    font-size: x-large;
 }
      
   
@@ -185,8 +198,9 @@ nav ul a{
 }
 .sort-row{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    padding-bottom: 20px;
 }
 .sort-row h2{
     margin-left: 10%;
@@ -200,16 +214,17 @@ nav ul a{
 
 .row{
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: space-evenly;
 }
 .col{
     flex-basis: 25%;
+    padding: 50px;
 }
 .col img{
-    width: 200px;
-    height: 200px;
+    width: 15rem;
+    height: 15rem;
     object-fit: scale-down;
     transition: transform 0.5s;
 }
@@ -221,6 +236,7 @@ nav ul a{
 }
 .AddtoCart{
     cursor: pointer;
+    font-size: xx-large;
 }
 
 /*--------------------Sorting and Page Buttons-------------------------*/
@@ -307,25 +323,23 @@ ul{
     text-align: center;
 }
 
-/*--------- media query for menu < 800 square size----------*/
 
-.menu-icon{
-    width: 20px;
-    display: none;
-}
+
+/*--------- media query for menu < 800 square size----------*/
 
 @media only screen and (max-width: 800px){
     nav ul{
         position: absolute;
         top: 70px;
-        left: 0;
-        background: #333;
-        width: 100%;       
+        right: 0;
+        background: rgb(252, 252, 252);
+        width: 60%;       
         overflow: hidden;
         transition: max-height .5s;
     }
     nav ul li{
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         margin-right: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -337,21 +351,41 @@ ul{
         display: block;
         cursor: pointer;
     }
+    .cart-icon1{
+        display: none;
+    }
+    .cart-icon2{
+        display: block;
+    }
 }
+@media only screen and (max-width: 1300px){
 
-/*--------media query for less than 600 square size-------*/
-@media only screen and (max-width: 600px){
-    .row, .row-2, .row-3, .row-4, .row-5, .row-6, .row-7{
-        text-align: center;
+    .col img{
+        width: 9rem;
+        height: 9rem;
     }
-    .col-2, .col-3, .col-4, .col-5, .col-6, .col-7{
-        flex-basis: 100%;
-    }
+    
     .cart-container {
         margin: auto;
         width: 95%;
         position: sticky;
         align-self: flex-start;
-        top: 127px;
+        top: 50px;
     }
+/*--------media query for less than 980 square size-------*/
+@media only screen and (max-width: 980px){
+
+    .row{
+        flex-direction: column;
+    }
+    
+    .cart-container {
+        margin: auto;
+        width: 95%;
+        position: sticky;
+        align-self: flex-start;
+        top: 50px;
+    }
+}
+
 }

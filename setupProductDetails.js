@@ -1,13 +1,19 @@
-
-class Page{
-    constructor(products, productCounter, productElements){
-        this.products = products;
-        this.productCounter = productCounter;
-        this.productElements = productElements;
+if(screen.availWidth < 920){
+    for(let i = 2; i < 5; i++){
+        document.getElementById("product-" + i).remove();
     }
 }
 
-let page = new Page([],0,[]);
+class Page{
+    constructor(products, productCounter, productElements,view){
+        this.products = products;
+        this.productCounter = productCounter;
+        this.productElements = productElements;
+        this.view = view;
+    }
+}
+
+let page = new Page([],0,[],0);
 
 function getProductsFromDataBase(){
     $.ajax({
@@ -22,7 +28,7 @@ function getProductsFromDataBase(){
  function setProductDetails(data){         
                 
     page.products = data;
-   
+    page.view = screen.availWidth;
     setProductDetailsElements(page.products);
     shuffledProducts = shuffleProducts(page.products);
     page.productElements = getProductElements(shuffledProducts);
@@ -32,27 +38,44 @@ function getProductsFromDataBase(){
 function setProducts(productElements){
 
     let productPlacementId = "product-";
-    console.log(page.productCounter);
     
-    for(let i = 1; i < 5; i++){
-        
+    if(page.view > 920){
+        for(let i = 1; i < 5; i++){
+            if(page.productCounter >= page.products.length){
+                page.productCounter = 0;
+            }else if(page.productCounter < 0){
+                page.productCounter = page.products.length-5;
+            }
+            document.getElementById(productPlacementId + i).innerHTML = productElements[page.productCounter];
+            page.productCounter++;
+        } 
+    }else{
         if(page.productCounter >= page.products.length){
             page.productCounter = 0;
         }else if(page.productCounter < 0){
-            page.productCounter = page.products.length-5;
+            page.productCounter = page.products.length-1;
         }
-        document.getElementById(productPlacementId + i).innerHTML = productElements[page.productCounter];
-        page.productCounter++;
-    }      
-    console.log(page.productCounter);
+        document.getElementById(productPlacementId + 1).innerHTML = productElements[page.productCounter];
+    }     
+    
 }
 
 function changeProductsRight(){
-    setProducts(page.productElements);
+    if(page.view > 920){
+        setProducts(page.productElements);
+    }else{
+        page.productCounter++;
+        setProducts(page.productElements);
+    }
 }
 function changeProductsLeft(){
-    page.productCounter -= 8;
-    setProducts(page.productElements);
+    if(page.view > 920){
+        page.productCounter -= 8;
+        setProducts(page.productElements);
+    }else{
+        page.productCounter--;
+        setProducts(page.productElements);
+    }
 }
 
 

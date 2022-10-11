@@ -190,8 +190,9 @@ nav ul a{
     align-items: center;
     padding-bottom: 5%;
 }
-.products-container .row{
-    display: grid;
+.row{
+    display: flex;
+    flex-wrap: wrap;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     justify-content: space-around;
 }
@@ -202,28 +203,28 @@ nav ul a{
     
 }
 .btnLeft a, .btnRight a{
-    font-size: 150px;
+    font-size: 10rem;
     cursor: pointer;
     user-select: none;
 }
 .col-1, .col-2, .col-3{
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    width:auto;
+    height:auto;
     justify-items: center;
     align-content: center;
+    text-align: center;
 }
-.col-1 .Image img{
-    width: 150px;
-    height: 150px;
+
+.col-1 .Image img, .col-3 .Image img {
+    width: 10rem;
+    height: 10rem;
     object-fit: scale-down;
 }
 .col-2 .Image img{
-    width: 450px;
-    height: 450px;
-    object-fit: scale-down;
-}
-.col-3 .Image img{
-    width: 150px;
-    height: 150px;
+    width: 11rem;
+    height: 11rem;
     object-fit: scale-down;
 }
 .AddtoCart{
@@ -321,12 +322,7 @@ ul{
 
 /*--------media query for less than 600 square size-------*/
 @media only screen and (max-width: 600px){
-    .row, .row-2, .row-3, .row-4, .row-5, .row-6, .row-7{
-        text-align: center;
-    }
-    .col-2, .col-3, .col-4, .col-5, .col-6, .col-7{
-        flex-basis: 100%;
-    }
+    
     .cart-container {
         margin: auto;
         width: 95%;

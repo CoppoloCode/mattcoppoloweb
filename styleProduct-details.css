@@ -186,8 +186,8 @@ margin: 25px 0 15px 0;
     padding-top: 50px;
 }
 .col-1 img{
-    width: 500px;
-    height: 500px;
+    width: 20rem;
+    height: 20rem;
     object-fit: scale-down;
     
 }
@@ -197,7 +197,7 @@ margin: 25px 0 15px 0;
 }
 .col-2 .Name{
     text-align: left;
-    font-size: 40px;
+    font-size: 2rem;
 }
 .col-2 .Info{
     margin-bottom:20px;
@@ -206,7 +206,7 @@ margin: 25px 0 15px 0;
 }
 .col-2 .Review{
     text-align: left;
-    font-size: 25px;
+    font-size: 1rem;
     color: gold;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -244,9 +244,9 @@ margin: 25px 0 15px 0;
 }
 .row-2{
     display:flex;
-    justify-content: space-between;
-    padding-left: 50px;
-    padding-right: 50px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+   
 }
 .btnLeft a, .btnRight a{
     font-size: 150px; 
@@ -254,12 +254,12 @@ margin: 25px 0 15px 0;
     user-select: none;
 }
 .col{
-    flex-basis: 25%;
+   
     transition: transform 0.5s;
 }
 .col img{
-    width: 200px;
-    height: 200px;
+    width: 10rem;
+    height: 10rem;
     object-fit: scale-down;
 }
 .col p{
@@ -362,13 +362,15 @@ ul{
 }
 
 /*--------media query for less than 600 square size-------*/
-@media only screen and (max-width: 600px){
-    .row, .row-2, .row-3, .row-4, .row-5, .row-6, .row-7{
-        text-align: center;
+@media only screen and (max-width: 900px){
+
+    .row{
+        flex-direction: column
     }
-    .col-2, .col-3, .col-4, .col-5, .col-6, .col-7{
-        flex-basis: 100%;
+    .row .col-2{
+        width:fit-content;
     }
+    
     .cart-container {
         margin: auto;
         width: 95%;
