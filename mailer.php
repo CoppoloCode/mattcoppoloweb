@@ -4,20 +4,22 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 require_once 'vendor/autoload.php';
 
-$mail = new PHPMailer(true);
-$mail->isSMTP(true);
-$mail->Host = "smtp.gmail.com";
-$mail->SMTPAuth = true;
-$mail->Username = "coppolomatthew@gmail.com";
-$mail->Password = "lyjnukhhukkglmju";
-$mail->SMTPSecure = 'tsl';
-$mail->Port = "587";
-$mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
-$mail->isHTML(true);
+
 
 function sendVerificationEmail($email,$hash){
    
     $hash = 'http://localhost/mattcoppoloweb/sign-in.html?verify='.$hash;
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP(true);
+    $mail->Host = "smtp.gmail.com";
+    $mail->SMTPAuth = true;
+    $mail->Username = "coppolomatthew@gmail.com";
+    $mail->Password = "lyjnukhhukkglmju";
+    $mail->SMTPSecure = 'tsl';
+    $mail->Port = "587";
+    $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
+    $mail->isHTML(true);
     
     $mail->addAddress($email);
     
@@ -35,11 +37,22 @@ function sendVerificationEmail($email,$hash){
 function sendForgotPasswordEmail($email,$hash){
    
     $hash = 'http://localhost/mattcoppoloweb/sign-in.html?passReset='.$hash;
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP(true);
+    $mail->Host = "smtp.gmail.com";
+    $mail->SMTPAuth = true;
+    $mail->Username = "coppolomatthew@gmail.com";
+    $mail->Password = "lyjnukhhukkglmju";
+    $mail->SMTPSecure = 'tsl';
+    $mail->Port = "587";
+    $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
+    $mail->isHTML(true);
     
     $mail->addAddress($email);
     
     $mail->Subject = "Forgot Password";
-    $mail->Body = "<h2> Please click the link to recover your password. </h2> <a href='$hash'>Verfiy Email</a>";
+    $mail->Body = "<h2> Please click the link to recover your password. </h2> <a href='$hash'>Change Password</a>";
     
     try{
         $mail->send();

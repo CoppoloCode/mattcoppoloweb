@@ -15,24 +15,20 @@ const account = new accountInfo([]);
 
 const accountButtonsElement =  `<div class="buttons">
                                 <button id="orders" onclick="getOrders()">Your Orders</button>
-                                <button id="login-security" onclick="accountModify()">Login & Security</button> 
-                                <button id="payments" onclick="payments()">Your Payment Methods</button>   
+                                <button id="login-security" onclick="accountModify()">Login & Security</button>    
                                 </div>`;
 const accountModifyElement =`<div class="account-title">
-                                <button id='smallBtn' onclick="setupAccount()">Go Back</button>
                                 <h1>Your Account Info</h1>
                             </div>
-                            <div class="accountModify">
-                                <div class="accountInfo">
-                                    <div class="email"></div>
-                                    <div class="password"></div>
-                                    <div class="address"></div>
-                                    <div class="firstName"></div>
-                                    <div class="lastName"></div>
-                                </div>
+                            <div class="accountInfo">
+                                <div class="email"></div>
+                                <div class="password"></div>
+                                <div class="address"></div>
+                                <div class="firstName"></div>
+                                <div class="lastName"></div>
                             </div>`;
-const previousOrdersElement = `<button id='smallBtn'onclick="setupAccount()">Go Back</button><div class="title"><h1> Your Previous Orders </h1></div>`;
-const noPreviousOrdersElement = `<button id='smallBtn'onclick="setupAccount()">Go Back</button><div class="title"><h1> You Have not purchased anything yet...</h1></div>`;
+const previousOrdersElement = `<div class="title"><h1> Your Previous Orders </h1></div>`;
+const noPreviousOrdersElement = `<div class="title"><h1> No Orders </h1></div>`;
 const passwordElement = `<h2>Password:</h2>
                          <input id="passInput1" type="password" value=""></input>
                          <input id="passInput2" type="password" value=""></input>
@@ -76,6 +72,7 @@ function signOut(){
 function setupAccount(){
     let accountElement = `<div class="account-title"><h1>Welcome back `+ account.accountInfo.first_name +`</h1></div>`+accountButtonsElement;
 
+    document.getElementsByClassName("back-btn-container")[0].innerHTML = ``;
     document.getElementsByClassName("account-container")[0].innerHTML = accountElement;
 
 }
@@ -99,6 +96,7 @@ function accountModify(){
                                         <p>`+account.accountInfo.last_name+`</p>
                                         <button id='smallBtn' onclick="changeLastName()">Change</button>`;                                    
 
+    document.getElementsByClassName("back-btn-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccount()">Go Back</button>`;
     document.getElementsByClassName("account-container")[0].innerHTML = accountModifyElement;
     document.getElementsByClassName("email")[0].innerHTML = accountEmailElement;
     document.getElementsByClassName("password")[0].innerHTML = accountPasswordElement;
@@ -324,15 +322,19 @@ function orders(data){
     
     let products = [];
     products = JSON.parse(data);
+    document.getElementsByClassName("back-btn-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccount()">Go Back</button>`;
     if(products.length > 0){
 
         document.getElementsByClassName("account-container")[0].innerHTML = previousOrdersElement;
+        document.getElementsByClassName("account-container")[0].innerHTML += `<div class="products"></div>`;
 
         products.forEach(product =>{
-            document.getElementsByClassName("account-container")[0].innerHTML += `<div class="product"><img src="images/`+ product.Image + `"></img>
-                                                                                  <small>`+ product.Description + `</small>
-                                                                                  <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
-                                                                                  <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div></div>`;
+            document.getElementsByClassName("products")[0].innerHTML += `<div class="product">
+                                                                                    <img src="images/`+ product.Image + `"></img>
+                                                                                    <small>`+ product.Description + `</small>
+                                                                                    <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
+                                                                                    <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div>
+                                                                                  </div>`;
         });
 
     }else{

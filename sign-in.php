@@ -69,7 +69,6 @@ if(isset($_POST['createAccount'])){
             echo "check email";
         }
        
-
     }
 }
 else if(isset($_POST["verifyEmail"])){
@@ -114,14 +113,23 @@ else if(isset($_POST["verifyEmail"])){
         $stmt = $conn->prepare("INSERT INTO accounts (user_id, email, password, address, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('ssssss', $user_id,$email,$password,$address,$firstName,$lastName);
         $stmt->execute();
-        $result = $stmt->get_result();
+        
+        if($stmt){
+            $stmt = $conn->prepare("DELETE FROM pendingaccounts WHERE verification = ?");
+            $stmt->bind_param('s', $verificationCode);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        }
+        
+        echo "VERIFICATION COMPLETE";
+    }else{
 
         $stmt = $conn->prepare("DELETE FROM pendingaccounts WHERE verification = ?");
         $stmt->bind_param('s', $verificationCode);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        echo "VERIFICATION COMPLETE";
+        echo "proccess expired";
     }
 }
 
@@ -167,34 +175,67 @@ elseif(isset($_POST['forgotPassword'])){
     $stmt->execute();
     $result = $stmt->get_result();
     $count = mysqli_num_rows($result);
-    
+
     if($count == 0){
         echo "No account with that email.";
-    }else{ 
+    }else{
+
         $row = $result->fetch_assoc();
         $user_id = $row['user_id'];
-        $emailSent = sendForgotPasswordEmail($email, $user_id);
-        //TODO create new db table to store passwordrequests so user does not send multiple emails.
+
+        $stmt = $conn->prepare("SELECT user_id FROM pendingpasswordchange WHERE user_id = ?");
+        $stmt->bind_param('s', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $count = mysqli_num_rows($result);
+
+        if($count == 0){
+            
+            $emailSent = sendForgotPasswordEmail($email, $user_id);
+            if($emailSent){
+                $stmt = $conn->prepare("INSERT INTO pendingpasswordchange (user_id) VALUES (?)");
+                $stmt->bind_param('s', $user_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            }
+        }else{
+            echo "Check Email";
+        }
     }
 }
 elseif(isset($_POST['updatePassword'])){
 
     $user_id = $_POST['verificationCode'];
     $pass = $_POST['pass'];
+    $expires = "date_sub(now(), interval 1 hour)";
 
-    $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
-    $stmt->bind_param('s', $user_id);
+    $stmt = $conn->prepare("SELECT * FROM pendingpasswordchange WHERE (user_id = ?) AND (expires > ?)");
+    $stmt->bind_param('ss', $user_id, $expires);
     $stmt->execute();
     $result = $stmt->get_result();
     $count = mysqli_num_rows($result);
 
-    if($count>0){
-        $stmt = $conn->prepare("UPDATE accounts SET accounts.password = ? WHERE user_id = ?");
-        $stmt->bind_param('ss', $pass, $user_id);
+    if($count > 0){
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("UPDATE accounts SET password = ? WHERE user_id = ?");
+        $stmt->bind_param('ss', $hash, $user_id);
+        $stmt->execute();
+        
+
+        if($stmt){
+            $stmt = $conn->prepare("DELETE FROM pendingpasswordchange WHERE user_id = ?");
+            $stmt->bind_param('s', $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        }
+
+        echo "password changed";
+    }else{
+        $stmt = $conn->prepare("DELETE FROM pendingpasswordchange WHERE user_id = ?");
+        $stmt->bind_param('s', $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-    }else{
-        echo "Account not found";
+        echo "proccess expired";
     }
 
 }

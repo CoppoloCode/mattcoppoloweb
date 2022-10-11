@@ -1,5 +1,4 @@
 
-
 window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
         location.reload();
@@ -49,8 +48,8 @@ function setupSignInHTML(){
                                 </div>
                             </div>
                                 <div class="button-row">
-                                    <button id="Create-New-Account" onclick="setupCreateAccountHTML()">Create New Account</button>
                                     <button id="Sign-In" type="submit">Sign In</button>
+                                    <button id="Create-New-Account" onclick="setupCreateAccountHTML()">Create New Account</button>
                                 </div>
                          </form>
                          <div class="forgotPassword">
@@ -185,8 +184,7 @@ function createAccount(){
         url: "sign-in.php",
         type: "POST",
         data: {createAccount: 1, email, password, address, firstName, lastName},
-        success: function(data){
-            console.log(data);
+        success: function(data){s
             if(data == "email already exists."){
                 notifyUser("You already have an account with that email.");
             }else if(data == "verify email"){
@@ -223,10 +221,10 @@ function verifyEmail(verificationCode){
         data: {verifyEmail: verificationCode},
         success: function(data){
             if(data == "VERIFICATION COMPLETE"){
-                notifyUser(`<p>Success! Your account has been created.</p>`);
+                notifyUser(`Success! Your account has been created.`);
                 
             }else{
-                notifyUser(`<p>Something went wrong in the verification proccess. Please try again.</p>`);
+                notifyUser(`Email Verification has expired. Please create an account and verify within an hour.`);
             }
         },
         error: function(err){
@@ -258,8 +256,11 @@ function forgotPassword(){
         success: function(data){
             if(data == "No account with that email."){
                 notifyUser("There is no account associated with that E-mail.");
+            }else if(data.includes("Mailer Error:")){
+                notifyUser("Failed to send. Try again.");
             }else{
-                notifyUser("Please follow the link we sent to your email to reset your password.");
+           
+                notifyUser("Please follow the link we sent to your email to reset your password. This may take a few minutes.");
             }
         },
         error: function(err){
@@ -275,16 +276,22 @@ function createNewPassword(){
     let verificationCode = window.location.href.split("passReset=")[1];
 
     let pass = $("#password").val();
-   
+    console.log(verificationCode);
+
     $.ajax({
         url: "sign-in.php",
         type: "POST",
-        data: {updatePassword: verificationCode, pass},
+        data: {updatePassword: 1, verificationCode, pass},
         success: function(data){
+            console.log(data);
             if(data == "Account not found"){
                 notifyUser("An error occured in the verification proccess. please try again.");
-            }else{
-                notifyUser("changePassword");
+            }else if(data == "proccess expired"){
+                notifyUser("verification proccess has expired try again.")
+            }
+            else{
+                setupSignInHTML();
+                notifyUser("Your password has been changed.");
             }
         },
         error: function(err){
