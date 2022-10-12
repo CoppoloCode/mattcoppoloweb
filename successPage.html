@@ -17,17 +17,21 @@
                 <div class="logo">
                     <img src="images/Storelogo.png">
                 </div>
-                <nav>
-                    <ul id="MenuItems">
-                        <a href="index.html">Back to CoppoloCode</a>
-                        <a href="store.html">Home</a>
-                        <a href="Products.html">Products</a>
-                        <a href="sign-in.html">Account</a>
-                        <a onclick="signOut()">Sign Out</a>
-                        <a href="#0" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
-                    </ul>
-                 </nav>
-                <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
+                <div>
+                    <nav>
+                        <ul id="MenuItems">
+                            <a href="index.html">CoppoloCode</a>
+                            <a href="store.html">Home</a>
+                            <a href="Products.html">Products</a>
+                            <a href="sign-in.html">Account</a>
+                            <a href="#0" class="cart-icon1" id="cart"><i class="fa fa-shopping-cart" id="cart-icon1">Cart</i><span id="badge1"></span></a>
+                        </ul>
+                    </nav>
+                    <nav>
+                        <a href="#0" class="cart-icon2" id="cart"><i class="fa fa-shopping-cart" id="cart-icon2">Cart</i><span id="badge2"></span></a>
+                        <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
+                    </nav>
+                </div>
             </div>
         </div>
     </div> 
@@ -37,7 +41,7 @@
     <div class="cart-container">
         <div class="shopping-cart">
           <div class="shopping-cart-header">
-            <i class="fa fa-shopping-cart cart-icon"></i><span id="badge2"></span>
+            <i class="fa fa-shopping-cart cart-icon"></i><span id="badge3"></span>
             <div id="shopping-cart-total">
                 
             </div>

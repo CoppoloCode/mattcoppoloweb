@@ -35,10 +35,10 @@ function getProductsFromDataBaseReview(typeName){
 
 function getProductsbyReview(data){         
     
-    page.products = data;
+    page.products = getProductElements(data);
     
     page.view = window.screen.availWidth;
-   
+    
     sendProduct();
     
 }
@@ -89,29 +89,14 @@ function sendProduct(){
 
 function setupProduct(product,productNum){
 
-    
-    
-    let productImageElement;
-    let productPriceElement;
-    let productReviewElement;
-    let productNameElement;
     let productNumString = (productNum).toString();
 
     
-    productNameElement = getNameElement(product);
-    productImageElement = getImageElement(product);
-    productReviewElement = getReview(product[3]);
-    productPriceElement = getPriceELement(product);
+    document.getElementsByClassName("col-" + productNumString)[0].innerHTML = product;
+    
 
-    
-    document.getElementById("showName-" + productNumString).innerHTML = productNameElement;
-    document.getElementById("showImage-" + productNumString).innerHTML = productImageElement;
-    document.getElementById("showReview-" + productNumString).innerHTML = productReviewElement;
-    document.getElementById("showPrice-" + productNumString).innerHTML = productPriceElement;
-    
-    if(productNum == 2){
-        saveProductId(product[0]);
-        document.getElementById("btn").innerHTML = "</p><a id=" + "'" + product[0] + "'" + "class='AddtoCart'><i class='fa fa-cart-plus' aria-hidden='true'></i></a>";
+    if(productNum != 2){
+        document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0].remove();
     }
    
     

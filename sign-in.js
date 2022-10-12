@@ -184,7 +184,7 @@ function createAccount(){
         url: "sign-in.php",
         type: "POST",
         data: {createAccount: 1, email, password, address, firstName, lastName},
-        success: function(data){s
+        success: function(data){
             if(data == "email already exists."){
                 notifyUser("You already have an account with that email.");
             }else if(data == "verify email"){

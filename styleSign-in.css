@@ -43,6 +43,7 @@ nav img{
     width: 20px;
 }
 nav{
+    display: flex;
     padding-right: 10px;
 }
 nav ul a{
@@ -51,13 +52,20 @@ nav ul a{
     font-size: 20px;
     color: rgb(31, 29, 29);
 }
-#cart-icon{
-    cursor: pointer;
-    padding-right: 5px;
+.menu-icon{
+    width: 20px;
+    display: none;
+}
+.cart-icon2{
+    display: none;
 }
 
 /*------------------------------Cart------------------------------*/
 
+#cart-icon1, #cart-icon2{
+    cursor:pointer;
+    padding-right: 5px;
+}
 .cart-container {
     margin: auto;
     width: 95%;
@@ -66,7 +74,7 @@ nav ul a{
     align-self: flex-start;
 }
   
-#badge1,#badge2 {
+#badge1,#badge2,#badge3 {
     background-color: #6394F8;
     border-radius: 10px;
     color: white;
@@ -78,7 +86,7 @@ nav ul a{
     vertical-align: middle;
     white-space: nowrap;
 }
-
+  
 .shopping-cart {
     margin: 10px 15px;
     background: white;
@@ -87,9 +95,13 @@ nav ul a{
     right: 0;
     border-radius: 3px;
     padding: 20px;
-    z-index: 1;
 }
+.clearfix div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
+}   
 .shopping-cart-header {
     border-bottom: 1px solid #E8E8E8;
     padding-bottom: 15px;
@@ -104,7 +116,6 @@ nav ul a{
 }
 #shopping-cart-items {  
     padding-top: 20px;
-    list-style: none;
 }
 .shopping-cart li {
     margin-bottom: 18px;
@@ -126,7 +137,6 @@ nav ul a{
       
 .item-price {
     color: blue;
-    margin-right: 8px;
 }
       
 .item-quantity {
@@ -135,6 +145,7 @@ nav ul a{
 .RemoveFromCart{
     cursor: pointer;
     color:red;
+    font-size: x-large;
 }
      
   
@@ -296,14 +307,17 @@ nav ul a{
     nav ul{
         position: absolute;
         top: 70px;
-        left: 0;
-        background: #333;
-        width: 100%;       
+        right: 0;
+        background: rgb(252, 252, 252);
+        width: 60%;       
         overflow: hidden;
         transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
     }
     nav ul li{
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         margin-right: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -314,6 +328,12 @@ nav ul a{
     .menu-icon{
         display: block;
         cursor: pointer;
+    }
+    .cart-icon1{
+        display: none;
+    }
+    .cart-icon2{
+        display: block;
     }
 }
 
@@ -343,6 +363,5 @@ nav ul a{
         width: 95%;
         position: sticky;
         align-self: flex-start;
-        top: 127px;
     }
 }

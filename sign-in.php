@@ -47,14 +47,25 @@ if(isset($_POST['createAccount'])){
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
-        $count = mysqli_num_rows($result);
+        $count1 = mysqli_num_rows($result);
 
-        if($count == 0){
-            $count = mysqli_num_rows($result);
+        do{
             $emailHash = password_hash($email,PASSWORD_DEFAULT);
-            $passwordHash = password_hash($password,PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("SELECT * FROM pendingaccounts WHERE verification = ?");
+            $stmt->bind_param('s', $emailHash);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $count2 = mysqli_num_rows($result);
 
+        }while($count2 > 0);
+
+        
+        if($count1 == 0 && $count2 == 0){
+            $count = mysqli_num_rows($result);
+            
+            $passwordHash = password_hash($password,PASSWORD_DEFAULT);
             $emailSent = sendVerificationEmail($email, $emailHash);
+
             if($emailSent){
                 $stmt = $conn->prepare("INSERT INTO pendingaccounts (email, password, address, first_name, last_name, verification) VALUES (?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param('ssssss', $email,$passwordHash,$address,$firstName,$lastName,$emailHash);
@@ -98,7 +109,6 @@ else if(isset($_POST["verifyEmail"])){
         $lastName = $row["last_name"];
         
         do{
-
             $user_id = password_hash($email,PASSWORD_DEFAULT);
             $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
             $stmt->bind_param('s', $user_id);

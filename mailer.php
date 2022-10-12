@@ -15,7 +15,7 @@ function sendVerificationEmail($email,$hash){
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "coppolomatthew@gmail.com";
-    $mail->Password = "lyjnukhhukkglmju";
+    $mail->Password = "tegxtazyhhxzxxvj";
     $mail->SMTPSecure = 'tsl';
     $mail->Port = "587";
     $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
@@ -30,7 +30,7 @@ function sendVerificationEmail($email,$hash){
         $mail->send();
         return true;
     }catch(Exception $e){
-        echo "Mailer Error: " . $mail->ErrorInfo;
+        echo "Mailer Error: " . $mail->ErrorInfo . $mail->Password;
         return false;
     }
 }
@@ -43,7 +43,7 @@ function sendForgotPasswordEmail($email,$hash){
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "coppolomatthew@gmail.com";
-    $mail->Password = "lyjnukhhukkglmju";
+    $mail->Password = "tegxtazyhhxzxxvj";
     $mail->SMTPSecure = 'tsl';
     $mail->Port = "587";
     $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');

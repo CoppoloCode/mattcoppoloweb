@@ -42,6 +42,7 @@ nav img{
     width: 20px;
 }
 nav{
+    display: flex;
     padding-right: 10px;
 }
 nav ul a{
@@ -50,9 +51,12 @@ nav ul a{
     font-size: 20px;
     color: rgb(31, 29, 29);
 }
-#cart-icon{
-    cursor: pointer;
-    padding-right: 5px;
+.menu-icon{
+    width: 20px;
+    display: none;
+}
+.cart-icon2{
+    display: none;
 }
 
 /* ----------------------------Intro----------------------------- */
@@ -82,6 +86,10 @@ p{
 
 /*------------------------------Cart------------------------------*/
 
+#cart-icon1, #cart-icon2{
+    cursor:pointer;
+    padding-right: 5px;
+}
 .cart-container {
     margin: auto;
     width: 95%;
@@ -90,7 +98,7 @@ p{
     align-self: flex-start;
 }
   
-#badge1,#badge2 {
+#badge1,#badge2,#badge3 {
     background-color: #6394F8;
     border-radius: 10px;
     color: white;
@@ -102,7 +110,7 @@ p{
     vertical-align: middle;
     white-space: nowrap;
 }
-
+  
 .shopping-cart {
     margin: 10px 15px;
     background: white;
@@ -111,9 +119,13 @@ p{
     right: 0;
     border-radius: 3px;
     padding: 20px;
-    z-index: 1;
 }
+.clearfix div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
+}   
 .shopping-cart-header {
     border-bottom: 1px solid #E8E8E8;
     padding-bottom: 15px;
@@ -128,10 +140,10 @@ p{
 }
 #shopping-cart-items {  
     padding-top: 20px;
-    list-style: none;
 }
 .shopping-cart li {
     margin-bottom: 18px;
+    list-style: none;
 }
   
 .shopping-cart img {
@@ -150,7 +162,6 @@ p{
       
 .item-price {
     color: blue;
-    margin-right: 8px;
 }
       
 .item-quantity {
@@ -159,6 +170,7 @@ p{
 .RemoveFromCart{
     cursor: pointer;
     color:red;
+    font-size: x-large;
 }
      
   
@@ -205,7 +217,6 @@ p{
     clear: both;
 }
 
-
 /*--------------------Categories to choose-------------------------*/
 
 .categories{ 
@@ -238,7 +249,9 @@ p{
     transform: translateY(-5px); 
 }
 .col-3 img{
-    width: 100%;
+    width: 250px;
+    height: 250px;
+    object-fit: scale-down;
     cursor: pointer;
 }
 
@@ -259,7 +272,7 @@ p{
 
 }
 .row-3 a{
-    font-size: 20px;
+    font-size: x-large;
     cursor: pointer;
 }
 .col-4{
@@ -440,14 +453,17 @@ small{
     nav ul{
         position: absolute;
         top: 70px;
-        left: 0;
-        background: #333;
-        width: 100%;       
+        right: 0;
+        background: rgb(252, 252, 252);
+        width: 60%;       
         overflow: hidden;
         transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
     }
     nav ul li{
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         margin-right: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -458,6 +474,12 @@ small{
     .menu-icon{
         display: block;
         cursor: pointer;
+    }
+    .cart-icon1{
+        display: none;
+    }
+    .cart-icon2{
+        display: block;
     }
 }
 
@@ -474,6 +496,5 @@ small{
         width: 95%;
         position: sticky;
         align-self: flex-start;
-        top: 127px;
     }
 }

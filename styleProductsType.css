@@ -36,6 +36,7 @@ nav img{
     width: 20px;
 }
 nav{
+    display: flex;
     padding-right: 10px;
 }
 nav ul a{
@@ -44,12 +45,18 @@ nav ul a{
     font-size: 20px;
     color: rgb(31, 29, 29);
 }
-
+.menu-icon{
+    width: 20px;
+    display: none;
+}
+.cart-icon2{
+    display: none;
+}
 
 /*-------------------- Cart ------------------------*/
 
-#cart-icon{
-    cursor: pointer;
+#cart-icon1, #cart-icon2{
+    cursor:pointer;
     padding-right: 5px;
 }
 .cart-container {
@@ -58,10 +65,9 @@ nav ul a{
     position: sticky;
     top: 55px;
     align-self: flex-start;
-    z-index: 1;
 }
   
-#badge1,#badge2 {
+#badge1,#badge2,#badge3 {
     background-color: #6394F8;
     border-radius: 10px;
     color: white;
@@ -83,7 +89,12 @@ nav ul a{
     border-radius: 3px;
     padding: 20px;
 }
+.clearfix div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
+}   
 .shopping-cart-header {
     border-bottom: 1px solid #E8E8E8;
     padding-bottom: 15px;
@@ -119,7 +130,6 @@ nav ul a{
       
 .item-price {
     color: blue;
-    margin-right: 8px;
 }
       
 .item-quantity {
@@ -128,6 +138,7 @@ nav ul a{
 .RemoveFromCart{
     cursor: pointer;
     color:red;
+    font-size: x-large;
 }
      
   
@@ -217,12 +228,12 @@ nav ul a{
     text-align: center;
 }
 
-.col-1 .Image img, .col-3 .Image img {
+.col-1 img, .col-3 img {
     width: 10rem;
     height: 10rem;
     object-fit: scale-down;
 }
-.col-2 .Image img{
+.col-2 img{
     width: 11rem;
     height: 11rem;
     object-fit: scale-down;
@@ -299,14 +310,17 @@ ul{
     nav ul{
         position: absolute;
         top: 70px;
-        left: 0;
-        background: #333;
-        width: 100%;       
+        right: 0;
+        background: rgb(252, 252, 252);
+        width: 60%;       
         overflow: hidden;
         transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
     }
     nav ul li{
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         margin-right: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
@@ -318,6 +332,12 @@ ul{
         display: block;
         cursor: pointer;
     }
+    .cart-icon1{
+        display: none;
+    }
+    .cart-icon2{
+        display: block;
+    }
 }
 
 /*--------media query for less than 600 square size-------*/
@@ -328,6 +348,6 @@ ul{
         width: 95%;
         position: sticky;
         align-self: flex-start;
-        top: 127px;
+        
     }
 }

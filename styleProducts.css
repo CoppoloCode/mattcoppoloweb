@@ -5,6 +5,7 @@
 }
 body{
     position: relative;
+    height: 100%;
     font-family: 'Poppins', sans-serif;
     z-index: -3;
 }
@@ -113,6 +114,7 @@ nav ul a{
 }
 .shopping-cart li {
     margin-bottom: 18px;
+    list-style: none;
 }
   
 .shopping-cart img {
@@ -189,7 +191,7 @@ nav ul a{
 
 /*--------------------Products-------------------------*/
 .small-container{
-    max-width: auto;
+    min-height: 100%;
     text-align: center;
     padding: 10px;
     position: relative;
@@ -336,6 +338,8 @@ ul{
         width: 60%;       
         overflow: hidden;
         transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
     }
     nav ul li{
         display: flex;
