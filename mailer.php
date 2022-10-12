@@ -43,7 +43,7 @@ function sendForgotPasswordEmail($email,$hash){
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "coppolomatthew@gmail.com";
-    $mail->Password = "lyjnukhhukkglmju";
+    $mail->Password = "clvxjcmsdfjdfd";
     $mail->SMTPSecure = 'tsl';
     $mail->Port = "587";
     $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
