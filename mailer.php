@@ -20,7 +20,7 @@ function sendVerificationEmail($email,$hash){
     $mail->Port = "587";
     $mail->setFrom('coppolomatthew@gmail.com', 'TrueGGaming');
     $mail->isHTML(true);
-    
+    //test
     $mail->addAddress($email);
     
     
