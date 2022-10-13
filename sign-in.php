@@ -1,5 +1,5 @@
 <?php
-require "mailer.php";
+require_once "mailer.php";
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
@@ -169,7 +169,9 @@ else if(isset($_POST["signIn"])){
             $result = $stmt->get_result();
         
             $row =  $result->fetch_assoc();
-            echo $row['user_id'];
+            $user_id = $row['user_id'];
+            
+            echo $user_id;
         
         }else{
             echo "incorrect password.";
@@ -192,7 +194,8 @@ elseif(isset($_POST['forgotPassword'])){
 
         $row = $result->fetch_assoc();
         $user_id = $row['user_id'];
-
+        $email = $row['email'];
+        $verificationCode = password_hash($email, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("SELECT user_id FROM pendingpasswordchange WHERE user_id = ?");
         $stmt->bind_param('s', $user_id);
         $stmt->execute();
@@ -201,10 +204,10 @@ elseif(isset($_POST['forgotPassword'])){
 
         if($count == 0){
             
-            $emailSent = sendForgotPasswordEmail($email, $user_id);
+            $emailSent = sendForgotPasswordEmail($email, $verificationCode);
             if($emailSent){
-                $stmt = $conn->prepare("INSERT INTO pendingpasswordchange (user_id) VALUES (?)");
-                $stmt->bind_param('s', $user_id);
+                $stmt = $conn->prepare("INSERT INTO pendingpasswordchange (user_id, verification) VALUES (?,?)");
+                $stmt->bind_param('ss', $user_id, $verificationCode);
                 $stmt->execute();
                 $result = $stmt->get_result();
             }
@@ -215,31 +218,33 @@ elseif(isset($_POST['forgotPassword'])){
 }
 elseif(isset($_POST['updatePassword'])){
 
-    $user_id = $_POST['verificationCode'];
+    $verificationCode = $_POST['verificationCode'];
     $pass = $_POST['pass'];
     $expires = "date_sub(now(), interval 1 hour)";
 
-    $stmt = $conn->prepare("SELECT * FROM pendingpasswordchange WHERE (user_id = ?) AND (expires > ?)");
-    $stmt->bind_param('ss', $user_id, $expires);
+    $stmt = $conn->prepare("SELECT * FROM pendingpasswordchange WHERE (verification = ?) AND (expires > ?)");
+    $stmt->bind_param('ss', $verificationCode, $expires);
     $stmt->execute();
     $result = $stmt->get_result();
     $count = mysqli_num_rows($result);
 
     if($count > 0){
+        $row = $result->fetch_assoc();
+        $user_id = $row['user_id'];
         $hash = password_hash($pass, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("UPDATE accounts SET password = ? WHERE user_id = ?");
         $stmt->bind_param('ss', $hash, $user_id);
         $stmt->execute();
         
-
         if($stmt){
             $stmt = $conn->prepare("DELETE FROM pendingpasswordchange WHERE user_id = ?");
             $stmt->bind_param('s', $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
+            echo "password changed";
+        }else{
+            echo "error updating password";
         }
-
-        echo "password changed";
     }else{
         $stmt = $conn->prepare("DELETE FROM pendingpasswordchange WHERE user_id = ?");
         $stmt->bind_param('s', $user_id);

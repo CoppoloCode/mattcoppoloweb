@@ -14,10 +14,9 @@ body{
 .navbar{
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
-.logo{
-    margin-left: -20px;
-}
+
 nav{
     flex: 1;
     text-align: right;
@@ -54,4 +53,15 @@ p{
     justify-content: space-around;
     margin: 200px;
     padding-top: 100px;
+}
+@media only screen and (max-width: 1200px){
+
+    nav a{
+        font-size: x-large;
+    }
+    .navbar img{
+        width: 10%;
+        height: 10%;
+    }
+    
 }

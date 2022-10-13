@@ -21,6 +21,11 @@ if(isset($_POST['storeProducts'])){
         $stmt->bind_param('sss', $userID, $productID, $date);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        $stmt = $db->prepare("UPDATE products SET Quantity = Quantity - 1 WHERE ID = $productID");
+        $stmt->bind_param('s', $productID);
+        $stmt->execute();
+        $result = $stmt->get_result();
     }
    echo ($result);
 }

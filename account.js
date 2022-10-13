@@ -29,12 +29,6 @@ const accountModifyElement =`<div class="account-title">
                             </div>`;
 const previousOrdersElement = `<div class="title"><h1> Your Previous Orders </h1></div>`;
 const noPreviousOrdersElement = `<div class="title"><h1> No Orders </h1></div>`;
-const passwordElement = `<h2>Password:</h2>
-                         <input id="passInput1" type="password" value=""></input>
-                         <input id="passInput2" type="password" value=""></input>
-                         <button id='passwordBtn' onclick="updatePassword(document.getElementById('passInput1').value,document.getElementById('passInput2').value)">Save</button>`;
-const passwordsMatchElement = `<div class="noMatch"><small>Passwords do not match</small></div>`;
-const passwordsBlankElement = `<div class="blank"><small>Password cannot be blank</small></div>`;
 
 
 
@@ -140,72 +134,9 @@ function placeEmail(email){
 }
 
 function changePassword(){
-
-    document.getElementsByClassName("password")[0].innerHTML = passwordElement;
-    
+    document.cookie = "user=0; path=/;";
+    location.assign('sign-in.html?updatePass');
 }
-
-function updatePassword(password1, password2){
-    
-    let passwordStatus = checkPasswords(password1, password2);
-
-    if(passwordStatus){
-
-        account.accountInfo.password = password2;
-        
-
-        $.ajax({
-            url: "account.php",
-            type: "POST",
-            data: {changePassword: password2},
-            success: function(){
-                placePassword(password2);
-            },
-            error: function(err){
-                console.log(err.responseText);
-            }
-
-        })
-    
-    }
-}
-
-function placePassword(password){
-
-    document.getElementsByClassName("password")[0].innerHTML = `<h2>Password:</h2>
-                                                                <p id='password'>`+password+`</p>
-                                                                <button id='smallBtn' onclick="changePassword()">Change</button>`;
-}
-
-
-function checkPasswords(pass1, pass2){
-
-    if(pass1 != pass2){
-        if(document.getElementsByClassName("noMatch")[0] == null){
-            document.getElementsByClassName("password")[0].outerHTML += passwordsMatchElement;
-            
-        }
-        return false;
-    }else{
-        if(document.getElementsByClassName("noMatch")[0] != null){
-            document.getElementsByClassName("noMatch")[0].parentNode.removeChild(document.getElementsByClassName("noMatch")[0]);
-        }
-    }
-    if((pass1 == '') || (pass2 == '')){
-        if(document.getElementsByClassName("blank")[0] == null){
-            document.getElementsByClassName("password")[0].outerHTML += passwordsBlankElement;
-            
-        }
-        return false;
-    }else{
-        if(document.getElementsByClassName("blank")[0] != null){
-            document.getElementsByClassName("blank")[0].parentNode.removeChild(document.getElementsByClassName("blank")[0]);
-        }                                                        
-    }
-
-    return true;
-}
-
 function changeAddress(){
 
     document.getElementsByClassName("address")[0].innerHTML = `<h2>Address:</h2>

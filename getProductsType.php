@@ -29,7 +29,7 @@
 
     if($_POST['functionname'] == 'getProductsSortedReview'){
 
-        $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Review Desc");
+        $stmt = $conn->prepare("SELECT * FROM products WHERE Type = ? ORDER BY Review Desc");
         $stmt->bind_param('s', $typeName);
         
     }else{
@@ -62,8 +62,10 @@
 
 
         $products[$i][6] = $row["Type"];
-
         
+
+        $products[$i][7] = $row["Quantity"];
+
         $i++;
     }
 

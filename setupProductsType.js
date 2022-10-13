@@ -15,25 +15,25 @@ function setTypeName(){
     typeName = localStorage.getItem("chosenProductType");
     typeName = typeName.toString();
     setTypeTitle(typeName);
-    getProductsFromDataBaseReview(typeName);
+    getProductsFromDataBaseType(typeName);
 }
 
 function setTypeTitle(typeName){
     document.getElementById("title").innerText = "All " + typeName + 's';
 }
 
-function getProductsFromDataBaseReview(typeName){
+function getProductsFromDataBaseType(typeName){
 
     $.ajax({
         url: 'getProductsType.php',
         type: 'POST',
         dataType:'json',
         data: {functionname: 'getProductsSortedReview', typename: typeName},
-        success: getProductsbyReview,
+        success: getProductTypeElements,
     });
 }  
 
-function getProductsbyReview(data){         
+function getProductTypeElements(data){         
     
     page.products = getProductElements(data);
     
@@ -96,7 +96,11 @@ function setupProduct(product,productNum){
     
 
     if(productNum != 2){
-        document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0].remove();
+        if(document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0] != null){
+            document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0].remove();
+        }else{
+            document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("out-of-stock")[0].remove();
+        }
     }
    
     

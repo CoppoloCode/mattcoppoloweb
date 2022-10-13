@@ -191,8 +191,8 @@ nav ul a{
 .products-container{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230)); 
     padding-top: 8%;
-    padding-bottom: 12%;
     position: relative;
+    height: 100vh;
     z-index: -1;
 }
 .title-row{
@@ -299,14 +299,14 @@ ul{
     text-align: center;
 }
 
-/*--------- media query for menu < 800 square size----------*/
+/*--------- media query for menu < 1200 square size----------*/
 
 .menu-icon{
     width: 20px;
     display: none;
 }
 
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 1200px){
     nav ul{
         position: absolute;
         top: 70px;
@@ -338,6 +338,9 @@ ul{
     .cart-icon2{
         display: block;
     }
+    .row{
+        padding-top: 30%;
+    }
 }
 
 /*--------media query for less than 600 square size-------*/
@@ -348,6 +351,7 @@ ul{
         width: 95%;
         position: sticky;
         align-self: flex-start;
+
         
     }
 }

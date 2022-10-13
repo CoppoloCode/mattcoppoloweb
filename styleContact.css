@@ -6,6 +6,7 @@
 body{
     font-family: 'Poppins', sans-serif;
     background: radial-gradient(rgb(31, 30, 30), black);
+    height: 100vh;
 }
 .container{
     max-width: auto;
@@ -14,12 +15,15 @@ body{
 .navbar{
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
-.logo{
-    margin-left: -20px;
+
+.navbar img{
+    width: 5%;
+    height: 5%;
+    object-fit: scale-down;
 }
 nav{
-    flex: 1;
     text-align: right;
 }
 nav ul{
@@ -32,7 +36,7 @@ nav ul li{
 }
 a{
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1rem;
     color: whitesmoke;
     padding: 5px;
     display: inline-block;
@@ -44,15 +48,46 @@ a:hover{
     background: #563434;
 }
 .Contactrow{
-    margin: 300px;
-    padding-left: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20%;
 }
 .Contactcol{
-    margin-top: 50px;
+   margin-top: 2%;
+   text-align: left;
 }
 h1{
     color: whitesmoke;
 }
 p{
+    font-size: x-large;
     color: whitesmoke;
+}
+
+@media only screen and (max-width: 1200px){
+
+    nav a{
+        font-size: x-large;
+    }
+    .navbar img{
+        width: 10%;
+        height: 10%;
+    }
+    .Contactrow{
+        padding: 0;
+        margin-top: 55%;
+    }
+    h1{
+        color: whitesmoke;
+        font-size:250%;
+    }
+    p{
+        font-size: xx-large;
+        color: whitesmoke;
+    }
+    
+
+    
 }

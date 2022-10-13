@@ -14,7 +14,9 @@ else{
 $(document).on("change", "#confirmPassword, #password", function(){
     validatePassword();
 })
-
+if(window.location.href.includes("updatePass")){
+    setupForgotPasswordHTML()
+}
 if(window.location.href.includes("verify=")){
     let verificationCode = window.location.href.split("verify=")[1];
     verifyEmail(verificationCode);
@@ -87,8 +89,8 @@ function setupCreateAccountHTML(){
                                         </div>
                                         
                                         <div class="button-row">
-                                            <button onclick="goBack()" id="back">Back to Sign In</button>
                                             <button type="submit" id="Create-Account">Create Account</button>
+                                            <button onclick="goBack()" id="back">Back to Sign In</button>
                                         </div>
                                    </div>
                                  </form>`;
@@ -101,9 +103,10 @@ function setupCreateAccountHTML(){
 function setupForgotPasswordHTML(){
 
     let forgotPasswordElement = `<div class="account-title">
-                                    <h1>Forgot Password</h1>
-                                    <p>Please enter you email and follow the link provided in the email.</p>
-                                    <div class="notify"></div>
+                                    <h1>Update Password</h1>
+                                    <div class="notify">
+                                        <p>Please enter you email and follow the link provided in the email.</p>
+                                    </div>
                                  </div>
                                  <form onsubmit="forgotPassword(); return false">
                                     <div class="input-row">
@@ -131,10 +134,8 @@ function createNewPasswordHTML(){
                                 </div>
                                 <form onsubmit="createNewPassword(); return false">
                                     <div class="input-row">
-                                        <div>
-                                            <label>Password:</label><input type="password" id="password" required>
-                                            <label>Confirm Password:</label><input type="password" id="confirmPassword" required>
-                                        </div>
+                                        <label>Password:</label><input type="password" id="password" required>
+                                        <label>Confirm Password:</label><input type="password" id="confirmPassword" required>
                                     </div>
                                     <div class="button-row">
                                         <button onclick="goBack()" id="back">Back to Sign In</button>
@@ -158,7 +159,7 @@ function signIn(){
         type: "POST",
         data: {signIn: 1, email, password},
         success: function(data){
-            console.log(data);
+            data = data.replace('-','');
             if(data == "account not found."){
                 notifyUser(`<small> Email does not exist. </small>`);
              }else if(data.includes("incorrect password")){
@@ -185,7 +186,8 @@ function createAccount(){
         type: "POST",
         data: {createAccount: 1, email, password, address, firstName, lastName},
         success: function(data){
-            if(data == "email already exists."){
+            data = data.replace('-','');
+            if(data.includes("email already exists.")){
                 notifyUser("You already have an account with that email.");
             }else if(data == "verify email"){
                 notifyUser("Please verify your email by following the link we sent to your email.");
@@ -220,6 +222,7 @@ function verifyEmail(verificationCode){
         type: "POST",
         data: {verifyEmail: verificationCode},
         success: function(data){
+            data = data.replace('-','');
             if(data == "VERIFICATION COMPLETE"){
                 notifyUser(`Success! Your account has been created.`);
                 
@@ -254,12 +257,12 @@ function forgotPassword(){
         type: "POST",
         data: {forgotPassword: email},
         success: function(data){
-            if(data == "No account with that email."){
+            data = data.replace('-','');
+            if(data.includes("No account with that email.")){
                 notifyUser("There is no account associated with that E-mail.");
             }else if(data.includes("Mailer Error:")){
                 notifyUser("Failed to send. Try again.");
             }else{
-           
                 notifyUser("Please follow the link we sent to your email to reset your password. This may take a few minutes.");
             }
         },
@@ -276,15 +279,15 @@ function createNewPassword(){
     let verificationCode = window.location.href.split("passReset=")[1];
 
     let pass = $("#password").val();
-    console.log(verificationCode);
+    
 
     $.ajax({
         url: "sign-in.php",
         type: "POST",
         data: {updatePassword: 1, verificationCode, pass},
         success: function(data){
-            console.log(data);
-            if(data == "Account not found"){
+            data = data.replace('-','');
+            if(data == "error updating password"){
                 notifyUser("An error occured in the verification proccess. please try again.");
             }else if(data == "proccess expired"){
                 notifyUser("verification proccess has expired try again.")

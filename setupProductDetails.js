@@ -92,21 +92,33 @@ function setProductDetailsElements(products){
     let productImageElement;
     let productDescriptionElement;
     let productPriceElement;
-    let productReviewElement = products[chosenProductId-1][3];
+    let productReviewElement;
     let productNameElement;
+    let quantity;
 
+    for(i = 0; i < products.length; i++){
+        if(products[i][0] == chosenProductId){
+            productReviewElement = products[i][3];
+            quantity = products[i][7];
+
+        }
+    }
     
     productNameElement = getNameElement(products, chosenProductId);
     productImageElement = getImageElement(products, chosenProductId);
     productDescriptionElement = getDescriptionElement(products, chosenProductId);
-    productReviewElement = getReview(productReviewElement);
+    productReviewElement = getReviewElement(productReviewElement);
     productPriceElement = getPriceElement(products, chosenProductId);
     document.getElementById("showName").innerHTML = productNameElement;
     document.getElementById("showImage").innerHTML = productImageElement;
     document.getElementById("showInfo").innerHTML = productDescriptionElement;
     document.getElementById("showReview").innerHTML = productReviewElement;
     document.getElementById("showPrice").innerHTML = productPriceElement;
-    document.getElementsByClassName("AddtoCart")[0].outerHTML = "<a id ='"+chosenProductId+"'class=AddtoCart> Add to Cart &#8594; </a>";
+    if(quantity > 0){
+        document.getElementsByClassName("AddtoCart")[0].outerHTML = "<a id ='"+chosenProductId+"'class=AddtoCart> Add to Cart &#8594; </a>";
+    }else{
+        document.getElementsByClassName("AddtoCart")[0].outerHTML = `<p class="out-of-stock">OUT OF STOCK</p>`;
+    }
     
 }
 
@@ -115,8 +127,13 @@ function setProductDetailsElements(products){
 
 function getNameElement(products, productId){
 
-    let productName = products[productId-1][1]
-
+    let productName;
+    for(i = 0; i < products.length; i++){
+        if(products[i][0] == productId){
+            productName = products[i][1];
+        }
+    }
+    
     productNameElement = '<p id="'+productId+'">'+ productName +'</p>';
 
     return productNameElement;
@@ -126,9 +143,13 @@ function getNameElement(products, productId){
 
 function getImageElement(products, productId){
 
-    let productImageElement;
-    
-    productImageElement =  "<img src='images/" + products[productId-1][2] + "'" + ">"+"</img>"; 
+    let productImage;
+    for(i = 0; i < products.length; i++){
+        if(products[i][0] == productId){
+            productImage = products[i][2];
+        }
+    }
+    productImageElement =  "<img src='images/" + productImage + "'" + ">"+"</img>"; 
     return  productImageElement;
 
 }
@@ -139,8 +160,15 @@ function getImageElement(products, productId){
 
 function getDescriptionElement(products, productId){
 
-    let productDescription = products[productId-1][5];
+    let productDescription;
     let productDescriptionElement;
+
+    for(i = 0; i < products.length; i++){
+        if(products[i][0] == productId){
+            productDescription = products[i][5];
+        }
+    }
+    
     productDescriptionElement = "<small>" + productDescription + "</small>";
     return productDescriptionElement;
     
@@ -151,8 +179,13 @@ function getDescriptionElement(products, productId){
 
 function getPriceElement(products, productId){
 
-    let productPriceElement;
-    productPriceElement = '<p>' + '$' + products[productId-1][4] + '</p>';
+    let productPrice;
+    for(i = 0; i < products.length; i++){
+        if(products[i][0] == productId){
+            productPrice = products[i][4];
+        }
+    }
+    productPriceElement = '<p>' + '$' + productPrice + '</p>';
     return productPriceElement 
 
 }

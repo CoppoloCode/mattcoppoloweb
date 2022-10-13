@@ -9,12 +9,12 @@
         die("Connection Failed: " . $conn->connect_error);
     }
 
-    $userId = $_COOKIE['user'];
+    $user_id = $_COOKIE['user'];
     
     if(isset($_POST['getAccountData'])){
 
         $stmt = $conn->prepare("SELECT * FROM accounts WHERE user_id = ?");
-        $stmt->bind_param('s', $userId);
+        $stmt->bind_param('s', $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
 

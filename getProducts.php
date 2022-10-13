@@ -36,23 +36,23 @@
             
             if($_POST['functionname'] == 'getProducts'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ?");
+                $stmt = $conn->prepare("SELECT * FROM products WHERE Type = ?");
                 $stmt->bind_param('s', $typeName);
             }
 
             if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Cost ASC");
+                $stmt = $conn->prepare("SELECT * FROM products WHERE Type = ? ORDER BY Cost ASC");
                 $stmt->bind_param('s', $typeName);
             }
             if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Cost Desc");
+                $stmt = $conn->prepare("SELECT * FROM products WHERE Type = ? ORDER BY Cost Desc");
                 $stmt->bind_param('s', $typeName);
             }
             if($_POST['functionname'] == 'getProductsSortedReview'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products WHERE Type = ? ORDER BY Review Desc");
+                $stmt = $conn->prepare("SELECT * FROM products WHERE Type = ? ORDER BY Review Desc");
                 $stmt->bind_param('s', $typeName);
             }
         }
@@ -61,22 +61,22 @@
 
             if($_POST['functionname'] == 'getProducts'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products");
+                $stmt = $conn->prepare("SELECT * FROM products");
 
             }
             if($_POST['functionname'] == 'getProductsSortedPriceAsc'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost ASC");
+                $stmt = $conn->prepare("SELECT * FROM products ORDER BY Cost ASC");
                 
             }
             if($_POST['functionname'] == 'getProductsSortedPriceDesc'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Cost Desc");
+                $stmt = $conn->prepare("SELECT * FROM products ORDER BY Cost Desc");
                 
             }
             if($_POST['functionname'] == 'getProductsSortedReview'){
 
-                $stmt = $conn->prepare("SELECT ID, Name, Image, Review, Cost, Description, Type FROM products ORDER BY Review Desc");
+                $stmt = $conn->prepare("SELECT * FROM products ORDER BY Review Desc");
                 
             }  
         }
@@ -112,7 +112,7 @@
 
         $products[$i][6] = $row["Type"];
 
-        
+        $products[$i][7] = $row["Quantity"];
         $i++;
     }
 

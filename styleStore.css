@@ -281,8 +281,8 @@ p{
     transition: transform 0.5s;
 }
 .col-4 img{
-    width: 200px;
-    height: 200px;
+    width: 10rem;
+    height: 10rem;
     object-fit: scale-down;
     
 }
