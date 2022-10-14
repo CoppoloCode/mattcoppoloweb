@@ -8,6 +8,9 @@ body{
     background: radial-gradient(rgb(31, 30, 30), black);
     height: 100vh;
 }
+
+
+
 .container{
     max-width: auto;
     margin: auto;
@@ -68,9 +71,8 @@ p{
     margin: 25px 0;
     color: whitesmoke;
 }
-.col-1 button{
-    width: 10rem;
-    cursor: pointer;
+.col-1 a{
+    width: 13rem;
 }
 .btn{
     display: inline-block;
@@ -104,9 +106,9 @@ p{
     .row p,a{
         font-size:x-large
     }
-    .row button{
+    .col-1 a{
         font-size: xx-large;
-        width: 55%;
+        width: 19rem;
     }
     .col-1{
         align-items:flex-start;

@@ -9,34 +9,33 @@ body{
     position: relative;
     z-index: -3;
     font-family: 'Poppins', sans-serif;
-    background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
+    height: 100%;
 }
 
 
 /*--------------------Navbar-------------------------*/
-.header{
+
+.header-container{
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
+    margin: auto;
     position: sticky;
     top: 0;
     align-self: flex-start;
     z-index: 1;
-}
-.container{
-    margin: auto;
-}
-.navbar{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
 }
-.navbar .menu-icon{
+.header-container .menu-icon{
     width: 30px;
     padding-right: 10px;
 }
 .logo img{
     width: 50px;
     padding: 2px;
+}
+.navbar{
+    margin-bottom: 30px;
 }
 nav img{
     width: 20px;
@@ -59,31 +58,6 @@ nav ul a{
     display: none;
 }
 
-/* ----------------------------Intro----------------------------- */
-
-
-.row{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding-bottom: 300px;
-    padding-top: 150px;
-}
-.col-2{
-    margin: auto;
-}
-.col-2 h1{
-    font-size: 40px;
-    color: rgb(0, 0, 0);
-}
-.col-2 img{
-    width: 300px;
-}
-p{
-    color: rgb(0, 0, 0);
-}
-
 /*------------------------------Cart------------------------------*/
 
 #cart-icon1, #cart-icon2{
@@ -96,6 +70,7 @@ p{
     position: sticky;
     top: 55px;
     align-self: flex-start;
+    z-index: 3;
 }
   
 #badge1,#badge2,#badge3 {
@@ -217,12 +192,52 @@ p{
     clear: both;
 }
 
-/*--------------------Categories to choose-------------------------*/
 
+/* ----------------------------Intro----------------------------- */
+
+.intro-container{
+    position: relative;
+    background-image: url("images/introbackground.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    height: 100vh;
+}
+.intro-container h1{
+    font-size: 8vw;
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke:2px black;
+    
+}
+.intro-container h2{
+    font-size: 6vw;
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke: 2px rgb(0, 0, 0);
+}
+
+/*--------------------Categories to choose-------------------------*/
+.reveal{
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: 3s all ease;
+}
+.reveal.active{
+    transform: translateY(0);
+    opacity: 1;
+}
 .categories{ 
     border-bottom-style: solid;
     position: relative;
     z-index: -2;
+    background: radial-gradient(rgba(155, 41, 41, 0.041), rgb(172, 37, 37));
+    padding-top: 20px;
+    border-top-style: solid;
 }
 .title{
     text-align: center;
@@ -242,24 +257,31 @@ p{
 .col-3{
     flex-basis: 25%;
     padding: 50px;
-    transition: transform 0.5s;
-    
 }
 .col-3:hover{
-    transform: translateY(-5px); 
+    animation: bounceAnimation .5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
 }
 .col-3 img{
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: auto;
     object-fit: scale-down;
     cursor: pointer;
+    
+}
+@keyframes bounceAnimation {
+	from {transform: translateY(0px);}
+	to {transform: translateY(-20px);}
 }
 
 /*--------------------Products-------------------------*/
-.small-container{
-    background: radial-gradient(rgb(202, 181, 181), rgb(61, 204, 223));
+.products-container{
+    
     position: relative;
     z-index: -2;
+    background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
+    padding-top: 50px;
 }
 
 .row-3{
@@ -284,13 +306,16 @@ p{
     width: 10rem;
     height: 10rem;
     object-fit: scale-down;
-    
+   
 }
+
 .col-4 p{
     font-size: 14px;
 }
-.col-4:hover{
-    transform: translateY(-5px);
+.col-4 img:hover{
+    animation: bounceAnimation .5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
 }
 
 /*--------------------Exclusive-------------------------*/
@@ -308,12 +333,15 @@ p{
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
-    background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
+    background: radial-gradient(rgb(202, 181, 181), rgb(36, 81, 163));
 }
 .col-5 img{
     width: 250px;
 }
-small{
+.col-5 p{
+    font-size: large;
+}
+.col-5 small{
     color:rgb(0, 0, 0);
 }
 .btn{
@@ -328,7 +356,12 @@ small{
 /*--------------------testimonial-------------------------*/
 .testimonial{
     position: relative;
-    z-index: -1;
+    background-image: url("images/computerbackground.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+   
 }
 .row-5{
     display: flex;
@@ -339,6 +372,11 @@ small{
 }
 .col-6{
     flex-basis: 30%;
+}
+.col-6 p{
+    -webkit-text-stroke: 1px black;
+    color: white;
+    font-size: 2rem;
 }
 .col-6 img{
     width: 125px;
@@ -356,20 +394,31 @@ small{
 .testimonial .col-6:hover{
     transform: translateY(-10px);
 }
+.fa-quote-left, .fa-quote-right{
+    -webkit-text-stroke: 1px black;
+    color: white;
+}
+.fa-star, .fa-star-o{
+    color:#ff523b;
+}
+.col-6 h3{
+    -webkit-text-stroke: 1px black;
+    color: white;
+}
 
 /*--------------------brands-------------------------*/
 .brands{
     margin: auto;
     position: relative;
     z-index: -1;
+    background-color: rgba(3, 3, 3, 0.89);
 }
 .row-6{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    
 }
 .col-7{
     width: 160px;
@@ -396,6 +445,7 @@ small{
 }
 .footer p{
     color:#8a8a8a;
+    font-size: 1rem;
 }
 .footer h3{
     color:white;
@@ -450,6 +500,9 @@ small{
 }
 
 @media only screen and (max-width: 800px){
+    .navbar{
+        margin-bottom: 0;
+    }
     nav ul{
         position: absolute;
         top: 70px;
@@ -481,20 +534,28 @@ small{
     .cart-icon2{
         display: block;
     }
-}
-
-/*--------media query for less than 600 square size-------*/
-@media only screen and (max-width: 600px){
-    .row, .row-2, .row-3, .row-4, .row-5, .row-6, .row-7{
-        text-align: center;
-    }
-    .col-2, .col-3, .col-4, .col-5, .col-6, .col-7{
-        flex-basis: 100%;
-    }
     .cart-container {
         margin: auto;
         width: 95%;
         position: sticky;
         align-self: flex-start;
     }
+}
+
+/*--------media query for less than 600 square size-------*/
+
+@media only screen and (max-width: 1100px){
+   
+    .intro-container{
+        height: 100vh;
+    }
+    .categories{
+        height: fit-content;
+
+    }
+    .row-2, .row-3{
+        height: fit-content;
+        flex-direction: column;
+    }
+    
 }
