@@ -55,37 +55,32 @@
 <body onload='getProductsFromDataBase()'>
 <!-------------------Intro--------------------->
     <div class="intro-container">
-        <h1>Welcome to TrueGGaming</h1>
-        <h2>Make Your Dream Gaming Setup a Reality.</h2>   
+        <h1>TrueGGaming</h1>
     </div>
     
     
     <!----------Choose Categories----------->
 
-    <div class="categories">
-        <h2 class="title">Chose Your Device</h2>
-        <div class="categories-container reveal">
-            <div class="row-2">
-                <div class="col-3">
-                    <a id="headset" onclick="saveProductType(id)" href="productsType.html"><img src="images/headset.png"></a>
-                </div>
-                <div class="col-3">
-                    <a id="keyboard" onclick="saveProductType(id)" href="productsType.html"><img src="images/rgbblackkeyboard.png"></a>
-                </div>
-                <div class="col-3">
-                    <a id="mouse" onclick="saveProductType(id)" href="productsType.html"><img src="images/rgbblackmouse.png"></a>
-                </div>
-                <div class="col-3">
-                    <a id="PC" onclick="saveProductType(id)" href="productsType.html"><img src="images/redpc.png"></a>
-                </div>
-            </div>
+    <div class="categories"> 
+        <div class="headset">
+            <a id="headset" onclick="saveProductType(id)" href="productsType.html">Headsets</a>
         </div>
+        <div class="keyboard">
+            <a id="keyboard" onclick="saveProductType(id)" href="productsType.html">Keyboards</a>
+        </div>
+        <div class="mouse">
+            <a id="mouse" onclick="saveProductType(id)" href="productsType.html">Mouses</a>
+        </div>
+        <div class="pc">
+            <a id="PC" onclick="saveProductType(id)" href="productsType.html">PCs</a>
+        </div>
+       
     </div>
 
 
     <!---------- featured products ----------->
     <div class="products-container">
-        <h3 class="title"> Featured Products </h3>
+        <h3 class="title"> Featured </h3>
         <div class="row-3 reveal">
             <div class="col-4" id = "product-1">
                 
@@ -102,7 +97,7 @@
         </div>
     <!---------- latest products ----------->
 
-        <h3 class="title"> Latest Products </h3>
+        <h3 class="title"> Latest </h3>
         <div class="row-3 reveal">
             <div class="col-4" id = "product-5">
                 

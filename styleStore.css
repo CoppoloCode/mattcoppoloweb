@@ -16,7 +16,7 @@ body{
 /*--------------------Navbar-------------------------*/
 
 .header-container{
-    background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
+    background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
     margin: auto;
     position: sticky;
     top: 0;
@@ -210,17 +210,82 @@ nav ul a{
 }
 .intro-container h1{
     font-size: 8vw;
-    color: rgb(255, 255, 255);
-    -webkit-text-stroke:2px black;
+    color:rgb(0, 0, 0);
+    -webkit-text-stroke:2px rgb(250, 250, 250);
     
 }
-.intro-container h2{
-    font-size: 6vw;
-    color: rgb(255, 255, 255);
-    -webkit-text-stroke: 2px rgb(0, 0, 0);
-}
+
 
 /*--------------------Categories to choose-------------------------*/
+.categories{
+    z-index: -2;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    height: 50vh;
+    position: relative;
+    display:grid;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    cursor: pointer;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    
+}
+.categories::-webkit-scrollbar{
+    display: none;
+ }
+.categories:hover{
+    animation-play-state: paused;
+    margin-left: auto;
+}
+.title{
+    text-align: center;
+    font-size: 50px;
+    color: rgb(14, 13, 13);
+}
+.headset, .mouse, .keyboard , .pc{
+    position: relative;
+    width: 100vw;
+    height: 100%; 
+    background-size: cover;
+    background-position: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+}
+.categories a{
+    font-size: 5rem;
+    color:rgb(255, 255, 255);
+    -webkit-text-stroke:2px rgb(0, 0, 0);
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+}
+.categories a:hover{
+    animation: bounceAnimation infinite .5s alternate;
+}
+.headset{
+    background-image: url(images/headsetbackground.jpg);
+   
+}
+.keyboard{
+    background-image: url(images/keyboardbackground.jpeg);
+   
+}
+.mouse{
+    background-image: url(images/mousebackground.jpg);
+   
+}
+.pc{
+    background-image: url(images/computerbackground.jpeg);
+    
+}
+
+
+
+/*--------------------Products-------------------------*/
 .reveal{
     position: relative;
     transform: translateY(150px);
@@ -231,59 +296,12 @@ nav ul a{
     transform: translateY(0);
     opacity: 1;
 }
-.categories{ 
-    border-bottom-style: solid;
-    position: relative;
-    z-index: -2;
-    background: radial-gradient(rgba(155, 41, 41, 0.041), rgb(172, 37, 37));
-    padding-top: 20px;
-    border-top-style: solid;
-}
-.title{
-    text-align: center;
-    font-size: 50px;
-    margin: 0 auto 80px;
-    position: relative;
-    line-height:  60px;
-    color: rgb(14, 13, 13);
-}
-.row-2{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding-bottom: 55px;
-}
-.col-3{
-    flex-basis: 25%;
-    padding: 50px;
-}
-.col-3:hover{
-    animation: bounceAnimation .5s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-}
-.col-3 img{
-    width: 100%;
-    height: auto;
-    object-fit: scale-down;
-    cursor: pointer;
-    
-}
-@keyframes bounceAnimation {
-	from {transform: translateY(0px);}
-	to {transform: translateY(-20px);}
-}
-
-/*--------------------Products-------------------------*/
 .products-container{
     
     position: relative;
     z-index: -2;
     background: radial-gradient(rgb(202, 181, 181), rgb(140, 224, 147));
-    padding-top: 50px;
 }
-
 .row-3{
     display: flex;
     align-items: center;
@@ -308,7 +326,6 @@ nav ul a{
     object-fit: scale-down;
    
 }
-
 .col-4 p{
     font-size: 14px;
 }
@@ -317,7 +334,10 @@ nav ul a{
     animation-direction: alternate;
     animation-iteration-count: infinite;
 }
-
+@keyframes bounceAnimation {
+	from {transform: translateY(0px);}
+	to {transform: translateY(-20px);}
+}
 /*--------------------Exclusive-------------------------*/
 .offer{
     position: relative;
@@ -540,6 +560,7 @@ nav ul a{
         position: sticky;
         align-self: flex-start;
     }
+    
 }
 
 /*--------media query for less than 600 square size-------*/
@@ -549,9 +570,8 @@ nav ul a{
     .intro-container{
         height: 100vh;
     }
-    .categories{
-        height: fit-content;
-
+    .categories a{
+        font-size: 3rem;
     }
     .row-2, .row-3{
         height: fit-content;

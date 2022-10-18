@@ -9,28 +9,27 @@ body{
     z-index: -3;
 }
 /*--------------------Navbar-------------------------*/
-.header{
+.header-container{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    margin: auto;
     position: sticky;
     top: 0;
     align-self: flex-start;
     z-index: 1;
-}
-.container{
-    margin: auto;
-}
-.navbar{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.navbar .menu-icon{
+.header-container .menu-icon{
     width: 30px;
     padding-right: 10px;
 }
 .logo img{
     width: 50px;
     padding: 2px;
+}
+.navbar{
+    margin-bottom: 30px;
 }
 nav img{
     width: 20px;
