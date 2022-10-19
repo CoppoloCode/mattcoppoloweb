@@ -10,7 +10,7 @@ body{
 }
 /*--------------------Navbar-------------------------*/
 .header-container{
-    background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    background: black;
     margin: auto;
     position: sticky;
     top: 0;
@@ -42,7 +42,7 @@ nav ul a{
     padding: 10px;
     text-decoration: none;
     font-size: 20px;
-    color: rgb(31, 29, 29);
+    color: #8a8a8a;
 }
 .menu-icon{
     width: 20px;
@@ -189,7 +189,7 @@ nav ul a{
 
 .products-container{
     background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230)); 
-    padding-top: 8%;
+    padding-top: 2%;
     position: relative;
     height: 100vh;
     z-index: -1;
@@ -198,50 +198,66 @@ nav ul a{
     display: grid;
     justify-content: center;
     align-items: center;
-    padding-bottom: 5%;
+    padding-bottom: 8%;
+    padding-left: 20px;
 }
 .row{
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    justify-content: space-around;
-}
-.btnLeft, .btnRight{
-    display: grid;
-    justify-content: center;
-    align-items: center;
+    display:grid;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    cursor: pointer;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
     
 }
-.btnLeft a, .btnRight a{
-    font-size: 10rem;
-    cursor: pointer;
-    user-select: none;
-}
-.col-1, .col-2, .col-3{
-    display: flex;
-    flex-direction: column;
-    width:auto;
+
+.col{
+    width:100vw;
+    padding-left: 35%;
+    padding-right: 35%;
     height:auto;
     justify-items: center;
     align-content: center;
     text-align: center;
+    scroll-snap-align: start;
+    user-select: none;
 }
-
-.col-1 img, .col-3 img {
-    width: 10rem;
-    height: 10rem;
-    object-fit: scale-down;
+.row::-webkit-scrollbar{
+    display:none;
 }
-.col-2 img{
-    width: 11rem;
-    height: 11rem;
+.col a{
+    width:fit-content;
+}
+.col img{
+    width: 30vw;
+    height: 30vh;
+    padding-top:20px;
     object-fit: scale-down;
 }
 .AddtoCart{
     cursor: pointer;
 }
-
-
+.btn-row{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 1%;
+}
+.btn-row a{
+    cursor: pointer;
+    user-select: none;
+    font-size: 10rem;
+}
+.col img:hover{
+    animation: bounceAnimation .5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+@keyframes bounceAnimation {
+	from {transform: translateY(0px);}
+	to {transform: translateY(-20px);}
+}
 /*--------------------Footer-------------------------*/
 
 .footer{
@@ -336,9 +352,6 @@ ul{
     }
     .cart-icon2{
         display: block;
-    }
-    .row{
-        padding-top: 30%;
     }
 }
 

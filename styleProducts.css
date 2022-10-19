@@ -11,7 +11,7 @@ body{
 }
 /*--------------------Navbar-------------------------*/
 .header-container{
-    background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    background: black;
     margin: auto;
     position: sticky;
     top: 0;
@@ -43,7 +43,7 @@ nav ul a{
     padding: 10px;
     text-decoration: none;
     font-size: 20px;
-    color: rgb(31, 29, 29);
+    color: #8a8a8a;
 }
 .menu-icon{
     width: 20px;

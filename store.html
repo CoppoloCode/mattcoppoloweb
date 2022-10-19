@@ -54,200 +54,201 @@
 
 <body onload='getProductsFromDataBase()'>
 <!-------------------Intro--------------------->
-    <div class="intro-container">
-        <h1>TrueGGaming</h1>
-    </div>
-    
-    
-    <!----------Choose Categories----------->
 
-    <div class="categories"> 
-        <div class="headset">
-            <a id="headset" onclick="saveProductType(id)" href="productsType.html">Headsets</a>
-        </div>
-        <div class="keyboard">
-            <a id="keyboard" onclick="saveProductType(id)" href="productsType.html">Keyboards</a>
-        </div>
-        <div class="mouse">
-            <a id="mouse" onclick="saveProductType(id)" href="productsType.html">Mouses</a>
-        </div>
-        <div class="pc">
-            <a id="PC" onclick="saveProductType(id)" href="productsType.html">PCs</a>
-        </div>
-       
-    </div>
+        <section class="intro-container">
+            <h1>TrueGGaming</h1>
+        </section>
+        
+        
+        <!----------Choose Categories----------->
+
+        <section class="categories"> 
+            <div class="headset">
+                <a id="headset" onclick="saveProductType(id)" href="productsType.html">Headsets</a>
+            </div>
+            <div class="keyboard">
+                <a id="keyboard" onclick="saveProductType(id)" href="productsType.html">Keyboards</a>
+            </div>
+            <div class="mouse">
+                <a id="mouse" onclick="saveProductType(id)" href="productsType.html">Mouses</a>
+            </div>
+            <div class="pc">
+                <a id="PC" onclick="saveProductType(id)" href="productsType.html">PCs</a>
+            </div>
+        
+        </section>
 
 
-    <!---------- featured products ----------->
-    <div class="products-container">
-        <h3 class="title"> Featured </h3>
-        <div class="row-3 reveal">
-            <div class="col-4" id = "product-1">
-                
-            </div>
-            <div class="col-4" id = "product-2">
-                
-            </div>
-            <div class="col-4" id = "product-3">
-                
-            </div>
-            <div class="col-4" id = "product-4">
-                
-            </div>
-        </div>
-    <!---------- latest products ----------->
-
-        <h3 class="title"> Latest </h3>
-        <div class="row-3 reveal">
-            <div class="col-4" id = "product-5">
-                
-            </div>
-            <div class="col-4" id = "product-6">
-                
-            </div>
-            <div class="col-4" id = "product-7">
-                
-            </div>
-            <div class="col-4" id = "product-8">
-                
-            </div>
-        </div>
-    </div>
-
-    <!---------- Exclusive product ----------->
-
-    <div class="offer">
-        <div class="small-container" >
-            <div class="row-4">
-                <div class="col-5">
-                    <img src="images/frontpagepc.png" class="offer-img">
+        <!---------- featured products ----------->
+        <section class="products-container">
+            <h3 class="title"> Featured </h3>
+            <div class="row-3 reveal">
+                <div class="col-4" id = "product-1">
+                    
                 </div>
-                <div class="col-5">
-                    <p>Exclusively Available on TruGGaming</p>
-                    <h1>Ultimate PC</h1>
-                    <small>This PC offers the fastest processing via cpu and graphics card.<br> Full RBG capabilities
-                        and overclocking technology. <br>Limited time supply, get yours now!<br>
-                    </small>
-                    <a href='product-details.html' class="btn" id="1" onclick='saveProductId(id)'> Buy Now &#8594; </a>
+                <div class="col-4" id = "product-2">
+                    
+                </div>
+                <div class="col-4" id = "product-3">
+                    
+                </div>
+                <div class="col-4" id = "product-4">
+                    
                 </div>
             </div>
-        </div>
-    </div>
+        <!---------- latest products ----------->
 
+            <h3 class="title"> Latest </h3>
+            <div class="row-3 reveal">
+                <div class="col-4" id = "product-5">
+                    
+                </div>
+                <div class="col-4" id = "product-6">
+                    
+                </div>
+                <div class="col-4" id = "product-7">
+                    
+                </div>
+                <div class="col-4" id = "product-8">
+                    
+                </div>
+            </div>
+        </section>
 
-    <!---------- Reviews ----------->
-    <div class="testimonial">
-        <div class="small-container">
-            <div class="row-5">
-                <div class="col-6">
-                    <i class="fa fa-quote-left" aria-hidden="true"></i>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
-                    <i class="fa fa-quote-right" aria-hidden="true"></i>
-                    <div class="raiting">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
+        <!---------- Exclusive product ----------->
+
+        <section class="offer">
+            <div class="small-container" >
+                <div class="row-4">
+                    <div class="col-5">
+                        <img src="images/frontpagepc.png" class="offer-img">
                     </div>
-                    <img src="images/user1.jpg">
-                    <h3>Mark Zuckerberg</h3>
-                </div>
-                <div class="col-6">
-                    <i class="fa fa-quote-left" aria-hidden="true"></i>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
-                    <i class="fa fa-quote-right" aria-hidden="true"></i>
-                    <div class="raiting">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                    </div>
-                    <img src="images/user2.jpg">
-                    <h3>James White</h3>
-                </div>
-                <div class="col-6">
-                    <i class="fa fa-quote-left" aria-hidden="true"></i>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
-                    <i class="fa fa-quote-right" aria-hidden="true"></i>
-                    <div class="raiting">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    </div>
-                    <img src="images/user3.jpeg">
-                    <h3>Jay Dominick</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!---------- brands ----------->
-    <div class="brands">
-        <div class="small-container">
-            <div class="row-6">
-                <div class="col-7">
-                    <img src="images/brand1.png" alt="">
-                </div>
-                <div class="col-7">
-                    <img src="images/brand2.png" alt="">
-                </div>
-                <div class="col-7">
-                    <img src="images/brand3.png" alt="">
-                </div>
-                <div class="col-7">
-                    <img src="images/brand4.png" alt="">
-                </div>
-                <div class="col-7">
-                    <img src="images/brand5.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!---------- Footer ----------->
-
-    <div class="footer">
-        <div class="container">
-            <div class="row-7">
-                <div class="footer-col-1">
-                    <h3>Download Our App</h3>
-                    <p>Download App for Android and ios mobile phone.</p>
-                    <div class="app-logo">
-                        <img src="images/googleplay.png" alt="">
-                        <img src="images/applestore.png" alt="">
+                    <div class="col-5">
+                        <p>Exclusively Available on TruGGaming</p>
+                        <h1>Ultimate PC</h1>
+                        <small>This PC offers the fastest processing via cpu and graphics card.<br> Full RBG capabilities
+                            and overclocking technology. <br>Limited time supply, get yours now!<br>
+                        </small>
+                        <a href='product-details.html' class="btn" id="1" onclick='saveProductId(id)'> Buy Now &#8594; </a>
                     </div>
                 </div>
-                <div class="footer-col-2">
-                    <img src="images/Storelogo.png">
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="footer-col-3">
-                    <h3>Useful Links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Join Affiliate</li>
-                    </ul>
-                </div>
-                <div class="footer-col-4">
-                    <h3>Follow us</h3>
-                    <ul>
-                        <li>Facebook</li>
-                        <li>Twitter</li>
-                        <li>Instagram</li>
-                        <li>YouTube</li>
-                    </ul>
+            </div>
+        </section>
+
+
+        <!---------- Reviews ----------->
+        <section class="testimonial">
+            <div class="small-container">
+                <div class="row-5">
+                    <div class="col-6">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                        <div class="raiting">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <img src="images/user1.jpg">
+                        <h3>Mark Zuckerberg</h3>
+                    </div>
+                    <div class="col-6">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                        <div class="raiting">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                        </div>
+                        <img src="images/user2.jpg">
+                        <h3>James White</h3>
+                    </div>
+                    <div class="col-6">
+                        <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum libero doloremque beatae? </p>
+                        <i class="fa fa-quote-right" aria-hidden="true"></i>
+                        <div class="raiting">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                        <img src="images/user3.jpeg">
+                        <h3>Jay Dominick</h3>
+                    </div>
                 </div>
             </div>
-            <hr>
-            <p class="copyright">Copyright 2022 - My Test Website</p>
-        </div>
-    </div>
+        </section>
+
+        <!---------- brands ----------->
+        <section class="brands">
+            <div class="small-container">
+                <div class="row-6">
+                    <div class="col-7">
+                        <img src="images/brand1.png" alt="">
+                    </div>
+                    <div class="col-7">
+                        <img src="images/brand2.png" alt="">
+                    </div>
+                    <div class="col-7">
+                        <img src="images/brand3.png" alt="">
+                    </div>
+                    <div class="col-7">
+                        <img src="images/brand4.png" alt="">
+                    </div>
+                    <div class="col-7">
+                        <img src="images/brand5.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!---------- Footer ----------->
+
+        <section class="footer">
+            <div class="container">
+                <div class="row-7">
+                    <div class="footer-col-1">
+                        <h3>Download Our App</h3>
+                        <p>Download App for Android and ios mobile phone.</p>
+                        <div class="app-logo">
+                            <img src="images/googleplay.png" alt="">
+                            <img src="images/applestore.png" alt="">
+                        </div>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="images/Storelogo.png">
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links</h3>
+                        <ul>
+                            <li>Coupons</li>
+                            <li>Blog Post</li>
+                            <li>Return Policy</li>
+                            <li>Join Affiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow us</h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Twitter</li>
+                            <li>Instagram</li>
+                            <li>YouTube</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright 2022 - My Test Website</p>
+            </div>
+        </section>   
 
     <script src="cart.js"></script>
     <script src="insertProduct.js"></script>

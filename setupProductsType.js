@@ -8,7 +8,11 @@ class Page{
 }
 
 let page = new Page(0,[],0);
+page.view = window.screen.availWidth;
 
+if(page.view < 1400){
+    document.getElementsByClassName("btn-row")[0].remove();
+}
 
 function setTypeName(){
     let typeName;
@@ -37,106 +41,58 @@ function getProductTypeElements(data){
     
     page.products = getProductElements(data);
     
-    page.view = window.screen.availWidth;
-    
-    sendProduct();
+    setupProductList();
     
 }
 
-function productIncrease(){
-    if(page.productCounter == page.products.length-1){
-        page.productCounter = 0;
-    }else{
-        page.productCounter++;
-    }
-}
+function setupProductList(){
 
-function productDecrease(){
-    if(page.productCounter == 0){
-        page.productCounter = page.products.length-1;
-    }else{
-        page.productCounter--;
-    }
-    
-}
+    for(i = 0; i < page.products.length; i++){
 
-function sendProduct(){
-    
-    if(page.view > 800){
-        if(page.productCounter == page.products.length-1){
-            setupProduct(page.products[page.productCounter-1],1);
-            setupProduct(page.products[page.productCounter],2);
-            setupProduct(page.products[0],3);   
-        }
-        else if(page.productCounter == 0){
-            setupProduct(page.products[page.products.length-1],1);
-            setupProduct(page.products[0],2);
-            setupProduct(page.products[1],3);   
-        }else{
-            setupProduct(page.products[page.productCounter-1],1);
-            setupProduct(page.products[page.productCounter],2);   
-            setupProduct(page.products[page.productCounter+1],3);
-        }
-    }else{
-        
-        setupProduct(page.products[page.productCounter],2);
-      
-    }
-
-}
-
-
-
-function setupProduct(product,productNum){
-
-    let productNumString = (productNum).toString();
-
-    
-    document.getElementsByClassName("col-" + productNumString)[0].innerHTML = product;
-    
-
-    if(productNum != 2){
-        if(document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0] != null){
-            document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("AddtoCart")[0].remove();
-        }else{
-            document.getElementsByClassName("col-" + productNumString)[0].getElementsByClassName("out-of-stock")[0].remove();
-        }
+        document.getElementsByClassName("row")[0].innerHTML += `<div class="col">`+page.products[i]+`</div>`;
     }
    
+}
+
+function productScrollRight(){
+    
+    document.querySelector(".row").scrollLeft += page.view;
+    
     
 }
-
-
-
-/* ------------creates the Name Element of a product  -----------*/
- 
-function getNameElement(product){
-
-    let productName = product[1];
-
-    productNameElement = '<p id="'+product[0]+'">'+ productName +'</p>';
-
-    return productNameElement;
-}
-
-/* -----------creates the Image Element of a product  -----------*/
-
-function getImageElement(product){
-
-    let productImageElement;
+function productScrollLeft(){
     
-    productImageElement =  "<img src='images/" + product[2] + "'" + ">"+"</img>"; 
-    return  productImageElement;
-
+    document.querySelector(".row").scrollLeft += -page.view;
+    
+   
 }
 
-/* ------------creates the price Element of a product  -----------*/
 
-function getPriceELement(product){
+const slider = document.querySelector('.row');
+let isDown = false;
+let startX;
+let scrollLeft;
 
-    let productPriceElement;
-    productPriceElement = '<p>' + '$' + product[4] + '</p>';
-    return productPriceElement 
+slider.addEventListener('mousedown', (e) => {
+  isDown = true;
+  slider.classList.add('active');
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+slider.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 3; //scroll-fast
+  slider.scrollLeft = scrollLeft - walk;
+});
 
-}
 
