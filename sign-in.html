@@ -5,36 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store Home</title>
     <link rel="stylesheet" href="styleSign-in.css">
+    <link rel="stylesheet" href="styleHeader.css">
+    <link rel="stylesheet" href="styleCart.css">
+    <link rel="stylesheet" href="styleFooter.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
 </head>
-<body>
-    <div class="header">
-        <div class="container">
-            <div class="navbar">
-                <div class="logo">
-                    <img src="images/Storelogo.png">
-                </div>
-                <div>
-                    <nav>
-                        <ul id="MenuItems">
-                            <a href="index.html">CoppoloCode</a>
-                            <a href="store.html">Home</a>
-                            <a href="Products.html">Products</a>
-                            <a href="sign-in.html">Account</a>
-                            <a href="#0" class="cart-icon1" id="cart"><i class="fa fa-shopping-cart" id="cart-icon1">Cart</i><span id="badge1"></span></a>
-                        </ul>
-                    </nav>
-                    <nav>
-                        <a href="#0" class="cart-icon2" id="cart"><i class="fa fa-shopping-cart" id="cart-icon2">Cart</i><span id="badge2"></span></a>
-                        <img src="images/menuicon.png" class="menu-icon" onclick="menutoggle()">
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div> 
+
+<div class="header-container">
+    <div class="logo">
+        <img src="images/Storelogo.png">
+    </div>
+    <div class="navbar">
+        <nav>
+            <ul id="MenuItems">
+                <a href="index.html">CoppoloCode</a>
+                <a href="store.html">Home</a>
+                <a href="Products.html">Products</a>
+                <a href="sign-in.html">Account</a>
+                <a href="#0" class="cart-icon1" id="cart"><i class="fa fa-shopping-cart" id="cart-icon">Cart</i><span id="badge1"></span></a>
+            </ul>
+        </nav>
+        <nav>
+            <a href="#0" class="cart-icon2" id="cart"><i class="fa fa-shopping-cart" id="cart-icon2">Cart</i><span id="badge2"></span></a>
+            <a class="menu-icon" onclick="menutoggle()"><i class="fa fa-solid fa-bars"></i></a>
+        </nav>
+    </div>
+</div>
 
 <!------------------- Cart----------------------->
 
@@ -54,7 +53,7 @@
           <a href="checkout.html" class="button">Checkout</a>
         </div> <!--end shopping-cart -->
     </div> <!--end container -->
-
+<body>
 <!---------------------- Account ----------------------->
     
     <div class="account">

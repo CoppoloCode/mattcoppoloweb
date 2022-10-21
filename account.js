@@ -74,8 +74,7 @@ function setupAccount(){
 function accountModify(){
 
     let accountEmailElement =      `<h2>Email:</h2>
-                                        <p>`+account.accountInfo.email+`</p>
-                                        <button id='smallBtn' onclick="changeEmail()">Change</button>`;
+                                        <p>`+account.accountInfo.email+`</p><p></p>`;
     let accountPasswordElement =   `<h2>Password:</h2>
                                         <p id = 'password'>`+account.accountInfo.password+`</p>
                                         <button id='smallBtn' onclick="changePassword()">Change</button>`;

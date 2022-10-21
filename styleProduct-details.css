@@ -9,186 +9,17 @@ body{
     position: relative;
     z-index: -3;
 }
-/*--------------------Navbar-------------------------*/
-.header{
-    background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
-    position: sticky;
-    top: 0;
-    align-self: flex-start;
-    z-index: 1;
-}
-.container{
-    margin: auto;
-}
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-}
-.navbar .menu-icon{
-    width: 30px;
-    padding-right: 10px;
-}
-.logo img{
-    width: 50px;
-    padding: 2px;
-}
-nav img{
-    width: 20px;
-}
-nav{
-    display: flex;
-    padding-right: 10px;
-}
-nav ul a{
-    padding: 10px;
-    text-decoration: none;
-    font-size: 20px;
-    color: rgb(31, 29, 29);
-}
-.menu-icon{
-    width: 20px;
-    display: none;
-}
-.cart-icon2{
-    display: none;
-}
-
-/*------------------------------Cart------------------------------*/
-#cart-icon1, #cart-icon2{
-    cursor:pointer;
-    padding-right: 5px;
-}
-.cart-container {
-    margin: auto;
-    width: 95%;
-    position: sticky;
-    top: 55px;
-    align-self: flex-start;
-}
-  
-#badge1,#badge2,#badge3 {
-    background-color: #6394F8;
-    border-radius: 10px;
-    color: white;
-    display: inline-block;
-    font-size: 12px;
-    line-height: 1;
-    padding: 3px 7px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-  
-.shopping-cart {
-    margin: 10px 15px;
-    background: white;
-    width: 320px;
-    position: absolute;
-    right: 0;
-    border-radius: 3px;
-    padding: 20px;
-}
-.clearfix div{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-}   
-.shopping-cart-header {
-    border-bottom: 1px solid #E8E8E8;
-    padding-bottom: 15px;
-}
-#shopping-cart-total{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-#cartEmpty{
-    text-align: center;
-}
-#shopping-cart-items {  
-    padding-top: 20px;
-}
-.shopping-cart li {
-    margin-bottom: 18px;
-}
-  
-.shopping-cart img {
-    float: left;
-    width: 100px;
-    height: 100px;
-    object-fit: scale-down;
-    margin-right: 12px;
-}
-
-.item-name {
-    display: block;
-    padding-top: 10px;
-    font-size: 16px;
-}
-      
-.item-price {
-    color: blue;
-}
-      
-.item-quantity {
-    width: 35px;
-}
-.RemoveFromCart{
-    cursor: pointer;
-    color:red;
-    font-size: x-large;
-}
-     
-  
-.shopping-cart:after {
-    bottom: 100%;
-    left: 93%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-bottom-color: white;
-    border-width: 8px;
-    margin-left: -8px;
-}
-  
-.cart-icon {
-    color: #515783;
-    font-size: 24px;
-    margin-right: 7px;
-    float: left;
-}
-  
-.button {
-    background: blue;
-    color:white;
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    display: block;
-    border-radius: 3px;
-    font-size: 16px;
-    margin: 25px 0 15px 0;
-}
-
-.button:hover {
-    background: lighten(blue, 3%);
-}
-
-.clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 
 
 /*--------------------Product-details-------------------------*/
-
+.details-container{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 100px;
+    background: radial-gradient(rgb(141, 133, 133), rgb(95, 93, 93));
+}
 .row{
     display: flex;
     flex-wrap: wrap;
@@ -246,98 +77,55 @@ nav ul a{
 
 
 /*--------------------Products-------------------------*/
-.small-container{
+.product-container{
+    display: flex;
     align-items: center;
     text-align: center;
     padding-top: 10px;
+    padding-left: 5%;
+    padding-right: 5%;
     padding-bottom: 100px;
-    background: radial-gradient(rgb(141, 133, 133), rgb(233, 230, 230));
+    background: radial-gradient(rgb(141, 133, 133), rgb(95, 93, 93));
 }
 .row-2{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    display:grid;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    cursor: pointer;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
    
 }
-.btnLeft a, .btnRight a{
-    font-size: 150px; 
+.btn-Col{
+    font-size: 10rem;
     cursor: pointer;
     user-select: none;
 }
-.col{
-   
+.col-3{
+    width:20vw;
+    height:auto;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+    scroll-snap-align: start;
+    user-select: none;
     transition: transform 0.5s;
 }
-.col img{
+.row-2::-webkit-scrollbar{
+    display: none;
+}
+.col-3 img{
     width: 10rem;
     height: 10rem;
     object-fit: scale-down;
 }
-.col p{
+.col-3 p{
     font-size: 14px;
 }
-.col:hover{
-    transform: translateY(-5px);
-}
+
 .AddtoCart i{
     cursor: pointer;
-}
-
-
-/*--------------------Footer-------------------------*/
-
-.footer{
-    background-color: black;
-    color: #8a8a8a;
-    font-size: 14px;
-    padding-top: 20px;
-}
-.footer p{
-    color:#8a8a8a;
-}
-.footer h3{
-    color:white;
-    margin-bottom: 20px;
-}
-.row-3{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    
-}
-.footer-col-1{
-    padding-left: 40px;
-}
-.footer-col-2{
-    flex: 1;
-    text-align: center;
-}
-.footer-col-2 img{
-    width: 75px;
-    padding-bottom: 20px;
-}
-.footer-col-3, .footer-col-4{
-    flex-basis: 20%;
-    text-align: center;
-}
-ul{
-    list-style-type: none;
-}
-.app-logo{
-    padding-top: 20px;
-}
-.app-logo img{
-    width: 75px;
-}
-.footer hr{
-    border: none;
-    background: #b5b5b5;
-    height: 1px;
-    margin: 20px;
-}
-.copyright{
-    text-align: center;
 }
 
 /*--------- media query for menu < 800 square size----------*/
@@ -381,7 +169,7 @@ ul{
     }
 }
 
-/*--------media query for less than 600 square size-------*/
+
 @media only screen and (max-width: 900px){
 
     .row{
@@ -396,5 +184,30 @@ ul{
         width: 95%;
         position: sticky;
         align-self: flex-start;
+    }
+    .col-3{
+        width: 100vw;
+        padding-right: 20vw;
+    }
+}
+
+@media only screen and (max-width: 700px){
+
+    .row{
+        flex-direction: column
+    }
+    .row .col-2{
+        width:fit-content;
+    }
+    
+    .cart-container {
+        margin: auto;
+        width: 95%;
+        position: sticky;
+        align-self: flex-start;
+    }
+    .col-3{
+        width: 100vw;
+        padding-right: 30vw;
     }
 }
