@@ -29,7 +29,7 @@ const accountModifyElement =`<div class="account-title">
                             </div>`;
 const previousOrdersElement = `<div class="title"><h1> Your Previous Orders </h1></div>`;
 const noPreviousOrdersElement = `<div class="title"><h1> No Orders </h1></div>`;
-
+const deleteAccountButtonElement = `<button class="deleteAccount" onclick="deleteAccountAlert()">Delete Account</button>`;
 
 
 function getAccountData(){
@@ -96,6 +96,7 @@ function accountModify(){
     document.getElementsByClassName("address")[0].innerHTML = accountAddressElement;
     document.getElementsByClassName("firstName")[0].innerHTML = accountFirstNameElement;
     document.getElementsByClassName("lastName")[0].innerHTML = accountLastNameElement;
+    document.getElementsByClassName("account-container")[0].innerHTML += deleteAccountButtonElement;
 
 }
 
@@ -232,6 +233,34 @@ function placeLastName(lastName){
                                                                 <button id='smallBtn' onclick="changeLastName()">Change</button>`;
 }
 
+function deleteAccountAlert(){
+    let selection;
+    if(confirm("Are you Sure You Want To Delete Your Account?")){
+        selection = true;
+    }else{
+        selection = false;
+    }
+    if(selection){
+        deleteAccount();
+    }
+}
+
+function deleteAccount(){
+
+    $.ajax({
+        url: "account.php",
+        type: "POST",
+        data: {deleteAccount: 1},
+        success: function(data){
+            signOut();
+        },
+        error: function(err){
+            console.log(err.responseText);
+        }
+
+    });
+}
+
 function getOrders(){
 
     $.ajax({
@@ -252,6 +281,7 @@ function orders(data){
     
     let products = [];
     products = JSON.parse(data);
+    
     document.getElementsByClassName("back-btn-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccount()">Go Back</button>`;
     if(products.length > 0){
 

@@ -92,16 +92,38 @@
         echo $result;
 
     }
+    else if(isset($_POST['deleteAccount'])){
+
+        $stmt = $conn->prepare("DELETE FROM cart WHERE user_ID = ?");
+        $stmt->bind_param('s', $user_id);
+        $stmt->execute();
+        
+        $stmt = $conn->prepare("DELETE FROM payments WHERE user_id = ? ");
+        $stmt->bind_param('s',  $user_id);
+        $stmt->execute();
+
+        $stmt = $conn->prepare("DELETE FROM purchased WHERE user_id = ?");
+        $stmt->bind_param('s',  $user_id);
+        $stmt->execute();
+
+        $stmt = $conn->prepare("DELETE FROM accounts WHERE user_id = ?");
+        $stmt->bind_param('s', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        echo $result;
+    }
 
     else if(isset($_POST['getOrders'])){
 
         $stmt = $conn->prepare("SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
         purchased.product_id = products.ID and purchased.user_id = ?");
-        $stmt->bind_param('s', $userId);
+        $stmt->bind_param('s', $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
-
-        if($result == true){
+        $count = mysqli_num_rows($result);
+    
+        if($count > 0){
 
             $products = [];
 

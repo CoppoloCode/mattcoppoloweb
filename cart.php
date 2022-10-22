@@ -69,7 +69,7 @@ if(isset($_POST['getProductsForCookie'])){
     if(isset($_POST['productID'])){
 
         $productID = $_POST['productID'];
-
+        
         $stmt = $conn->prepare("DELETE FROM cart WHERE product_ID = ? AND user_id = ?");
         $stmt->bind_param('ss', $productID, $user_id);
         $stmt->execute();

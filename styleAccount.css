@@ -109,7 +109,13 @@ input{
 #password{
     -webkit-text-security: disc;
 }
-
+.deleteAccount{
+    width: 100px;
+    height: 40px;   
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(rgba(255, 8, 8, 0.82),rgba(240, 99, 17, 0.82));;
+}
 /* --------------------Orders--------------------- */
 .account-container .title{
    text-align: center;

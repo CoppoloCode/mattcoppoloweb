@@ -110,13 +110,13 @@ function setupForgotPasswordHTML(){
                                  </div>
                                  <form onsubmit="forgotPassword(); return false">
                                     <div class="input-row">
-                                        <div>
-                                            <label>Email:</label><input type="email" id="email" required>
-                                        </div>
+                                        
+                                        <label>Email:</label><input type="email" id="email" required>
+                                        
                                     </div>
                                     <div class="button-row">
-                                        <button onclick="goBack()" id="back">Back to Sign In</button>
                                         <button type="submit">Send Email</button>
+                                        <button onclick="goBack()" id="back">Back to Sign In</button>
                                     </div>
                                  </form>`;
 

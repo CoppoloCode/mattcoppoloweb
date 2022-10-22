@@ -63,7 +63,7 @@ body{
     gap: 30px;
     flex-direction: column;
     justify-content: space-evenly;
-    
+    align-items: center;
 }
 
 .sign-in-email, .sign-in-password{

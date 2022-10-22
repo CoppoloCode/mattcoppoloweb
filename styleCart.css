@@ -53,6 +53,7 @@
 }
 #shopping-cart-items {  
     padding-top: 20px;
+    list-style: none;
 }
 .shopping-cart li {
     margin-bottom: 18px;

@@ -246,10 +246,7 @@ elseif(isset($_POST['updatePassword'])){
             echo "error updating password";
         }
     }else{
-        $stmt = $conn->prepare("DELETE FROM pendingpasswordchange WHERE user_id = ?");
-        $stmt->bind_param('s', $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        
         echo "proccess expired";
     }
 

@@ -125,4 +125,3 @@ function changeTypeSorting(){
 
     getProductsFromDataBase(page.sorting, selectedValue);
 }
-
