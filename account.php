@@ -98,11 +98,11 @@
         $stmt->bind_param('s', $user_id);
         $stmt->execute();
         
-        $stmt = $conn->prepare("DELETE FROM payments WHERE user_id = ? ");
+        $stmt = $conn->prepare("DELETE FROM payment_info WHERE user_id = ? ");
         $stmt->bind_param('s',  $user_id);
         $stmt->execute();
 
-        $stmt = $conn->prepare("DELETE FROM purchased WHERE user_id = ?");
+        $stmt = $conn->prepare("DELETE FROM purchases WHERE user_id = ?");
         $stmt->bind_param('s',  $user_id);
         $stmt->execute();
 
@@ -116,8 +116,8 @@
 
     else if(isset($_POST['getOrders'])){
 
-        $stmt = $conn->prepare("SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchased.Date FROM products inner JOIN purchased ON 
-        purchased.product_id = products.ID and purchased.user_id = ?");
+        $stmt = $conn->prepare("SELECT products.ID, products.Name, products.Cost, products.Description, products.Image, purchases.Date FROM products inner JOIN purchases ON 
+        purchases.product_id = products.ID and purchases.user_id = ?");
         $stmt->bind_param('s', $user_id);
         $stmt->execute();
         $result = $stmt->get_result();

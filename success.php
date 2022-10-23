@@ -29,7 +29,7 @@
             $payment_status = $arr_body['state'];
             $user_id = USER_ID;
 
-            $stmt = $db->prepare("INSERT INTO payments(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
+            $stmt = $db->prepare("INSERT INTO payment_info(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
             (?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param('sssssss', $user_id, $payment_id, $payer_id, $payer_email, $amount, $currency, $payment_status);
             $stmt->execute();

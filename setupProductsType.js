@@ -10,9 +10,7 @@ class Page{
 let page = new Page(0,[],0);
 page.view = window.screen.availWidth;
 
-if(page.view < 1400){
-    document.getElementsByClassName("btn-row")[0].remove();
-}
+
 
 function setTypeName(){
     let typeName;

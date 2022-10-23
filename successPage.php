@@ -1,6 +1,5 @@
 <?php
 
-
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
 $db->set_charset('utf8mb4');
@@ -17,7 +16,7 @@ if(isset($_POST['storeProducts'])){
 
     foreach($products as $product){
         $productID = $product[0];
-        $stmt = $db->prepare("INSERT INTO purchased (user_ID, product_id, Date) VALUES (? , ? , ?)");
+        $stmt = $db->prepare("INSERT INTO purchases (user_ID, product_id, Date) VALUES (? , ? , ?)");
         $stmt->bind_param('sss', $userID, $productID, $date);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -26,6 +25,7 @@ if(isset($_POST['storeProducts'])){
         $stmt->bind_param('s', $productID);
         $stmt->execute();
         $result = $stmt->get_result();
+
     }
    echo ($result);
 }
