@@ -280,7 +280,7 @@ function getOrders(){
 function orders(data){
     
     let products = [];
-    console.log(data);
+    
     products = JSON.parse(data);
     
     document.getElementsByClassName("back-btn-container")[0].innerHTML = `<button id='smallBtn'onclick="setupAccount()">Go Back</button>`;
