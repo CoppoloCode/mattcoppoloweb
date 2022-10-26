@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>All Products</title>
-    <link rel="stylesheet" href="styleProductsType.css">
+    <link rel="stylesheet" href="styleProducts.css">
     <link rel="stylesheet" href="styleHeader.css">
     <link rel="stylesheet" href="styleCart.css">
     <link rel="stylesheet" href="styleFooter.css">
@@ -13,8 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
-<body onload="setTypeName()">
-
+<body onload="getProductsFromDataBase(1,1)">
     <div class="header-container">
         <div class="logo">
             <img src="images/Storelogo.png">
@@ -22,7 +21,7 @@
         <div class="navbar">
             <nav>
                 <ul id="MenuItems">
-                    <a href="index.html">CoppoloCode</a>
+                    <a href="../index.html">CoppoloCode</a>
                     <a href="store.html">Home</a>
                     <a href="Products.html">Products</a>
                     <a href="sign-in.html">Account</a>
@@ -55,24 +54,76 @@
     </div> <!--end container -->
 
     <!---------- products ----------->
-    <div class="products-container">
-        <div class="title-row">
-            <h1 id="title"></h1>
+    <div class="small-container">
+        <div class="sort-row">
+            <select class="sorting" id="selectBox" onchange="changeSorting()">
+                <option value="1">Sort by Featured</option>
+                <option value="2">Sort by price asc</option>
+                <option value="3">Sort by price desc</option>
+                <option value="4">Sort by rating</option>              
+                </option>
+            </select>
+            <select class="typesorting" id="selectTypeBox" onchange="changeTypeSorting()">
+                <option value="1">Sort by All</option>
+                <option value="2">Sort by headsets</option>
+                <option value="3">Sort by keyboards</option>
+                <option value="4">Sort by mouses</option>      
+                <option value="5">Sort by PCs</option>        
+                </option>
+            </select>
         </div>
         <div class="row">
-           
+            <div class="col" id="product-1">
+             
+            </div>
+            <div class="col" id="product-2">
+                
+            </div>
+            <div class="col" id="product-3">
+                
+            </div>
+            <div class="col" id="product-4">
+                
+            </div>
         </div>
-        <div class="btn-row">
-            <a onclick="productScrollLeft()">&#8249;</a>
-            <a onclick="productScrollRight()">&#8250;</a>
-        </div>
+        <div class="row">
+            <div class="col" id="product-5">
+                
+            </div>
+            <div class="col" id="product-6">
+                
+            </div>
+            <div class="col" id="product-7">
+
+            </div>
+            <div class="col" id="product-8">
+                
+            </div>
+         </div> 
+         <div class="row">
+            <div class="col" id="product-9">
+                
+            </div>
+            <div class="col" id="product-10">
+                
+            </div>
+            <div class="col" id="product-11">
+               
+            </div>
+            <div class="col" id="product-12">
+                
+            </div>
+         </div>   
+         <div class="page-btn" id="page-btn">
+            
+         </div>
     </div>
+</body>
 
     
 
     <!---------- Footer ----------->
 
-    
     <div class="footer">
         <div class="footer-row">
             <div class="footer-col-1">
@@ -112,14 +163,14 @@
     </div>
   
 
-    
+
+
     <script src="cart.js"></script>
-    <script src="saveProductId.js"></script>
     <script src="insertProduct.js"></script>
-    <script src="setupProductsType.js"></script>
+    <script src="saveProductId.js"></script>
     <script src="toggleMenu.js"></script>
+    <script src="setupProductsPage.js"></script>
     
 
 
-</body>
 </html>
