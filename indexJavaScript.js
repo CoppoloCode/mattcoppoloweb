@@ -9,10 +9,9 @@ function reveal() {
   
       if (elementTop < windowHeight - elementVisible) {
         reveals[i].classList.add("active" + (i+1));
-      } else {
-        
-      }
+      } 
     }
   }
   
   window.addEventListener("scroll", reveal);
+

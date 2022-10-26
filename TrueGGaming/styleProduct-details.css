@@ -34,6 +34,9 @@ body{
     
 }
 .col-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width:25%;
     padding-left: 20px;
 }
@@ -48,7 +51,7 @@ body{
 }
 .col-2 .Review{
     text-align: left;
-    font-size: 1rem;
+    font-size: 3rem;
     color: gold;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -86,6 +89,7 @@ body{
     padding-right: 5%;
     padding-bottom: 100px;
     background: radial-gradient(rgb(141, 133, 133), rgb(95, 93, 93));
+    border-top-style: solid;
 }
 .row-2{
     display:grid;
