@@ -29,7 +29,6 @@ body{
 }
 .navbar{
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 .navbar img{
@@ -38,8 +37,8 @@ body{
     object-fit: scale-down;
 }
 nav{
-    flex: 1;
-    text-align: right;
+    display: flex;
+    align-items: center;
 }
 nav ul{
     display:  inline-block;
@@ -63,7 +62,9 @@ nav ul li a{
 nav ul li a:hover{
     background: #563434;
 }
-
+.menu-icon{
+    display: none;
+}
 
 /* ---------------------Intro ------------------------ */
 .Intro{
@@ -304,7 +305,7 @@ nav ul li a:hover{
 }
 .projects-col a:hover ~ img{
     cursor: pointer;
-    animation: scale .5s ease-in;
+    animation: scale .1s ease-in;
     animation-fill-mode: forwards; 
 }
 .projects-col p{
@@ -431,6 +432,21 @@ textarea{
     color: red;
 }
 
+
+/* ------------------------Resume------------------------- */
+
+.iframe-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    scroll-snap-align: start;
+}
+iframe{
+    width: 90vw;
+    height: 100vh;
+}
+
 @keyframes scale {
 	from{
         transform: scale(1);
@@ -447,10 +463,48 @@ textarea{
     .header-container .navbar nav a{
         font-size: x-large;
     }
+    .navbar nav{
+        width: 0px;
+     }
     .navbar img{
         width: 10%;
         height: 10%;
     }
+    nav ul {
+        position: absolute;
+        top: 10vh;
+        right: 0;
+        background: rgb(0, 0, 0);
+        width: 30vw; 
+        height: 100vh;      
+        overflow: hidden;
+        transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 12px;
+        gap: 10px;
+    }
+    
+    nav ul li{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .menu-icon{
+        display: block;
+        text-align: center;
+        cursor: pointer;
+        width: 10vw;
+        height: 10vh;
+    }
+    .menu-icon i{
+        font-size: 5rem;
+        color: orangered;
+    }
+
     .about-container, .projects-container, .contact-container{
         padding: 10%;
     }
