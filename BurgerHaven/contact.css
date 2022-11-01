@@ -33,7 +33,7 @@ body{
 }
 .header-container h1{
     font-size: 3rem;
-    color: rgb(87, 21, 21);;
+    color: rgb(87, 21, 21);
 }
 
 .header-container nav{
@@ -60,33 +60,81 @@ body{
 .header-container ul li a:hover{
     color:blue;
 }
-
-
-/* -----------------------Home------------------------ */
-
-.home-container{
-    height: 100vh;
-    scroll-snap-align: start;
+#MenuItems{
+    z-index: 1;
 }
-.home-row-1{
+
+
+/* ---------------------Contact------------------------- */
+.contact-container{
     display:flex;
-    background-image: url(images/table.jpg);
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
+    flex-direction: column;
+    background-color: rgb(87, 21, 21);
+}
+.contact-row-1{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    height: 70vh;
-    overflow-x: hidden;
 }
-
-
-.home-row-1 img{
+.contact-row-1 h1{
+    color: wheat;
+    font-size: 5rem;
+    padding-top: 5%;
+}
+.contact-row-2{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: wheat;
+    font-size: 2rem;
+    padding-top: 30px;
+}
+.contact-row-2 div{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.contact-info{
+    gap: 20px;
+}
+.contact-row-2 input{
+    height: 50px;
+    width: 200px;
+    padding-left: 5px;
+}
+.contact-message{
+    padding-top: 50px;
+    flex-direction: column;
+    gap: 30px;
+}
+.contact-message textarea{
+    height: 150px;
+    width: 50vw;
+}
+.contact-message button{
+    background-color: rgb(101, 179, 224);
+    padding: 5px;
+    color: rgb(87, 21, 21);
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border-color: black;
+}
+.contact-row-3{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.contact-row-3 iframe{
     height: 600px;
-    width: 500px;
-    object-fit: scale-down;
-    user-select: none;
+    width: 922px;
 }
-.home-row-2{
+
+.contact-row-4{
     display:flex;
     height: 50vh;
     background-image: url(images/burger-pattern.jpeg);
@@ -95,51 +143,50 @@ body{
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
-    
 }
-.home-row-2-col-1, .home-row-2-col-2, .home-row-2-col-3{
+.contact-row-4-col-1, .contact-row-4-col-2, .contact-row-4-col-3{
     border-style:dotted;
     border-radius: 40px;
     padding:30px;
     background-color: rgb(11, 250, 178, .8);
 }
-.home-row-2-col-1  ul{
+.contact-row-4-col-1  ul{
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
-.home-row-2-col-1 ul li{
+.contact-row-4-col-1 ul li{
     list-style: none;
 }
-.home-row-2-col-1  ul li a{
+.contact-row-4-col-1  ul li a{
     color: rgb(87, 21, 21);
     font-size: 2rem;
     text-decoration: none;
     
 }
-.home-row-2-col-1  ul li a:hover{
+.contact-row-4-col-1  ul li a:hover{
     color: blue;
     
     
 }
-.home-row-2-col-2{
+.contact-row-4-col-2{
     display: flex;
     flex-direction: column;
     gap: 10px;
     text-align: center;
 }
-.home-row-2-col-2 h1{
+.contact-row-4-col-2 h1{
    font-size: 2.5rem;
 }
-.home-row-2-col-3{
+.contact-row-4-col-3{
     text-align: center;
 }
-.home-row-2-col-3 a{
+.contact-row-4-col-3 a{
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1380px){
-    
+@media only screen and (max-width: 1000px){
+
     .header-container nav{
        width: 0px;
     }
@@ -174,61 +221,9 @@ body{
         font-size: 5rem;
         color: yellow;
     }
-    .home-row-1 img{
-        margin-top: 30vh;
 
+    .contact-row-4{
+        font-size: 200%;
     }
 
-}
-
-@media only screen and (max-width: 1000px){
-
-.header-container nav{
-   width: 0px;
-}
-
-nav ul {
-    position: absolute;
-    top: 10vh;
-    right: 0;
-    background: rgb(101, 179, 224);
-    border-radius: 40px;
-    width: 100vw; 
-    height: 100vh;      
-    overflow: hidden;
-    transition: max-height .5s;
-    display: flex;
-    flex-direction: column;
-}
-
-nav ul li{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.menu-icon{
-    display: block;
-    cursor: pointer;
-    width: 10vw;
-}
-.menu-icon i{
-    font-size: 5rem;
-    color: yellow;
-}
-.home-row-1{
-   overflow-x: scroll;
-}
-
-.home-row-2{
-    flex-direction: column;
-    height: 300vh;
-}
-.home-row-2-col-1 ul li a{
-    font-size: 10rem;
-}
-.home-row-2-col-2, .home-row-2-col-3{
-    font-size: 3rem;
-}
 }

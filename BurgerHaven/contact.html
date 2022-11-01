@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BurgerHaven</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contact.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
         <h1>Burger Haven</h1>
         <nav>
             <ul id="MenuItems" style="max-height: 0px;">
-                <li><a href="#">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="catering.html">Catering</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
@@ -30,16 +30,26 @@
     </div>
 </section>
 
-<section id="Home" class="Home">
-    <div class="home-container">
-        <div class="home-row-1">
-            <img src="images/burger1.png" >
-            <img src="images/burger2.png" >
-            <img src="images/burger3.png" >
-            <img src="images/burger5.png" >
+<section class="Contact">
+    <div class="contact-container">
+        <div class="contact-row-1">
+            <h1>Contact Us!</h1>
         </div>
-        <div class="home-row-2">
-            <div class="home-row-2-col-1">  
+        <div class="contact-row-2">
+            <div class="contact-info">
+                <label>Name:</label><input type="text" class="name">
+                <label>Email:</label><input ype="email" class="email">
+            </div>
+            <div class="contact-message">
+                <label>Message</label><textarea class="message" ></textarea>
+                <button>Send</button>
+            </div>
+        </div>
+        <div class="contact-row-3">
+            <iframe src="https://sim-unlock.net/foto/12_48_26_Google_Maps.png" ></iframe>
+        </div>
+        <div class="contact-row-4">
+            <div class="contact-row-4-col-1">  
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="menu.html">Menu</a></li>
@@ -48,7 +58,7 @@
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
-            <div class="home-row-2-col-2">
+            <div class="contact-row-4-col-2">
                 <h1>Hours</h1>
                 <h2>Monday to Thrusday</h2>
                 <p>11:30am - 10:30pm</p>
@@ -59,7 +69,7 @@
                 <h2>Sunday</h2>
                 <p>12pm - 10:30pm</p>
             </div>
-            <div class="home-row-2-col-3">
+            <div class="contact-row-4-col-3">
                 <h1>Follow Us</h1>
                 <a><img src="images/insta.jpeg" alt=""></a>
                 <a><img src="images/yelp.jpeg" alt=""></a>
@@ -69,13 +79,7 @@
     </div>
 </section>
 
-
-
-
-
-    
-</body>
-
 <script src="toggleMenu.js"></script>
 
+</body>
 </html>
