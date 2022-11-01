@@ -1,0 +1,347 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Fuzzy Bubbles', cursive;
+}
+
+.header-container{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(101, 179, 224);
+    height: 6vh;
+}
+.menu-icon{
+    display: none;
+}
+.menu-icon i{
+    font-size:medium;
+    color:white;
+}
+.header-container img{
+    width: 100px;
+    height: 5vh;
+    object-fit: scale-down;
+}
+.header-container h1{
+    font-size: 3rem;
+    color: rgb(87, 21, 21);
+}
+
+.header-container nav{
+    
+    height: 10vh;
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2%;
+}
+.header-container ul{
+    display: flex;
+    width: 50vw;
+    list-style: none;
+    justify-content: space-evenly;
+}
+.header-container ul li a{
+    color: rgb(87, 21, 21);;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+.header-container ul li a:hover{
+    color:blue;
+}
+
+/* ------------------------Menu-Intro---------------------------- */
+
+.menu-container{
+    height: 94vh;
+    font-family:'Times New Roman', Times, serif;
+    text-shadow: 3px 3px 3px black;
+}
+.menu-row-1{
+    height:50vh;
+    background-image: url(images/burger1.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:wheat;
+    font-size: 5rem;
+    padding-bottom: 5%;
+}
+.menu-row-2{
+    height: 20vh;
+    background-image: url(images/burger-pattern.jpeg);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-style: solid;
+}
+.menu-row-2-col{
+    color: black;
+    box-shadow: 0 0 12px 4px;
+    background-color: rgb(87, 21, 21);
+    padding: 5px;
+    border-radius: 12px;
+    border-style: solid;
+    font-size: 3rem;
+}
+.menu-row-2-col a{
+    color: wheat;
+    text-decoration: none;
+    font-weight: bolder;
+}
+.menu-row-2-col:hover{
+    animation: scale .2s ease-in;
+    animation-fill-mode: forwards;
+}
+.menu-row-2-col a:hover{
+    color: white;
+    text-decoration: none;
+    font-weight: bolder;
+    
+}
+
+@keyframes scale {
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(1.05);
+    }
+    
+}
+
+.menu-row-3{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-image: url(images/burger2.jpeg);
+    background-position: center;
+    background-size: cover;
+    height:24vh;
+    
+}
+.menu-row-3-col{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+}
+.menu-row-3-col h1{
+    color:wheat;
+    font-size: 3rem;
+}
+.menu-row-3-col p{
+    color:wheat;
+    font-size: 2rem;
+}
+
+/* -----------------------Lunch Menu-------------------- */
+
+.lunch-container{
+    background-color: rgb(87, 21, 21);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    border-top-style: solid;
+    border-color: black;
+    color: wheat;
+    text-shadow: 3px 3px 3px black;
+}
+.lunch-row-1{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.lunch-row-1 p{
+    font-size: 2rem;
+}
+.lunch-row-2{
+    display: flex;
+    flex-wrap:wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-radius: 25px;
+    padding: 20px;
+    
+}
+.lunch-row-2-row-1{
+    text-align: center;
+}
+.lunch-row-2-row-2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 20px;
+}
+.lunch-row-2-col{
+    width: 20%;
+}
+.lunch-row-2-col h2{
+    padding-top: 15px;
+}
+.lunch-row-3{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 30px;
+    width: 98vw;
+}
+.lunch-row-3-col{
+    width: 20%;
+}
+.lunch-row-3-col h1{
+    padding-bottom: 20px;
+    font-size: 3rem;
+    text-align: center;
+}
+.lunch-row-3-col p{
+    font-size: 2rem;
+    padding-top: 20px;
+}
+.lunch-row-3-col small{
+    padding-top: 5px;
+}
+
+/* -----------------------Dinner Menu-------------------------- */
+.dinner-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(87, 21, 21);
+    color: wheat;
+    text-shadow: 3px 3px 3px black;
+    
+}
+.dinner-row-1{
+    padding-top: 60px;
+    font-size: 3rem;
+}
+.dinner-row-2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10%;
+    width: 90%;
+    padding-bottom: 2%;
+}
+.dinner-col{
+    padding-top: 5%;
+    width: 20%;
+}
+.dinner-col h1{
+    font-size: 3rem;
+    text-align: center;
+}
+.dinner-col p{
+    font-size: 2rem;
+    padding-top: 20px;
+}
+
+
+/* -------------------Happy Hour Menu----------------------- */
+
+.happyhour-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(87, 21, 21);
+    color: wheat;
+    text-shadow: 3px 3px 3px black;
+    padding-bottom: 10%;
+}
+.happyhour-row-1{
+    padding-top: 60px;
+    font-size: 3rem;
+}
+.happyhour-row-2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 10%;
+    width: 90%;
+    padding-bottom: 2%;
+}
+.happyhour-col{
+    padding-top: 5%;
+    width: 20%;
+}
+.happyhour-col h1{
+    font-size: 3rem;
+    text-align: center;
+}
+.happyhour-col p{
+    font-size: 2rem;
+    padding-top: 20px;
+}
+
+@media only screen and (max-width: 1000px){
+
+    .header-container nav{
+       width: 0px;
+    }
+    
+    nav ul {
+        position: absolute;
+        top: 10vh;
+        right: 0;
+        background: rgb(101, 179, 224);
+        border-radius: 40px;
+        width: 100vw; 
+        height: 100vh;      
+        overflow: hidden;
+        transition: max-height .5s;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    nav ul li{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .menu-icon{
+        display: block;
+        cursor: pointer;
+        width: 10vw;
+    }
+    .menu-icon i{
+        font-size: 5rem;
+        color: yellow;
+    }
+
+    
+    h1,h2, p{
+        font-size: 200%;
+    }
+    .lunch-row-2-row-2, .lunch-row-3, .dinner-row-2, .happyhour-row-2{
+        flex-direction: column;
+    }
+    .lunch-row-2-col, .lunch-row-3-col, .dinner-col , .happyhour-col{
+        width: 90vw;
+    }
+}

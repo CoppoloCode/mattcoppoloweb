@@ -33,7 +33,7 @@ body{
 }
 .header-container h1{
     font-size: 3rem;
-    color: rgb(255, 0, 0);
+    color: rgb(87, 21, 21);;
 }
 
 .header-container nav{
@@ -52,7 +52,7 @@ body{
     justify-content: space-evenly;
 }
 .header-container ul li a{
-    color: red;
+    color: rgb(87, 21, 21);;
     text-decoration: none;
     font-size: 2rem;
     font-weight: bolder;
@@ -66,7 +66,7 @@ body{
 
 .home-container{
     height: 100vh;
-    
+    scroll-snap-align: start;
 }
 .home-row-1{
     display:flex;
@@ -87,7 +87,6 @@ body{
 }
 
 .home-row-1 img{
-    scroll-snap-align: center;
     margin-bottom: 12vh;
     margin-right: 100vw;
     margin-left: 40vw;
@@ -126,7 +125,7 @@ body{
     list-style: none;
 }
 .home-row-2-col-1  ul li a{
-    color: red;
+    color: rgb(87, 21, 21);
     font-size: 2rem;
     text-decoration: none;
     
@@ -153,7 +152,7 @@ body{
 }
 @keyframes scroll {
     0%{
-        transform: translateX(0vw);
+        transform: translateX(0);
         
     }
     25%{
