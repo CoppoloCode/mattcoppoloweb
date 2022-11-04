@@ -6,11 +6,13 @@ var MenuItems = document.getElementById("MenuItems");
 
 function menutoggle(){
     
-    if(MenuItems.style.maxHeight == "0px"){
-        MenuItems.style.maxHeight = window.visualViewport.height + 'px';
-        MenuItems.style.maxWidth = window.visualViewport.width + 'px';
-    }
-    else{
-        MenuItems.style.maxHeight = "0px";
+    if(window.visualViewport.width < 1200){
+        if(MenuItems.style.height == "0px"){
+            MenuItems.style.height = window.visualViewport.height + 'px';
+            MenuItems.style.width = window.visualViewport.width + 'px';
+        }
+        else{
+            MenuItems.style.height = "0px";
+        }
     }
 }

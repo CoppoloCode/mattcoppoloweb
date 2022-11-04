@@ -477,7 +477,7 @@ iframe{
         width: 30vw; 
         height: 100vh;      
         overflow: hidden;
-        transition: max-height .5s;
+        transition: height .5s;
         display: flex;
         flex-direction: column;
         justify-content: center;

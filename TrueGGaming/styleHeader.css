@@ -53,7 +53,7 @@ nav ul a{
         width: 100vw; 
         height: 100vh;      
         overflow: hidden;
-        transition: max-height .5s;
+        transition: height .5s;
         display: flex;
         flex-direction: column;
     }
