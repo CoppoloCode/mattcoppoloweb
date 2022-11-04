@@ -6,7 +6,6 @@
 }
 html{
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
     scroll-padding-top: 70px;
 }
 body{
@@ -461,7 +460,7 @@ iframe{
 @media only screen and (max-width: 1200px){
 
     .header-container .navbar nav a{
-        font-size: x-large;
+        font-size: 5rem;
     }
     .navbar nav{
         width: 0px;

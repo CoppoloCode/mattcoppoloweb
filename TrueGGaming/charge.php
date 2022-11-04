@@ -1,19 +1,12 @@
 <?php
 require_once 'configPayPal.php';
+require_once "config.php";
 
 if(isset($_POST['submit'])){
 
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
-    $db->set_charset('utf8mb4');
-
-    if($db->connect_error){
-        die("connect failed: ". $db->connect_error);
-    }
-
     $user_id = USER_ID;
 
-    $stmt = $db->prepare("SELECT * FROM cart WHERE user_ID = ?");
+    $stmt = $conn->prepare("SELECT * FROM cart WHERE user_ID = ?");
     $stmt->bind_param('s', $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -31,7 +24,7 @@ if(isset($_POST['submit'])){
     for($i = 0; $i < sizeof($productId); $i++){
 
         $id = $productId[$i];
-        $stmt = $db->prepare("SELECT * FROM products WHERE ID = ?");
+        $stmt = $conn->prepare("SELECT * FROM products WHERE ID = ?");
         $stmt->bind_param('s', $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -92,6 +85,6 @@ if(isset($_POST['submit'])){
 
 
 
-$db->close(); 
+$conn->close(); 
 
 ?>

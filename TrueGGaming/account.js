@@ -293,7 +293,7 @@ function orders(data){
             document.getElementsByClassName("products")[0].innerHTML += `<div class="product">
                                                                                     <img src="images/`+ product.Image + `"></img>
                                                                                     <small>`+ product.Description + `</small>
-                                                                                    <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date +`</e></div>
+                                                                                    <div class="date"><p>Date Purchased: </p><e id='date'>`+ product.Date.split(" ")[0] +`</e></div>
                                                                                     <div class="price"><p>Price: </p><e id='cost'>$` + product.Cost + `</e></div>
                                                                                   </div>`;
         });

@@ -5,19 +5,12 @@ var MenuItems = document.getElementById("MenuItems");
 
 
 function menutoggle(){
-    if(window.visualViewport.width > 900){
-        if(MenuItems.style.maxHeight == "0px"){
-            MenuItems.style.maxHeight = "250px";
-        }
-        else{
-            MenuItems.style.maxHeight = "0px";
-        }
-    }else{
-        if(MenuItems.style.maxHeight == "0px"){
-            MenuItems.style.maxHeight = window.visualViewport.height + 'px';
-        }
-        else{
-            MenuItems.style.maxHeight = "0px";
-        }
+    
+    if(MenuItems.style.maxHeight == "0px"){
+        MenuItems.style.maxHeight = window.visualViewport.height + 'px';
+        MenuItems.style.maxWidth = window.visualViewport.width + 'px';
+    }
+    else{
+        MenuItems.style.maxHeight = "0px";
     }
 }

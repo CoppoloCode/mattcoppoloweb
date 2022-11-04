@@ -1,12 +1,7 @@
 
 <?php
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $conn = new mysqli("localhost", "root", "", "mattcoppolodatabase");
-    $conn->set_charset('utf8mb4');
-
-    if($conn->connect_error){
-        die("Connection Failed: " . $conn->connect_error);
-    }
+    require_once "config.php";
+    
     if($_POST['typename']){
 
         if($_POST['typename'] == 'all'){

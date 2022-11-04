@@ -141,6 +141,9 @@ input{
     text-align: left;
     overflow-y: scroll;
 }
+.product small::-webkit-scrollbar{
+    display: none;
+}
 .product p{
     font-weight: bold;
     

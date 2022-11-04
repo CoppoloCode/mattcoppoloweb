@@ -47,9 +47,9 @@ body{
 }
 .header-container ul{
     display: flex;
-    width: 50vw;
     list-style: none;
     justify-content: space-evenly;
+    gap: 30px;
 }
 .header-container ul li a{
     color: rgb(87, 21, 21);;

@@ -1,3 +1,3 @@
 <?php
- header("Location: http://localhost/mattcoppoloweb/checkout.html", true, 301);
+ header("Location: checkout.html", true, 301);
 ?>

@@ -2,13 +2,7 @@
 
     require_once 'configPayPal.php';
 
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    $db = new mysqli("localhost", "root", "", "mattcoppolodatabase");
-    $db->set_charset('utf8mb4');
-
-    if($db->connect_errno){
-        die("connect failed: ". $db->connect_error);
-    }
+    require_once "config.php";
 
     if(array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)){
         $transaction = $gateway->completePurchase(array(
@@ -29,21 +23,21 @@
             $payment_status = $arr_body['state'];
             $user_id = USER_ID;
 
-            $stmt = $db->prepare("INSERT INTO payment_info(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
+            $stmt = $conn->prepare("INSERT INTO payment_info(user_id, payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES
             (?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param('sssssss', $user_id, $payment_id, $payer_id, $payer_email, $amount, $currency, $payment_status);
             $stmt->execute();
             $result = $stmt->get_result();
 
-            header("Location: http://localhost/mattcoppoloweb/successPage.html", true, 301);
+            header("Location: successPage.html", true, 301);
 
         }else{
             echo $response->getMessage();
         }
      }else{
-        header("Location: http://localhost/mattcoppoloweb/store.html", true, 301);
+        header("Location: store.html", true, 301);
      }
 
-     $db->close();
+     $conn->close();
      
 ?>

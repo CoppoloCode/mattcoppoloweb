@@ -47,7 +47,7 @@ body{
 }
 .header-container ul{
     display: flex;
-    width: 50vw;
+    gap: 30px;
     list-style: none;
     justify-content: space-evenly;
 }

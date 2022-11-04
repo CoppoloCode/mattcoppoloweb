@@ -164,7 +164,7 @@ function signIn(){
                 notifyUser(`<small> Email does not exist. </small>`);
              }else if(data.includes("incorrect password")){
                 notifyUser(`<small> Incorrect Password. </small>`);
-             }else{
+             }else if(!data.includes("<br")){
                 accountCreated(data);
             }
         },

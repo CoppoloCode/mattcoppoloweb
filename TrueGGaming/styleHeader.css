@@ -65,8 +65,9 @@ nav ul a{
         margin-top: 10px;
         margin-bottom: 10px;
     }
-    nav ul li a{
-        color: #fff;
+    nav ul a{
+        color: black;
+        font-size: 3rem;
     }
     .menu-icon{
         display: block;
