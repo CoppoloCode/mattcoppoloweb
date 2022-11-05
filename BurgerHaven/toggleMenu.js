@@ -8,7 +8,7 @@ function menutoggle(){
     
     if(window.visualViewport.width < 1200){
         if(MenuItems.style.height == "0px"){
-            MenuItems.style.height = window.visualViewport.height + 'px';
+            MenuItems.style.height = '600px';
             MenuItems.style.width = window.visualViewport.width + 'px';
         }
         else{

@@ -12,54 +12,6 @@ body{
     font-family: 'Fuzzy Bubbles', cursive;
 }
 
-.header-container{
-    display:flex;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: rgb(101, 179, 224);
-    height: 6vh;
-}
-.menu-icon{
-    display: none;
-}
-.menu-icon i{
-    font-size:medium;
-    color:white;
-}
-.header-container img{
-    width: 100px;
-    height: 5vh;
-    object-fit: scale-down;
-}
-.header-container h1{
-    font-size: 3rem;
-    color: rgb(87, 21, 21);
-}
-
-.header-container nav{
-    
-    height: 10vh;
-    width: 50vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 2%;
-}
-.header-container ul{
-    display: flex;
-    gap: 30px;
-    list-style: none;
-    justify-content: space-evenly;
-}
-.header-container ul li a{
-    color: rgb(87, 21, 21);;
-    text-decoration: none;
-    font-size: 2rem;
-    font-weight: bolder;
-}
-.header-container ul li a:hover{
-    color:blue;
-}
 
 /* -------------------------Intro------------------------ */
 
@@ -153,42 +105,6 @@ body{
 
 
 @media only screen and (max-width: 1000px){
-
-    .header-container nav{
-       width: 0px;
-    }
-    
-    nav ul {
-        position: absolute;
-        top: 10vh;
-        right: 0;
-        background: rgb(101, 179, 224);
-        border-radius: 40px;
-        width: 100vw; 
-        height: 100vh;      
-        overflow: hidden;
-        transition: max-height .5s;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    nav ul li{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .menu-icon{
-        display: block;
-        cursor: pointer;
-        width: 10vw;
-    }
-    .menu-icon i{
-        font-size: 5rem;
-        color: yellow;
-    }
-
 
     .catering-container{
         font-size: 200%;

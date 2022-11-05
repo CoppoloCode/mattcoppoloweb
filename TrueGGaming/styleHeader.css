@@ -81,4 +81,7 @@ nav ul a{
         padding-right: 20px;
         color: #8a8a8a;
     }
+    #MenuItems{
+        height: 0px;
+    }
 }

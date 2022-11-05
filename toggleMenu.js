@@ -3,9 +3,6 @@
 
 var MenuItems = document.getElementById("MenuItems");
 
-if(window.visualViewport.width < 1200){
-    MenuItems.style.height = "0px";
-}
 
 function menutoggle(){
 

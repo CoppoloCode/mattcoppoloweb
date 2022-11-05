@@ -32,7 +32,7 @@
   }
   
   getCartProducts();
-  $(".shopping-cart").toggle()
+ 
   $(document).on("click", "#cart", function() {
     getCartProducts();
     $(".shopping-cart").fadeToggle("fast");
