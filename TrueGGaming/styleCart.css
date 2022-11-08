@@ -52,9 +52,14 @@
 #cartEmpty{
     text-align: center;
 }
-#shopping-cart-items {  
+#shopping-cart-items {
+    max-height: 50vh;  
     padding-top: 20px;
+    overflow-y: scroll;
     list-style: none;
+}
+#shopping-cart-items::-webkit-scrollbar{
+    display: none;
 }
 .shopping-cart li {
     margin-bottom: 18px;

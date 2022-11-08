@@ -26,6 +26,7 @@
 
   cookieCart.productIds = document.cookie.split('cart=')[1].split(';')[0].split(',');
   cookieCart.qty = document.cookie.split('qty=')[1].split(';')[0].split(',');
+
   if(cookieCart.productIds.length > 0){
     cookieCart.productIds.length = cookieCart.productIds.length -1;
     cookieCart.qty.length = cookieCart.qty.length -1;
@@ -82,15 +83,22 @@
     $(document).on("click", ".AddtoCart", function(){
 
       let id = $(this).attr("id");
-      let cart = cookieCart.productIds.join(',');
-      
-      if(cart.includes(id) == false){
-        cookieCart.productIds.push(id);
-        cookieCart.qty.push(1);
-        
-      }else{
-        alert("Item already in cart");
+      let found = false;
+
+      for(i = 0; i < cookieCart.productIds.length; i++){
+        if(cookieCart.productIds[i] == id){
+          found = true;
+          break;
+        }
       }
+      if(!found){
+          cookieCart.productIds.push(id);
+          cookieCart.qty.push(1);
+      }else{
+          alert("Item already in cart");
+        }
+     
+        
       
       if(userID != 0){
         $.ajax({

@@ -46,13 +46,13 @@
 
 
 
-@media only screen and (max-width: 1380px){
+@media only screen and (max-width: 1450px){
 
     .header-container nav{
        width: 0px;
     }
     
-    nav ul {
+    .header-container ul {
         position: absolute;
         top: 10vh;
         right: 0;
@@ -64,6 +64,8 @@
         transition: max-height .5s;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        gap: 30px;
     }
     
     nav ul li{
