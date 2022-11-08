@@ -70,10 +70,10 @@ nav ul li a:hover{
     scroll-snap-align: start;
 }
 .intro-container{
-    height: 100vh;
     display:flex;
     align-items: center;
     justify-content: center;
+    height: 95vh;
 }
 .intro-row{
     display: flex;
@@ -147,7 +147,6 @@ nav ul li a:hover{
 /* -------------------About-------------------------- */
 .About{
     scroll-snap-align: start;
-    height: 100vh;
 }
 .reveal{
     animation-play-state: paused;
@@ -179,9 +178,10 @@ nav ul li a:hover{
 .about-container{
     display:flex;
     flex-direction: column;
+    height: 100vh;
+    padding-bottom: 10%;
 }
 .about-row-1{
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -213,6 +213,10 @@ nav ul li a:hover{
     font-weight: 100;
     font-size: 1rem;
     line-height: 2;
+    overflow-y: scroll;
+}
+.about-row-2-col-1::-webkit-scrollbar{
+    display: none;
 }
 .about-row-3{
     display: flex;
@@ -434,17 +438,28 @@ textarea{
 
 /* ------------------------Resume------------------------- */
 
-.iframe-container{
+.resume-container{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    flex-direction: column;
     scroll-snap-align: start;
-}
-iframe{
-    width: 90vw;
     height: 100vh;
+    margin-bottom: 15%;
 }
+.resume-container h1{
+    font-size: 5rem;
+    background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 100;
+    text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 5%;
+}
+
 
 @keyframes scale {
 	from{
@@ -504,13 +519,11 @@ iframe{
         color: orangered;
     }
 
-    .about-container, .projects-container, .contact-container{
-        padding: 10%;
-    }
-
     .about-row-2-col-1{
         font-size: 1.5rem;
         width: 90vw;
+        height: 40vh;
+        text-align: center
     }
     .about-row-3{
         gap: 4vh;
@@ -526,6 +539,14 @@ iframe{
     }
     .projects-col p{
         font-size: 2rem;
+        width: 80vw;
+    }
+    .projects-col a{
+        font-size: 5rem;
+    }
+    .projects-col img{
+        width: 80vw;
+        height: 80vh;
     }
     .contact-container{
         font-size: 2rem;

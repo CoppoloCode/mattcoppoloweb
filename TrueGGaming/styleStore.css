@@ -160,6 +160,7 @@ html,body{
     justify-content: space-around;
     text-align: center;
     padding-bottom: 50px;
+    user-select: none;
 
 }
 .row-3 a{
@@ -330,9 +331,10 @@ html,body{
     .categories a{
         font-size: 3rem;
     }
-    .row-2, .row-3{
+    .row-3{
         height: fit-content;
         flex-direction: column;
+        gap: 30px;
     }
     
 }
