@@ -12,6 +12,11 @@
 
     --bg-color: rgb(20, 20, 20);
     --card-2-color: rgb(23, 23, 23);    
+
+    --purple: rgb(123, 31, 162);
+    --violet: rgb(103, 58, 183);
+    --pink: rgb(244, 143, 177);
+
 }
 
 body {
@@ -207,7 +212,7 @@ body {
     z-index: 2;
 }
 
-h1, h2, h3, h4, span {
+.card-2 h1, .card-2 h2, .card-2 h3, .card-2 h4, .card-2 span {
     color: rgb(240, 240, 240);
     font-family: "Rubik", sans-serif;
     font-weight: 400;
@@ -250,6 +255,95 @@ i {
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.85em;
     margin-top: 8px;
+}
+
+  
+@keyframes background-pan {
+    from {
+        background-position: 0% center;
+    }
+    
+    to {
+      background-position: -200% center;
+    }
+}
+  
+@keyframes scale {
+    from, to {
+      transform: scale(0);
+    }
+    
+    50% {
+      transform: scale(1);
+    }
+}
+  
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    
+    to {
+      transform: rotate(180deg);
+    }
+}
+  
+.MagicText{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    margin-top: 20vh;
+}
+.MagicText h1 {
+    color: white;
+    font-family: "Rubik", sans-serif;
+    font-size: clamp(2em, 2vw, 4em);
+    font-weight: 400;
+    margin: 0px;
+    padding: 20px;
+    text-align: center;
+}
+  
+.MagicText h1 > .magic {
+    display: inline-block;
+    position: relative;
+}
+  
+.MagicText h1 > .magic > .magic-star {
+    --size: clamp(20px, 1.5vw, 30px);
+    
+    animation: scale 700ms ease forwards;
+    display: block;
+    height: var(--size);
+    left: var(--star-left);
+    position: absolute;
+    top: var(--star-top);
+    width: var(--size);
+}
+  
+.MagicText h1 > .magic > .magic-star > svg {
+    animation: rotate 1000ms linear infinite;
+    display: block;
+    opacity: 0.7;
+}
+  
+.MagicText h1 > .magic > .magic-star > svg > path {
+    fill: var(--violet);
+}
+  
+.MagicText h1 > .magic > .magic-text {
+    animation: background-pan 3s linear infinite;
+    background: linear-gradient(
+      to right,
+      var(--purple),
+      var(--violet),
+      var(--pink),
+      var(--purple)
+    );
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 @media(max-width: 1000px) {
