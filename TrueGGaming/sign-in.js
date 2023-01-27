@@ -159,7 +159,6 @@ function signIn(){
         type: "POST",
         data: {signIn: 1, email, password},
         success: function(data){
-            data = data.replace('-','');
             if(data == "account not found."){
                 notifyUser(`<small> Email does not exist. </small>`);
              }else if(data.includes("incorrect password")){
@@ -186,7 +185,6 @@ function createAccount(){
         type: "POST",
         data: {createAccount: 1, email, password, address, firstName, lastName},
         success: function(data){
-            data = data.replace('-','');
             if(data.includes("email already exists.")){
                 notifyUser("You already have an account with that email.");
             }else if(data == "verify email"){
@@ -222,7 +220,6 @@ function verifyEmail(verificationCode){
         type: "POST",
         data: {verifyEmail: verificationCode},
         success: function(data){
-            data = data.replace('-','');
             if(data == "VERIFICATION COMPLETE"){
                 notifyUser(`Success! Your account has been created.`);
                 
@@ -257,7 +254,6 @@ function forgotPassword(){
         type: "POST",
         data: {forgotPassword: email},
         success: function(data){
-            data = data.replace('-','');
             if(data.includes("No account with that email.")){
                 notifyUser("There is no account associated with that E-mail.");
             }else if(data.includes("Mailer Error:")){
@@ -286,7 +282,6 @@ function createNewPassword(){
         type: "POST",
         data: {updatePassword: 1, verificationCode, pass},
         success: function(data){
-            data = data.replace('-','');
             if(data == "error updating password"){
                 notifyUser("An error occured in the verification proccess. please try again.");
             }else if(data == "proccess expired"){
