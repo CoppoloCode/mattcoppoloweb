@@ -3,20 +3,72 @@ $(document).on("change", "#pass1, #pass2", function(){
     validatePassword();
 })
 
-if(window.location.href.includes("verify=")){
-    let verificationCode = window.location.href.split("verify=")[1];
-    verifyEmail(verificationCode);
+$(document).on("change", "#userName", function(){
+    validateUserName();
+})
+
+function validateUserName(){
+
+    let userName = $("#userName").val();
+    let lower = false;
+    let upper = false;
+    let number = false;
+    
+    for(i = 0; i < userName.length; i++){
+        lower = false;
+        upper = false;
+        number = false;
+        c = userName.charCodeAt(i);
+        for(j = 97; j < 123; j++){
+            if(c == j){
+                lower = true;
+                break;
+            }
+            
+        }
+        for(j = 65; j < 91; j++){
+            if(c == j){
+                upper = true;
+                break;
+            }
+            
+        }
+        for(j = 48; j < 57; j++){
+            if(c == j){
+                number = true;
+                break;
+            }
+            
+        }
+        if(!(lower || upper || number)){
+            break;
+        }
+    }
+
+    if(lower || upper || number){
+        document.getElementById("userName").setCustomValidity("");
+    }else{
+        
+        document.getElementById("userName").setCustomValidity("User name must include alphanumeric characters or numbers only.");
+    }
+
 }
 
 function validatePassword(){
 
     let pass1 = $("#pass1").val();
     let pass2 = $("#pass2").val();
+    let userName = $("#userName").val();
 
     if(!(pass1 === pass2)){
         document.getElementById("pass2").setCustomValidity("Passwords Don't Match");
     }else{
         document.getElementById("pass2").setCustomValidity("");
+    }
+    if(pass1.includes(userName)){
+        document.getElementById("pass1").setCustomValidity("Password can not include user name.");
+    }else{
+        document.getElementById("pass1").setCustomValidity("");
     }
 
 }
@@ -44,7 +96,8 @@ function submitForm(){
 
             }else if(data.includes("Email sent.")){
                 alert("An Email has been sent. Please verify by clicking the link in your Email.");
-                
+            }else if(data.includes("Please check your email.")){
+                alert("An Email has been sent. Please verify by clicking the link in your Email.");
             }
         },
         error: function(err){
@@ -52,27 +105,6 @@ function submitForm(){
         }
     })
 
-    
-}
-
-function verifyEmail(verificationCode){
-    
-    $.ajax({
-        url: "signup.php",
-        type: "POST",
-        data: {verifyEmail: verificationCode},
-        success: function(data){
-            if(data == "VERIFICATION COMPLETE"){
-                console.log(`Success! Your account has been created.`);
-                
-            }else{
-                console.log(`Email Verification has expired. Please create an account and verify within an hour.`);
-            }
-        },
-        error: function(err){
-            console.log(err.responseText);
-        }
-    })
     
 }
 

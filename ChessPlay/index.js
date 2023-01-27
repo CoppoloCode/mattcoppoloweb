@@ -4,7 +4,7 @@ function playAsGuest() {
 }
 
 function login() {
-  // code for logging in
+  location.assign("signin.html");
 }
 
 function signup() {

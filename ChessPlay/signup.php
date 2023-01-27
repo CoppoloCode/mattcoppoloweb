@@ -35,20 +35,33 @@
             $passHash = password_hash($pass,PASSWORD_DEFAULT);
             $verificationHash = hash("md5",$email);
 
-            $emailSent = sendVerificationEmail($email,$verificationHash);
-            echo $emailSent;
+            $stmt = $conn->prepare("SELECT * FROM pendingaccounts WHERE email = ?");
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            if($emailSent){
+            $rows = mysqli_num_rows($result);
 
-                $stmt = $conn->prepare("INSERT INTO pendingaccounts (Email,Name,Password,Verification) VALUES (?,?,?,?)");
-                $stmt->bind_param('ssss', $email,$userName,$passHash,$verificationHash);
-                $stmt->execute();
-                $result = $stmt->get_result();
+            if($rows == 0){
 
-                echo "Email sent.";
+                 $emailSent = sendVerificationEmail($email,$verificationHash);
+                echo $emailSent;
+
+                if($emailSent){
+
+                    $stmt = $conn->prepare("INSERT INTO pendingaccounts (Email,Name,Password,Verification) VALUES (?,?,?,?)");
+                    $stmt->bind_param('ssss', $email,$userName,$passHash,$verificationHash);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    echo "Email sent.";
+
+                }else{
+                    echo "Email failed to send.";
+                }
 
             }else{
-                echo "Email failed to send.";
+                echo "Please check your email.";
             }
 
             
@@ -64,7 +77,11 @@
         $stmt->execute();
         $result = $stmt->get_result();
         $count = mysqli_num_rows($result);
-    
+
+        $stmt = $conn->prepare("DELETE * FROM pendingaccounts WHERE (Expires < ?)");
+        $stmt->bind_param('s', $expires);
+        $stmt->execute();
+        
     
         if($count > 0){
 
