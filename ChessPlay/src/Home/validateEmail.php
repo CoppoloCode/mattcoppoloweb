@@ -8,7 +8,7 @@ require_once './vendor/autoload.php';
 
 function sendVerificationEmail($email,$hash){
    
-    $hash = 'http://localhost/mattcoppoloweb/ChessPlay/signin.html?verify='.$hash;
+    $hash = 'http://localhost/mattcoppoloweb/ChessPlay/src/Home/signin.html?verify='.$hash;
 
     $mail = new PHPMailer(true);
     $mail->isSMTP(true);

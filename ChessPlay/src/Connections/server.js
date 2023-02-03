@@ -4,6 +4,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const {v4: uuidV4} = require('uuid');
 
+
 app.set('view engine' , 'ejs');
 app.use(express.static('public'));
 
@@ -13,17 +14,36 @@ app.get('/', (req, res) => {
 
 })
 
+//req.params.room
 app.get('/:room', (req, res) => {
-    res.render('room', {roomId: req.params.room})
+    res.render('room', {lobbyId: 1})
 })
+
+io.users = [];
 
 io.on('connection', socket => {
 
-    socket.on('join-room', (roomId, userId) =>{
-        console.log(roomId, userId);
-        socket.join(roomId);
-        socket.to(roomId).emit('user-connected', userId);
+    socket.on('join-room', (lobbyId, userId) =>{
+        io.users.push(userId);
+        socket.join(lobbyId);
+        socket.to(lobbyId).emit('user-connected', userId);
+        socket.on('disconnect', () => {
+            socket.to(lobbyId).emit('user-disconnected', userId);
+            for(i = 0; i < io.users.length; i++){
+                if(io.users[i] == userId){
+                    io.users.splice(i, 1);
+                }
+            }
+            
+        })
+        
+
     })
+
+    
+
+
+    
 
 })
 

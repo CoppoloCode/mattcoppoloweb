@@ -59,7 +59,7 @@ function validatePassword(){
     let pass1 = $("#pass1").val();
     let pass2 = $("#pass2").val();
     let userName = $("#userName").val();
-
+    console.log(userName);
     if(!(pass1 === pass2)){
         document.getElementById("pass2").setCustomValidity("Passwords Don't Match");
     }else{
@@ -97,7 +97,7 @@ function submitForm(){
             }else if(data.includes("Email sent.")){
                 alert("An Email has been sent. Please verify by clicking the link in your Email.");
             }else if(data.includes("Please check your email.")){
-                alert("An Email has been sent. Please verify by clicking the link in your Email.");
+                alert("An Email has already been sent. Please verify by clicking the link in your Email.");
             }
         },
         error: function(err){

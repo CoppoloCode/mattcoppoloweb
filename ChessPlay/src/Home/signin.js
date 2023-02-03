@@ -15,9 +15,8 @@ function signIn(){
         type: "POST",
         data: {signIn: true, email, password},
         success: function(data){
-            console.log(data);
             if(data == "SUCCESS"){
-                console.log(`login successful.`);
+                window.location.assign('http://localhost:3000');
                 
             }else{
                 console.log(`failed to login.`);
@@ -37,10 +36,11 @@ function signIn(){
 function verifyEmail(verificationCode){
     
     $.ajax({
-        url: "signup.php",
+        url: "signin.php",
         type: "POST",
-        data: {verifyEmail: verificationCode},
+        data: {verifyEmail: true, verificationCode},
         success: function(data){
+            console.log(data);
             if(data == "VERIFICATION COMPLETE"){
                 console.log(`Success! Your account has been created.`);
                 
