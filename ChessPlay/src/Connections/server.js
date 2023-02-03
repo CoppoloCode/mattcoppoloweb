@@ -27,6 +27,9 @@ io.on('connection', socket => {
         io.users.push(userId);
         socket.join(lobbyId);
         socket.to(lobbyId).emit('user-connected', userId);
+        socket.to(lobbyId).emit('send-users', io.users);
+        console.log(io.users);
+
         socket.on('disconnect', () => {
             socket.to(lobbyId).emit('user-disconnected', userId);
             for(i = 0; i < io.users.length; i++){
@@ -34,13 +37,11 @@ io.on('connection', socket => {
                     io.users.splice(i, 1);
                 }
             }
-            
+            console.log(io.users);
         })
         
-
     })
-
-    
+        
 
 
     
