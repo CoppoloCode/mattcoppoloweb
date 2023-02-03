@@ -15,9 +15,8 @@ function signIn(){
         type: "POST",
         data: {signIn: true, email, password},
         success: function(data){
-            if(data == "SUCCESS"){
-                window.location.assign('http://localhost:3000');
-                
+            if(!data.includes("Incorrect password.")){
+                window.location.assign('http://localhost:3000/' + data);
             }else{
                 console.log(`failed to login.`);
             }
@@ -26,7 +25,6 @@ function signIn(){
             console.log(err.responseText);
         }
     })
-
 
 
 }
@@ -54,7 +52,6 @@ function verifyEmail(verificationCode){
     })
     
 }
-
 
 function gotoHome(){
 

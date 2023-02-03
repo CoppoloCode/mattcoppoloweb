@@ -19,10 +19,11 @@
            
             $row = $result->fetch_assoc();
             $passHash = $row["Password"];
+            $userName = $row['Name'];
 
             if(password_verify($password, $passHash)){
 
-                echo "SUCCESS";
+                echo $userName;
 
             }else{
                 echo "Incorrect password.";
