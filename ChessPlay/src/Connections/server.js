@@ -78,11 +78,29 @@ io.on('connection', socket => {
             io.to(opponentId).emit('incomingChallenge' , user);
             
         })
+
+        socket.on('acceptChallenge', (challenger, challenged) =>{
+
+            let challengerId;
+            let challengedId;
+            for(i = 0; i < io.userNames.length; i++){
+                if(challenger == io.userNames[i]){
+                    challengerId = io.userIds[i];
+                    
+                }
+                if(challenged == io.userNames[i]){
+                    challengedId = io.userIds[i];
+                }
+            }
+            
+            io.to(challengerId).emit('challengeAccepted');
+            io.to(challengedId).emit('challengeAccepted');
+            
+        })
+
+        
        
     })
-        
-
-
     
 
 })
