@@ -2,15 +2,11 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-const {v4: uuidV4} = require('uuid');
-
 
 app.set('view engine' , 'ejs');
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.redirect(`./${uuidV4()}`);
-})
+
 
 //req.params.room
 app.get('/:room', (req, res) => {
@@ -19,16 +15,33 @@ app.get('/:room', (req, res) => {
 
 io.userIds = [];
 io.userNames = [];
+io.guestIds = new Set();
 
 io.on('connection', socket => {
 
+    
     socket.on('join-room', (lobbyId, userId, userName) =>{
+
+        if(userName.includes("guest")){
+
+            let isUnique = false;
+            do{
+                let randomId = Math.floor(Math.random() * 1000);
+                if(io.guestIds.add(randomId)){
+                    isUnique = true;
+                    userName = userName + '-' + randomId;
+                }
+                
+            }while(!isUnique);
+
+            socket.emit("guest", userName);
+        }
 
         io.userIds.push(userId);
         io.userNames.push(userName);
 
         socket.join(lobbyId);
-        socket.to(lobbyId).emit('user-connected', userId);
+        socket.to(lobbyId).emit('user-connected', userName);
 
         io.in(lobbyId).emit('send-users', io.userNames);
 
@@ -36,21 +49,36 @@ io.on('connection', socket => {
             socket.to(lobbyId).emit('user-disconnected', userId);
 
             for(i = 0; i < io.userIds.length; i++){
-                if(io.userIds[i] == userId){
-                    console.log(io.userIds[i], userId);
+                if(io.userIds[i] === userId){
                     io.userIds.splice(i,1);
+                    if(io.userNames[i].includes("guest")){
+                        let guestId = parseInt(io.userNames[i].split('-')[1]);
+                        io.guestIds.delete(guestId);
+                    }
                     io.userNames.splice(i,1);
-                    
                 }
             }
-            console.log(io.userIds, io.userNames);
            
             io.in(lobbyId).emit('send-users', io.userNames);
         })
         
         socket.on('get-users', () =>{
-            socket.emit('send-users', io.users);
+            socket.emit('send-users', io.userNames);
         })
+
+        socket.on('challenge', (user, opponent) =>{
+            let opponentId;
+            for(i = 0; i < io.userNames.length; i++){
+                if(opponent == io.userNames[i]){
+                    opponentId = io.userIds[i];
+                    break;
+                }
+            }
+            
+            io.to(opponentId).emit('incomingChallenge' , user);
+            
+        })
+       
     })
         
 

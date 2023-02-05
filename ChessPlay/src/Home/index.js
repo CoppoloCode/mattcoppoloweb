@@ -1,6 +1,6 @@
 
 function playAsGuest() {
-  // code for playing as a guest
+  location.assign("http://localhost:3000/guest");
 }
 
 function login() {

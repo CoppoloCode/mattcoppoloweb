@@ -46,7 +46,11 @@ function validateUserName(){
     }
 
     if(lower || upper || number){
-        document.getElementById("userName").setCustomValidity("");
+        if(userName.includes("guest")){
+            document.getElementById("userName").setCustomValidity("Please choose a different username.");
+        }else{
+            document.getElementById("userName").setCustomValidity("");
+        }
     }else{
         
         document.getElementById("userName").setCustomValidity("User name must include alphanumeric characters or numbers only.");
