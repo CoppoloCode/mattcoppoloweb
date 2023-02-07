@@ -13,99 +13,118 @@ app.get('/:room', (req, res) => {
     res.render('room', {lobbyId: 1})
 })
 
-io.userIds = [];
-io.userNames = [];
-io.guestIds = new Set();
+io.users = new Map();
+io.usersInLobby = new Map();
+io.ongoingGames = new Map();
 
-io.on('connection', socket => {
+io.on('connection',  socket => {
 
+    socket.join('lobby');
     
     socket.on('join-room', (lobbyId, userId, userName) =>{
 
-        if(userName.includes("guest")){
-
-            let isUnique = false;
-            do{
-                let randomId = Math.floor(Math.random() * 1000);
-                if(io.guestIds.add(randomId)){
-                    isUnique = true;
-                    userName = userName + '-' + randomId;
-                }
-                
-            }while(!isUnique);
-
-            socket.emit("guest", userName);
+        while(io.users.has(userName)){
+            userName = 'guest-' + Math.floor(Math.random() * 1000);
+            io.to(userId).emit('new-guest-name', userName);
         }
-
-        io.userIds.push(userId);
-        io.userNames.push(userName);
+        io.users.set(userName, userId);
+        io.usersInLobby.set(userName, userId);
+       
 
         socket.join(lobbyId);
         socket.to(lobbyId).emit('user-connected', userName);
 
-        io.in(lobbyId).emit('send-users', io.userNames);
+        sendLobbyList(lobbyId);
+        sendGameList(userName);
 
         socket.on('disconnect', () => {
-            socket.to(lobbyId).emit('user-disconnected', userId);
+            socket.to(lobbyId).emit('user-disconnected', userName);
 
-            for(i = 0; i < io.userIds.length; i++){
-                if(io.userIds[i] === userId){
-                    io.userIds.splice(i,1);
-                    if(io.userNames[i].includes("guest")){
-                        let guestId = parseInt(io.userNames[i].split('-')[1]);
-                        io.guestIds.delete(guestId);
-                    }
-                    io.userNames.splice(i,1);
-                }
-            }
+            removeUsersFromServer(userName);
            
-            io.in(lobbyId).emit('send-users', io.userNames);
+            sendLobbyList(lobbyId);
         })
         
         socket.on('get-users', () =>{
-            socket.emit('send-users', io.userNames);
+            sendLobbyList(lobbyId);
         })
 
-        socket.on('challenge', (user, opponent) =>{
-            let opponentId;
-            for(i = 0; i < io.userNames.length; i++){
-                if(opponent == io.userNames[i]){
-                    opponentId = io.userIds[i];
-                    break;
-                }
+        socket.on('challenge', (challenger, challenged) =>{
+
+            let challengedId = io.usersInLobby.get(challenged);
+           
+            io.to(challengedId).emit('incomingChallenge' , challenger);
+            
+        })
+
+        socket.on('acceptChallenge', (challenger , challenged) =>{
+
+            let challengerId = io.usersInLobby.get(challenger);
+            let challengedId = io.usersInLobby.get(challenged);
+            
+            let gameRoomId = Math.floor(Math.random() * 1000);
+            while(io.ongoingGames.has(gameRoomId)){
+                gameRoomId = Math.floor(Math.random() * 1000);
             }
-            
-            io.to(opponentId).emit('incomingChallenge' , user);
-            
+            io.ongoingGames.set(gameRoomId,[challenger,challenged]);
+            io.to(challengedId).emit('send-gameId', gameRoomId);
+            io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged);
         })
 
-        socket.on('acceptChallenge', (challenger, challenged) =>{
+        socket.on('join-game' , (userName, gameRoomId) =>{
+            
+            socket.leave('lobby');
+            removeUserFromLobby(userName);
+            sendLobbyList(lobbyId);
+            socket.join(gameRoomId);
+            socket.to(gameRoomId).emit('join-game-message');
 
-            let challengerId;
-            let challengedId;
-            for(i = 0; i < io.userNames.length; i++){
-                if(challenger == io.userNames[i]){
-                    challengerId = io.userIds[i];
-                    
-                }
-                if(challenged == io.userNames[i]){
-                    challengedId = io.userIds[i];
-                }
-            }
-            
-            io.to(challengerId).emit('challengeAccepted');
-            io.to(challengedId).emit('challengeAccepted');
-            
         })
 
-        
+        socket.on('send-message', (message, gameRoomId) =>{
+            socket.to(gameRoomId).emit('recieve-message', message);
+           
+        })
+
        
     })
+
+
+
     
 
 })
 
+function removeUserFromLobby(userName){
 
+    io.usersInLobby.delete(userName);
+}
+
+function removeUsersFromServer(userName){
+
+    io.users.delete(userName);
+    io.usersInLobby.delete(userName);  
+    
+}
+
+function sendLobbyList(lobbyId){
+    io.to(lobbyId).emit('send-users', [...io.usersInLobby.keys()]);
+}
+
+function sendGameList(userName){
+    let userId = io.users.get(userName);
+    let games = [...io.ongoingGames.values()];
+    let gameIds = [...io.ongoingGames.keys()];
+    let gameList = [];
+
+    for(i = 0; i < games.length; i++){
+        if(games[i][0] == userName || games[i][1] == userName){
+            gameList.push(gameIds[i]);
+        }
+    }
+
+    io.to(userId).emit('get-ongoingGames', gameList);
+}
 
 server.listen(3000);
 

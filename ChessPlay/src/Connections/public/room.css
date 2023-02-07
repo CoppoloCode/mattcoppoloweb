@@ -52,3 +52,43 @@ button:hover{
   flex-direction: column;
   margin-top: 200px;
 }
+
+#gameRoom{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("assets/images/blankbackground.jpg");
+  gap: 100px;
+}
+
+#game{
+  width: 800px;
+  height:800px;
+  background-color:black;
+  
+}
+#chat{
+  display:flex;
+  flex-direction: column;
+  gap: 30px;
+}
+#messages{
+  background-color: white;
+  height: 300px;
+  width: 500px;
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+}
+#selfMessage{
+  color: blue;
+  text-align: left;
+}
+#opponentMessage{
+  color:red;
+  text-align: left;
+}
+input{
+  width: 500px;
+  height: 50px;
+  font-size: 20px;
+}
