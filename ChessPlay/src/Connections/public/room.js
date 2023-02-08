@@ -4,16 +4,19 @@ const myPeer = new Peer(undefined,{
     port: '3001'
 })
 
+
 let userName = "" + window.location.href.split('/')[3];
 let inGame = false;
 let gameRoomId;
 let opponentName;
+let currentGame;
 
 myPeer.on('open',() => {
     if(socket.id == null){
         location.assign('http://localhost:3000/'+ userName);
     }
-    socket.emit('join-room', LOBBY_ID, socket.id, userName);
+    socket.emit('connected', LOBBY_ID, socket.id, userName);
+    socket.emit('join-lobby', userName, socket.id);
     setupLobby();
 })
 
@@ -47,28 +50,25 @@ socket.on('incomingChallenge', user => {
     
 })
 
-socket.on('challengeAccepted' , (gameId, opponentUserName) =>{
-    opponentName = opponentUserName;
+socket.on('challengeAccepted' , (gameId, opponent) =>{
     setupGameRoom();
     inGame = true;
     gameRoomId = gameId;
-    socket.emit('join-game', userName, gameRoomId);
+    opponentName = opponent;
+    socket.emit('join-game', gameRoomId, userName);
     
 })
 
-socket.on('send-gameId', gameId => {
-    socket.emit('join-game', userName, gameId);
-    gameRoomId = gameId;
-    setupGameRoom();
-    inGame = true;
-})
-
-socket.on('join-game-message', ()=> {
-    console.log('user connected to game');
+socket.on('join-game-message', (gameId)=> {
+    currentGame = gameId;
 })
 
 socket.on('recieve-message', message =>{
     placeMessage(message, true);
+})
+
+socket.on('get-opponent-name', opponent =>{
+    opponentName = opponent;
 })
 
 function setupLobby(){
@@ -80,7 +80,8 @@ function setupLobby(){
                                                     <button onclick="getUsers()">Refresh</button>
                                                     <button onclick="challengeUser()">Challenge</button>
                                                 </div>
-                                                <div id="requests"></div>`
+                                                <div id="requests"></div>
+                                                <div id="ongoingGames"><p>Ongoing Games</p><select id="games"></select><button onclick="joinGame()">Join Game</button></div>`
 }
 
 function setupLobbyList(userList){
@@ -95,9 +96,14 @@ function setupLobbyList(userList){
 }
 
 function setupGameList(gameList){
-
-    console.log(gameList);
-
+    if(!inGame){
+        document.getElementById('games').innerHTML = ``;
+        for(i = 0; i < gameList.length; i++){
+            
+            document.getElementById('games').innerHTML += `<option>` + gameList[i] + `</option>`;
+            
+        }
+    }
 }
 
 function getUsers() {
@@ -121,9 +127,17 @@ function accept(challenger){
 function decline(challenger){
     document.getElementById(challenger).outerHTML = "";
 }
+function joinGame(){
+    let game = $('#games').val();
+    setupGameRoom();
+    inGame = true;
+    gameRoomId = game;
+    socket.emit('join-game', gameRoomId, userName);
+    socket.emit('get-opponent-name', gameRoomId, userName);
+}
 
 function setupGameRoom(){
-    document.getElementById("body").innerHTML = "<div id='gameRoom'><div id='game'></div><div id='chat'><div id='messages'></div><input type='text' id='messageToSend'></input><button id='sendMessage' onclick='sendMessage()'>send</button></div></div>";
+    document.getElementById("body").innerHTML = "<div id='gameRoom'><div id='game'></div><div id='chat'><div id='messages'></div><input type='text' id='messageToSend'></input><button id='sendMessage' onclick='sendMessage()'>send</button><button onclick='backToLobby()'>Lobby</button></div></div>";
     input = document.getElementById('messageToSend');
     input.addEventListener("keypress", function(event) {
     
@@ -132,6 +146,13 @@ function setupGameRoom(){
       document.getElementById("sendMessage").click();
     }
 });
+}
+
+function backToLobby(){
+    inGame = false;
+    setupLobby();
+    socket.emit('leave-game', currentGame);
+    socket.emit('join-lobby', userName, socket.id);
 }
 
 function sendMessage(){

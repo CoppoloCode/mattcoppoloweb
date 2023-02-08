@@ -3,6 +3,21 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+const mysql = require('mysql');
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'chessplay'
+});
+
+con.connect((err) => {
+    if (err) throw err;
+    console.log('Connected!');
+});
+
+
+
 app.set('view engine' , 'ejs');
 app.use(express.static('public'));
 
@@ -17,31 +32,29 @@ io.users = new Map();
 io.usersInLobby = new Map();
 io.ongoingGames = new Map();
 
-io.on('connection',  socket => {
+io.on('connection', socket => {
 
-    socket.join('lobby');
-    
-    socket.on('join-room', (lobbyId, userId, userName) =>{
+    socket.on('connected', (lobbyId, userId, userName) =>{
 
         while(io.users.has(userName)){
             userName = 'guest-' + Math.floor(Math.random() * 1000);
             io.to(userId).emit('new-guest-name', userName);
         }
         io.users.set(userName, userId);
-        io.usersInLobby.set(userName, userId);
+
+        socket.on('join-lobby', (userName, userId) => {
+            socket.join(lobbyId);
+            io.usersInLobby.set(userName, userId);
+            socket.to(lobbyId).emit('user-connected', userName);
+            sendLobbyList(lobbyId);
+            sendGameList(userName);
+
+        })
        
-
-        socket.join(lobbyId);
-        socket.to(lobbyId).emit('user-connected', userName);
-
-        sendLobbyList(lobbyId);
-        sendGameList(userName);
-
+        
         socket.on('disconnect', () => {
             socket.to(lobbyId).emit('user-disconnected', userName);
-
             removeUsersFromServer(userName);
-           
             sendLobbyList(lobbyId);
         })
         
@@ -67,23 +80,40 @@ io.on('connection',  socket => {
                 gameRoomId = Math.floor(Math.random() * 1000);
             }
             io.ongoingGames.set(gameRoomId,[challenger,challenged]);
-            io.to(challengedId).emit('send-gameId', gameRoomId);
+
+            io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
             io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged);
+
         })
 
-        socket.on('join-game' , (userName, gameRoomId) =>{
+        socket.on('join-game' , (gameRoomId, user) =>{
             
-            socket.leave('lobby');
-            removeUserFromLobby(userName);
+            gameId = parseInt(gameRoomId);
+            socket.leave(1);
+            removeUserFromLobby(user);
             sendLobbyList(lobbyId);
-            socket.join(gameRoomId);
-            socket.to(gameRoomId).emit('join-game-message');
+            socket.join(gameId);
+            socket.to(gameId).emit('join-game-message', gameId);
 
         })
 
         socket.on('send-message', (message, gameRoomId) =>{
-            socket.to(gameRoomId).emit('recieve-message', message);
+            socket.to(parseInt(gameRoomId)).emit('recieve-message', message);
            
+        })
+
+        socket.on('leave-game', gameId =>{
+            socket.leave(parseInt(gameId));
+        })
+
+        socket.on('get-opponent-name', (gameId, user) => {
+            
+            let names = io.ongoingGames.get(parseInt(gameId));
+            if(names[0] === user){
+                io.to(socket.id).emit('get-opponent-name', names[1]);
+            }else{
+                io.to(socket.id).emit('get-opponent-name', names[0]);
+            }
         })
 
        
@@ -126,5 +156,13 @@ function sendGameList(userName){
     io.to(userId).emit('get-ongoingGames', gameList);
 }
 
+con.query('SELECT * FROM users', (err,rows) => {
+    if(err) throw err;
+  
+    console.log('Data received from Db:');
+    console.log(rows);
+});
+
 server.listen(3000);
+
 
