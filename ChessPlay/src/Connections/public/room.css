@@ -70,11 +70,25 @@ button:hover{
   gap: 100px;
 }
 
-#game{
-  width: 800px;
-  height:800px;
-  background-color:black;
-  
+#board{
+  width: 726px;
+  height:726px;
+  display:flex;
+  flex-wrap: wrap;
+  background-image:url(assets/images/board.png);
+  background-repeat: no-repeat;
+}
+.square{
+  height: 90px;
+  width: 90px;
+}
+.piece{
+  height: 90px;
+  width: 90px;
+}
+
+#gameButtons{
+  background-image: url(assets/images/blankbackground.jpg);
 }
 #chat{
   display:flex;

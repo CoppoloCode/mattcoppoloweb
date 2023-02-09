@@ -17,7 +17,6 @@ con.connect((err) => {
 });
 
 
-
 app.set('view engine' , 'ejs');
 app.use(express.static('public'));
 
@@ -31,6 +30,10 @@ app.get('/:room', (req, res) => {
 io.users = new Map();
 io.usersInLobby = new Map();
 io.ongoingGames = new Map();
+
+
+getGamesFromDB();
+
 
 io.on('connection', socket => {
 
@@ -79,8 +82,8 @@ io.on('connection', socket => {
             while(io.ongoingGames.has(gameRoomId)){
                 gameRoomId = Math.floor(Math.random() * 1000);
             }
-            io.ongoingGames.set(gameRoomId,[challenger,challenged]);
-
+            addGametoDB(gameRoomId, challenger, challenged, "new");
+            getGamesFromDB();
             io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
             io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged);
 
@@ -94,6 +97,7 @@ io.on('connection', socket => {
             sendLobbyList(lobbyId);
             socket.join(gameId);
             socket.to(gameId).emit('join-game-message', gameId);
+            io.to(gameId).emit('game-data', io.ongoingGames.get(gameId));
 
         })
 
@@ -106,18 +110,17 @@ io.on('connection', socket => {
             socket.leave(parseInt(gameId));
         })
 
-        socket.on('get-opponent-name', (gameId, user) => {
-            
-            let names = io.ongoingGames.get(parseInt(gameId));
-            if(names[0] === user){
-                io.to(socket.id).emit('get-opponent-name', names[1]);
-            }else{
-                io.to(socket.id).emit('get-opponent-name', names[0]);
-            }
+        socket.on('resign', (gameId, opponent) => {
+
+            removeGameFromDB(gameId);
+            io.to(io.users.get(opponent)).emit('opponent-resign');
+
         })
 
        
     })
+
+    
 
 
 
@@ -141,27 +144,78 @@ function sendLobbyList(lobbyId){
     io.to(lobbyId).emit('send-users', [...io.usersInLobby.keys()]);
 }
 
-function sendGameList(userName){
+ function sendGameList  (userName){
+
     let userId = io.users.get(userName);
     let games = [...io.ongoingGames.values()];
     let gameIds = [...io.ongoingGames.keys()];
     let gameList = [];
+    let opponents = [];
 
     for(i = 0; i < games.length; i++){
-        if(games[i][0] == userName || games[i][1] == userName){
+        if(games[i][0] == userName){
             gameList.push(gameIds[i]);
+            opponents.push(games[i][1]);
+        }
+        else if(games[i][1] == userName){
+            gameList.push(gameIds[i]);
+            opponents.push(games[i][0]);
         }
     }
 
-    io.to(userId).emit('get-ongoingGames', gameList);
+    io.to(userId).emit('get-ongoingGames', gameList, opponents);
 }
 
-con.query('SELECT * FROM users', (err,rows) => {
-    if(err) throw err;
-  
-    console.log('Data received from Db:');
-    console.log(rows);
-});
+function getGamesFromDB () {
+
+    return con.query('SELECT * FROM games', (err,rows) => {
+        if(err) throw err;
+    
+        if(rows.length > 0){
+            for(i = 0; i < rows.length; i++){
+                io.ongoingGames.set(rows[i]['id'], [rows[i]['challenger'], rows[i]['challenged'], rows[i]['positions']]);
+            }
+            
+        }
+        console.log(io.ongoingGames);
+        
+    });
+
+
+}
+
+function addGametoDB(gameRoomId, challenger, challenged, gameState){
+
+    let sql = 'INSERT INTO games (id, challenger, challenged, positions) VALUES (?,?,?,?)';
+    let values = [parseInt(gameRoomId), challenger, challenged, gameState];
+    io.ongoingGames.set(gameRoomId, [challenger, challenged, gameState]);
+
+    con.query(sql, values, (err,rows) => {
+        if(err) throw err;
+    
+        console.log("added game to db");
+    
+    });
+
+
+}
+
+function removeGameFromDB(gameId){
+
+    let sql = 'DELETE FROM games WHERE id = ?';
+    let values = [gameId];
+    io.ongoingGames.delete(gameId);
+
+    con.query(sql, values, (err,rows) => {
+        if(err) throw err;
+    
+        console.log("game removed from db");
+    
+    });
+
+}
+
+
 
 server.listen(3000);
 

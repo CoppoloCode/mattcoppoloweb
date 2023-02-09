@@ -8,8 +8,7 @@ const myPeer = new Peer(undefined,{
 let userName = "" + window.location.href.split('/')[3];
 let inGame = false;
 let gameRoomId;
-let opponentName;
-let currentGame;
+let Opponents = new Map();
 
 myPeer.on('open',() => {
     if(socket.id == null){
@@ -33,7 +32,10 @@ socket.on('send-users', userList => {
     setupLobbyList(userList);
 })
 
-socket.on('get-ongoingGames', games => {
+socket.on('get-ongoingGames', (games,opponents) => {
+    for(i = 0; i < games.length; i++){
+        Opponents.set(games[i],opponents[i]);
+    }
     setupGameList(games);
 })
 
@@ -51,24 +53,27 @@ socket.on('incomingChallenge', user => {
 })
 
 socket.on('challengeAccepted' , (gameId, opponent) =>{
-    setupGameRoom();
     inGame = true;
-    gameRoomId = gameId;
-    opponentName = opponent;
+    gameRoomId = parseInt(gameId);
+    Opponents.set(gameId, opponent);  
+    setupGameRoom();
     socket.emit('join-game', gameRoomId, userName);
     
 })
 
 socket.on('join-game-message', (gameId)=> {
-    currentGame = gameId;
+    gameRoomId = parseInt(gameId);
 })
 
 socket.on('recieve-message', message =>{
     placeMessage(message, true);
 })
 
-socket.on('get-opponent-name', opponent =>{
-    opponentName = opponent;
+socket.on('opponent-resign', () =>{
+
+    alert("You won by resignation!");
+    Opponents.delete(gameRoomId);
+    backToLobby();
 })
 
 function setupLobby(){
@@ -81,7 +86,7 @@ function setupLobby(){
                                                     <button onclick="challengeUser()">Challenge</button>
                                                 </div>
                                                 <div id="requests"></div>
-                                                <div id="ongoingGames"><p>Ongoing Games</p><select id="games"></select><button onclick="joinGame()">Join Game</button></div>`
+                                                <div id="ongoingGames"><h2>Ongoing Games</h2><select id="games"></select><button onclick="joinGame()">Join Game</button></div>`
 }
 
 function setupLobbyList(userList){
@@ -112,6 +117,10 @@ function getUsers() {
 
 }
 
+function getOpponents(){
+    socket.emit('get-opponents', userName);
+}
+
 function challengeUser(){
     let opponent = $('#list').val();
     socket.emit('challenge', userName, opponent);
@@ -121,37 +130,59 @@ function challengeUser(){
 function accept(challenger){
     document.getElementById(challenger).outerHTML = "";
     socket.emit('acceptChallenge', challenger, userName);
-    opponentName = challenger;
 }
 
 function decline(challenger){
     document.getElementById(challenger).outerHTML = "";
 }
 function joinGame(){
-    let game = $('#games').val();
-    setupGameRoom();
+    let gameId = $('#games').val();
     inGame = true;
-    gameRoomId = game;
+    gameRoomId = parseInt(gameId);
+    setupGameRoom();
     socket.emit('join-game', gameRoomId, userName);
-    socket.emit('get-opponent-name', gameRoomId, userName);
 }
 
 function setupGameRoom(){
-    document.getElementById("body").innerHTML = "<div id='gameRoom'><div id='game'></div><div id='chat'><div id='messages'></div><input type='text' id='messageToSend'></input><button id='sendMessage' onclick='sendMessage()'>send</button><button onclick='backToLobby()'>Lobby</button></div></div>";
+    document.getElementById("body").innerHTML = `<div id='gameRoom'>
+                                                    <div id='game'>
+                                                        <div id='board'>
+                                                        </div>
+                                                        <div id='gameButtons'>
+                                                            <button onclick='resign()'>Resign</button>
+                                                        </div>
+                                                    </div>
+                                                    <div id='chat'>
+                                                        <h2>Game: `+ gameRoomId +`</h2>
+                                                        <div id='messages'></div>
+                                                        <input type='text' id='messageToSend'></input>
+                                                        <button id='sendMessage' onclick='sendMessage()'>send</button>
+                                                        <button onclick='backToLobby()'>Lobby</button> 
+                                                    </div>
+                                                </div>`;
+
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            document.getElementById("board").innerHTML += `<div class='square' id='`+i+j+`'></div>`;
+        }
+    }
+
     input = document.getElementById('messageToSend');
     input.addEventListener("keypress", function(event) {
-    
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document.getElementById("sendMessage").click();
-    }
-});
+        if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("sendMessage").click();
+        }
+    });
+
+
 }
 
 function backToLobby(){
     inGame = false;
     setupLobby();
-    socket.emit('leave-game', currentGame);
+    socket.emit('leave-game', gameRoomId);
+    gameRoomId = null;
     socket.emit('join-lobby', userName, socket.id);
 }
 
@@ -162,11 +193,24 @@ function sendMessage(){
     placeMessage(message , false);
 }
 
-function placeMessage(message, opponent){
-    if(opponent == true){
-        document.getElementById('messages').innerHTML += `<p id='opponentMessage'>`+ opponentName + `: ` + message + `</p>`;
-    }else{
-        document.getElementById('messages').innerHTML += `<p id='selfMessage'>`+ userName + `: ` + message + `</p>`;
+function placeMessage(message, isOpponent){
+    if(inGame){
+        if(isOpponent == true){
+            document.getElementById('messages').innerHTML += `<p id='opponentMessage'>`+ Opponents.get(gameRoomId) + `: ` + message + `</p>`;
+        }else{
+            document.getElementById('messages').innerHTML += `<p id='selfMessage'>`+ userName + `: ` + message + `</p>`;
+        }
     }
    
+}
+
+function resign(){
+
+    let response = confirm("Are you sure you want to resign?");
+    if(response){
+        socket.emit('resign', gameRoomId, Opponents.get(gameRoomId));
+        Opponents.delete(gameRoomId);
+        backToLobby();
+    }
+    
 }
