@@ -82,10 +82,20 @@ io.on('connection', socket => {
             while(io.ongoingGames.has(gameRoomId)){
                 gameRoomId = Math.floor(Math.random() * 1000);
             }
+            let determineColor = Math.floor(Math.random()*2);
+            challenger = determineColor+'-'+challenger;
+            if(determineColor == 0){
+                determineColor++;
+            }else{
+                determineColor--;
+            }
+           
+            io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
+            io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged); 
+
+            challenged = determineColor+'-'+challenged;
             addGametoDB(gameRoomId, challenger, challenged, "new");
             getGamesFromDB();
-            io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
-            io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged);
 
         })
 
@@ -97,7 +107,7 @@ io.on('connection', socket => {
             sendLobbyList(lobbyId);
             socket.join(gameId);
             socket.to(gameId).emit('join-game-message', gameId);
-            io.to(gameId).emit('game-data', io.ongoingGames.get(gameId));
+            io.to(gameId).emit('game-data', gameId, io.ongoingGames.get(gameId));
 
         })
 
@@ -153,11 +163,11 @@ function sendLobbyList(lobbyId){
     let opponents = [];
 
     for(i = 0; i < games.length; i++){
-        if(games[i][0] == userName){
+        if(games[i][0].includes(userName)){
             gameList.push(gameIds[i]);
             opponents.push(games[i][1]);
         }
-        else if(games[i][1] == userName){
+        else if(games[i][1].includes(userName)){
             gameList.push(gameIds[i]);
             opponents.push(games[i][0]);
         }

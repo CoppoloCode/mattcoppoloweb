@@ -161,12 +161,6 @@ function setupGameRoom(){
                                                     </div>
                                                 </div>`;
 
-    for(i = 0; i < 8; i++){
-        for(j = 0; j < 8; j++){
-            document.getElementById("board").innerHTML += `<div class='square' id='`+i+j+`'></div>`;
-        }
-    }
-
     input = document.getElementById('messageToSend');
     input.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
