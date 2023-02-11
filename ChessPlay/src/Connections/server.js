@@ -77,25 +77,38 @@ io.on('connection', socket => {
 
             let challengerId = io.usersInLobby.get(challenger);
             let challengedId = io.usersInLobby.get(challenged);
-            
             let gameRoomId = Math.floor(Math.random() * 1000);
+            let determineColor = Math.floor(Math.random()*2);
+            let whosTurn;
             while(io.ongoingGames.has(gameRoomId)){
                 gameRoomId = Math.floor(Math.random() * 1000);
             }
 
-            let determineColor = Math.floor(Math.random()*2);
             challenger = determineColor+'.'+challenger;
             if(determineColor == 0){
                 determineColor++;
             }else{
                 determineColor--;
             }
+            challenged = determineColor+'.'+challenged;
+
+            if(challenger.includes('0')){
+                whosTurn = challenger.split('.')[1];
+            }else{
+                whosTurn = challenged.split('.')[1];
+            }
            
+
             io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
             io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged); 
 
-            challenged = determineColor+'.'+challenged;
-            addGametoDB(gameRoomId, challenger, challenged, "new", `[['wp1',0],['bp1',0],['wp2',0],['bp2',0],['wp3',0],['bp3',0],['wp4',0],['bp4',0],['wp5',0],['bp5',0],['wp6',0],['bp6',0],['wp7',0],['bp7',0],['wp8',0],['bp8',0]]`);
+            
+            let board = `br2.bk2.bb2.bqu.bki.bb1.bk1.br1,bp8.bp7.bp6.bp5.bp4.bp3.bp2.bp1,''.''.''.''.''.''.''.'',''.''.''.''.''.''.''.'',''.''.''.''.''.''.''.'',''.''.''.''.''.''.''.'',wp1.wp2.wp3.wp4.wp5.wp6.wp7.wp8,wr1.wk1.wb1.wqu.wki.wb2.wk2.wr2`;
+
+            let pawnsMoved = `wp1,0.wp2,0.wp3,0.wp4,0.wp5,0.wp6,0.wp7,0.wp8,0.bp1,0.bp2,0.bp3,0.bp4,0.bp5,0.bp6,0.bp7,0.bp8,0`;
+
+
+            addGametoDB(gameRoomId, challenger, challenged, board, pawnsMoved, whosTurn);
             getGamesFromDB();
 
         })
@@ -108,7 +121,7 @@ io.on('connection', socket => {
             sendLobbyList(lobbyId);
             socket.join(gameId);
             socket.to(gameId).emit('join-game-message', gameId);
-            io.to(gameId).emit('game-data', gameId, io.ongoingGames.get(gameId));
+            io.to(io.users.get(user)).emit('game-data', gameId, io.ongoingGames.get(gameId));
 
         })
 
@@ -117,12 +130,10 @@ io.on('connection', socket => {
            
         })
 
-        socket.on('user-moved', (user, board)=>{
-            io.to(io.users.get(user)).emit('opponent-moved', board);
-        })
-
-        socket.on('update-game', (gameId, board, pawnsMoved) =>{
-            io.ongoingGames.set(gameId,[io.ongoingGames.get(gameId)[0],io.ongoingGames.get(gameId)[1],board,pawnsMoved]);
+        socket.on('user-moved', (gameId, board, pawnsData, whosTurn)=>{
+            socket.to(gameId).emit('opponent-moved', board, pawnsData, whosTurn);
+            updateGame(gameId, board, pawnsData, whosTurn);
+            io.ongoingGames.set(gameId,[io.ongoingGames.get(gameId)[0],io.ongoingGames.get(gameId)[1],board,pawnsData,whosTurn]);
         })
 
         socket.on('leave-game', gameId =>{
@@ -130,7 +141,6 @@ io.on('connection', socket => {
         })
 
         socket.on('resign', (gameId, opponent) => {
-
             removeGameFromDB(gameId);
             io.to(io.users.get(opponent)).emit('opponent-resign');
 
@@ -139,11 +149,6 @@ io.on('connection', socket => {
        
     })
 
-    
-
-
-
-    
 
 })
 
@@ -192,7 +197,7 @@ function getGamesFromDB () {
     
         if(rows.length > 0){
             for(i = 0; i < rows.length; i++){
-                io.ongoingGames.set(rows[i]['id'], [rows[i]['challenger'], rows[i]['challenged'], rows[i]['positions'], rows[i]['pawnsMoved']]);
+                io.ongoingGames.set(rows[i]['id'], [rows[i]['challenger'], rows[i]['challenged'], rows[i]['positions'], rows[i]['pawnsMoved'], rows[i]['whosTurn']]);
             }
             
         }
@@ -203,11 +208,11 @@ function getGamesFromDB () {
 
 }
 
-function addGametoDB(gameRoomId, challenger, challenged, gameState, pawnsMoved){
+function addGametoDB(gameRoomId, challenger, challenged, gameState, pawnsMoved, whosTurn){
 
-    let sql = 'INSERT INTO games (id, challenger, challenged, positions, pawnsMoved) VALUES (?,?,?,?,?)';
-    let values = [parseInt(gameRoomId), challenger, challenged, gameState, pawnsMoved];
-    io.ongoingGames.set(gameRoomId, [challenger, challenged, gameState, pawnsMoved]);
+    let sql = 'INSERT INTO games (id, challenger, challenged, positions, pawnsMoved, whosTurn) VALUES (?,?,?,?,?,?)';
+    let values = [parseInt(gameRoomId), challenger, challenged, gameState, pawnsMoved, whosTurn];
+    io.ongoingGames.set(gameRoomId, [challenger, challenged, gameState, pawnsMoved, whosTurn]);
 
     con.query(sql, values, (err,rows) => {
         if(err) throw err;
@@ -217,6 +222,19 @@ function addGametoDB(gameRoomId, challenger, challenged, gameState, pawnsMoved){
     });
 
 
+}
+
+function updateGame(gameId, board, pawnsData, whosTurn){
+
+    let sql = 'UPDATE games SET positions = ?, pawnsMoved = ?, whosTurn = ? WHERE id = ?';
+    let values = [board,pawnsData,whosTurn,gameId];
+
+    con.query(sql, values, (err,rows) => {
+        if(err) throw err;
+    
+        console.log("game updated");
+    
+    });
 }
 
 function removeGameFromDB(gameId){

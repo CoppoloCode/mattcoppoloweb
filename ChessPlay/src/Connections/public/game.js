@@ -1,17 +1,8 @@
 let gameId;
 let gameState;
-let white;
-let black;
-let defaultBoard = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
-            ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['','','','','','','',''],
-            ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
-            ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
-
-
+let opponent;
+let color;
+let whosTurn;
 
 let squareNames = [['a8','b8','c8','d8','e8','f8','g8','h8'],
                         ['a7','b7','c7','d7','e7','f7','g7','h7'],
@@ -23,41 +14,10 @@ let squareNames = [['a8','b8','c8','d8','e8','f8','g8','h8'],
                         ['a1','b1','c1','d1','e1','f1','g1','h1']];
 
 
-let boardToUse = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
-                ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
-                ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
+let boardToUse = [];
 
-let squareNamesToUse = [['a8','b8','c8','d8','e8','f8','g8','h8'],
-                        ['a7','b7','c7','d7','e7','f7','g7','h7'],
-                        ['a6','b6','c6','d6','e6','f6','g6','h6'],
-                        ['a5','b5','c5','d5','e5','f5','g5','h5'],
-                        ['a4','b4','c4','d4','e4','f4','g4','h4'],
-                        ['a3','b3','c3','d3','e3','f3','g3','h3'],
-                        ['a2','b2','c2','d2','e2','f2','g2','h2'],
-                        ['a1','b1','c1','d1','e1','f1','g1','h1']];
+let beforeMove = [];
 
-let beforeMove = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
-                    ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
-                    ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
-
-let boardToSend =  [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
-                    ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['','','','','','','',''],
-                    ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
-                    ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
 
 let pawnsMoved = new Map();
 let images = new Map();
@@ -105,145 +65,133 @@ images.set('bb2','blackBishop.png');
 images.set('bqu','blackQueen.png');
 images.set('bki','blackKing.png');
 
+for(i = 1; i < 8; i++){
+
+    images.set('wq'+i, 'whiteQueen.png');
+    images.set('bq'+i, 'blackQueen.png');
+    images.set('wr'+(i+2), 'whiteRook.png');
+    images.set('br'+(i+2), 'blackRook.png');
+    images.set('wb'+(i+2), 'whiteBishop.png');
+    images.set('bb'+(i+2), 'blackBishop.png');
+    images.set('wk'+(i+2), 'whiteKnight.png');
+    images.set('bk'+(i+2), 'blackKnight.png');
+}
+
+
 socket.on('game-data', (game, gameData) =>{
 
     gameId = game;
-    gameState = gameData[2];
-    
-    gameData[3] = gameData[3].toString();
-    gameData[3] = gameData[3].replaceAll('[','');
-    gameData[3] = gameData[3].replaceAll(']','');
-    gameData[3] = gameData[3].split(",");
-    let pm = [];
-    for(i = 1; i < 32; i+=2){
-        pm.push(gameData[3][i])
+    if(gameData[0].includes(userName)){
+        color = gameData[0][0];
+        opponent = gameData[1].split('.')[1];
+    }else{
+        color = gameData[1][0];
+        opponent = gameData[0].split('.')[1];
     }
-    console.log(pm);
-    let j = 1;
-    for(i = 0; i < 16; i+=2){
-        pawnsMoved.set('wp'+j, parseInt(pm[i]));
-        j++;
+    whosTurn = gameData[4];
+
+    if(whosTurn == userName){
+        yourTurn = true;
+    }else{
+        yourTurn = false;
     }
-    j = 1;
-    for(i = 1; i < 16; i+=2){
-        pawnsMoved.set('bp'+j, parseInt(pm[i]));
-        j++;
+    if(yourTurn){
+        moved = false;
+        confirmedMove = false;
     }
 
-    if(gameData[0][0] == '0'){
-        white = gameData[0].split('.')[1];
-        black = gameData[1].split('.')[1];
-    }else{
-        white = gameData[1].split('.')[1];
-        black = gameData[0].split('.')[1];
+    gameState = gameData[2];
+    gameData[3] = gameData[3].split('.');
+
+    for(i = 0; i < gameData[3].length; i++){
+        gameData[3][i] = gameData[3][i].split(',');
+        gameData[3][i][1] =  parseInt(gameData[3][i][1]);
     }
-    if(gameState == 'new'){
-        setupNewBoard();
-    }else{
-        setupExistingBoard(gameData[2]);
+
+    for(i = 0; i < gameData[3].length; i++){
+        pawnsMoved.set(gameData[3][i][0],gameData[3][i][1]);
     }
     
+    setupBoard(gameData[2]);
+    setTurnStatus();
 
 });
 
-socket.on('opponent-moved', board =>{
+socket.on('opponent-moved', (board, pawnsData , turn) =>{
+    whosTurn = turn;
     yourTurn = true;
     confirmedMove = false;
     moved = false;
-    updateBoard(board);
+    updatePawnsMoved(pawnsData);
+    setupBoard(board, true);
+    setTurnStatus();
 })
 
-
-function setupNewBoard(){
-
+function updatePawnsMoved(pawnsData){
     
-
-    if(white.includes(userName)){
-
-       
-        for(i = 0; i < 8; i++){
-            boardToUse[i] = [...defaultBoard[i]];
-            squareNamesToUse[i] = [...squareNames[i]];
-        }
-
-        yourTurn = true;
-
-        setSquares();
-        displayBoard();
-        
-        
-    }else{
-
-        defaultBoard.reverse();
-        squareNames.reverse();
-        for(i = 0; i < 8; i++){
-            defaultBoard[i].reverse();
-            squareNames[i].reverse();
-        }
-        for(i = 0; i < 8; i++){
-            boardToUse[i] = [...defaultBoard[i]];
-            squareNamesToUse[i] = [...squareNames[i]];
-        }
-
-        yourTurn = false;
-
-        setSquares();
-        displayBoard();
+    pawnsData = pawnsData.split('.');
+    let pd = [];
+    for(i = 0; i < 16; i++){
+        pd.push(pawnsData[i].split(','));
+    }
+    
+    for(i = 0; i < 16; i++){
+        pawnsMoved.set(pd[i][0], parseInt(pd[i][1]));
     }
     
 }
 
-function setupExistingBoard(board){
+function setupBoard(board){
 
+   
+    board = board.split(','); 
     
 
-    if(white == userName){
-        for(i = 0; i < board.length; i++){
-            boardToUse[i] = [...board[i]];
-        }
-    }else{
-        board.reverse();
-        for(i = 0; i < board.length; i++){
-            board[i].reverse();
-        }
-        for(i = 0; i < board.length; i++){
-            boardToUse[i] = [...board[i]];
-        }
-    }
-
-    setSquares();
-    displayBoard();
-
-
-}
-
-function setSquares(){
     for(i = 0; i < 8; i++){
         for(j = 0; j < 8; j++){
-            document.getElementById("board").innerHTML += `<div class='square' id='`+squareNamesToUse[i][j]+`' ondrop="drop(event)" ondragover="allowDrop(event)"></div>`;
+            boardToUse[i] = board[i].split('.');
         }
     }
-}
-
-function updateBoard(board){
-
-    board.reverse();
-    for(i = 0; i < board.length; i++){
-        board[i].reverse();
+    
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == "''"){
+                boardToUse[i][j] = '';
+            }   
+        }
     }
-    for(i = 0; i < 8; i++){
-        boardToUse[i] = [...board[i]];
+
+    if(color == '0'){
+
+        setSquares();
+        displayBoard();
+        
+        
+    }else{
+
+        flipBoard();
+        setSquares();
+        displayBoard();
     }
     
-    clearBoard();
-    displayBoard();
+    
+}
+
+
+function setSquares(){
+    document.getElementById("board").innerHTML = ''
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            document.getElementById("board").innerHTML += `<div class='square' id='`+squareNames[i][j]+`' ondrop="drop(event)" ondragover="allowDrop(event)"></div>`;
+        }
+    }
 }
 
 function clearBoard(){
 
     for(i = 0; i < 8; i++){
         for(j = 0; j < 8; j++){
-            document.getElementById(squareNamesToUse[i][j]).innerHTML = ``;
+            document.getElementById(squareNames[i][j]).innerHTML = ``;
         }
     }
 
@@ -257,14 +205,14 @@ function displayBoard(){
             let img;
             if(images.has(boardToUse[i][j])){
                 img = "assets/images/" + images.get(boardToUse[i][j]);
-                if(boardToUse[i][j].includes('w') && userName == white){
-                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
-                }else if(!boardToUse[i][j].includes('w') && userName == white){
-                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
-                }else if(boardToUse[i][j].includes('w') && userName == black){
-                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
-                }else if(!boardToUse[i][j].includes('w') && userName == black){
-                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
+                if(boardToUse[i][j].includes('w') && color == '0'){
+                    document.getElementById(squareNames[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
+                }else if(!boardToUse[i][j].includes('w') && color == '0'){
+                    document.getElementById(squareNames[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
+                }else if(boardToUse[i][j].includes('w') && color == '1'){
+                    document.getElementById(squareNames[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
+                }else if(!boardToUse[i][j].includes('w') && color == '1'){
+                    document.getElementById(squareNames[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
                 }
                 
             }
@@ -272,6 +220,14 @@ function displayBoard(){
     }
 
 
+}
+
+function setTurnStatus(){
+    if(yourTurn){
+        document.getElementById('turnTracker').innerText = `Your Move`;
+    }else{
+        document.getElementById('turnTracker').innerText = `Opponent's Move`;
+    }
 }
 
 function allowDrop(ev) {
@@ -294,6 +250,37 @@ function drop(ev) {
             }else{
                 canMove = canPawnMove(data,ev.target.id);
             }
+            
+        }else if(data.includes('r')){
+            if(ev.target.id.length == 3){
+                canMove = canRookMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canRookMove(data,ev.target.id);
+            }
+        }else if(data.includes('bb') || data.includes('wb')){
+            if(ev.target.id.length == 3){
+                canMove = canBishopMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canBishopMove(data,ev.target.id);
+            }
+        }else if(data.includes('q')){
+            if(ev.target.id.length == 3){
+                canMove = canQueenMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canQueenMove(data,ev.target.id);
+            }
+        }else if(data.includes('k') && !data.includes('i')){
+            if(ev.target.id.length == 3){
+                canMove = canKnightMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canKnightMove(data,ev.target.id);
+            }
+        }else if(data.includes('ki')){
+            if(ev.target.id.length == 3){
+                canMove = canKingMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canKingMove(data,ev.target.id);
+            }
         }
         if(canMove && yourTurn){
             if(ev.target.id.length == 3){
@@ -301,6 +288,10 @@ function drop(ev) {
             }else{
                 ev.target.appendChild(document.getElementById(data));
             }
+            if(data.includes('p')){
+                canPawnUpgrade(data);
+            }
+            
             yourTurn = false;
             moved = true;
             pieceMoved = data;
@@ -311,25 +302,71 @@ function drop(ev) {
 }
 
 function confirmMove(){
-    confirmedMove = true;
-    if(moved){
-        socket.emit('user-moved', Opponents.get(gameId).split('.')[1], boardToUse);
-        
-        if(userName == white){
-            socket.emit('update-game', gameId, boardToUse,[...pawnsMoved.entries()]);
-        }else{
-            for(i = 0; i < boardToUse.length; i++){
-                boardToSend[i] = [...boardToUse[i]];
-                boardToSend[i].reverse();
-            }
-            boardToSend.reverse();
-            socket.emit('update-game', gameId, boardToSend , [...pawnsMoved.entries()]);
+    
+    if(moved && !confirmedMove){
+        confirmedMove = true;
+        yourTurn = false;
+        setTurnStatus();
+        if(color == '1'){
+            flipBoard();
         }
+        if(pieceMoved.includes('p')){
+            pawnsMoved.set(pieceMoved, pawnsMoved.get(pieceMoved)+1);
+        }
+        let board = convertBoard();
+        let pawnsData = convertPawnsData();
         
-    }else{
+        socket.emit('user-moved', gameId, board, pawnsData, opponent);
+    }else if(!moved){
         alert('make a move!');
+    }else{
+        alert('wait your turn!');
     }
     
+}
+
+function flipBoard(){
+    boardToUse.reverse();
+    squareNames.reverse();
+    for(i = 0; i < 8; i++){
+        boardToUse[i].reverse();
+        squareNames[i].reverse();
+    } 
+}
+
+function convertBoard(){
+    let board = ``;
+
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == ''){
+                board += "''" + '.';
+            }else{
+                board += boardToUse[i][j] + '.';
+            }
+        }
+        board = board.slice(0, board.length-1);
+        if(i != 7){
+            board += ',';
+        }
+       
+    }
+    return board;
+}
+
+function convertPawnsData(){
+
+    let data = [...pawnsMoved.entries()];
+    let pawnsData = ``;
+
+    for(i = 0; i < data.length; i++){
+        
+        pawnsData += data[i][0] + ',' + data[i][1] + '.';
+        
+    }
+    pawnsData = pawnsData.slice(0, pawnsData.length-1);
+
+    return pawnsData;
 }
 
 function revertMove(){
@@ -337,8 +374,6 @@ function revertMove(){
     if(!confirmedMove && moved){
         yourTurn = true;
         moved = false;
-        
-        pawnsMoved.set(pieceMoved, pawnsMoved.get(pieceMoved)-1);
         
         for(i = 0; i < 8; i++){
             boardToUse[i] = [...beforeMove[i]];
@@ -352,9 +387,7 @@ function canPawnMove(pawn,square){
 
     let color = pawn[0];
     let legalMoves = [];
-    let legal = false;
     let from;
-    let target;
 
     for(i = 0; i < boardToUse.length; i++){
         for(j = 0; j < boardToUse.length; j++){
@@ -381,37 +414,22 @@ function canPawnMove(pawn,square){
 
         }
     }
-    for(i = 0; i < squareNamesToUse.length; i++){
-        for(j = 0; j < squareNamesToUse.length; j++){
-            if(squareNamesToUse[i][j] == square){
-                target = [i,j];
-            }
-        }
-    }
 
-    
-
-    for(i = 0; i < legalMoves.length; i++){
-        if(target[0] == legalMoves[i][0] && target[1] == legalMoves[i][1]){
-            legal = true;
-            pawnsMoved.set(pawn,pawnsMoved.get(pawn)+1);
-            for(i = 0; i < 8; i++){
-                beforeMove[i] = [...boardToUse[i]];
-            }
-            boardToUse[target[0]][target[1]] = pawn;
-            boardToUse[from[0]][from[1]] = '';
-            break;
-        }
-    }
-    
-
-    return legal;
+    return isLegalMove(legalMoves, pawn, square, from);
 }
 
+function canPawnUpgrade(pawn){
+    for(i = 0; i < boardToUse.length; i++){
+        if(boardToUse[0][i] == pawn){
+            pawnUpgrade(pawn);
+        }
+    }
+}
 
 function pawnUpgrade(pawn){
+    
     let upgradePawnElement = `<div id="upgradePawn"> <h2> Pawn Upgrade </h2> <select id="selectUpgrade"><option>Queen</option><option>Rook</option><option>Bishop</option><option>Knight</option></select><button onclick="setUpgrade('`+pawn+`')">Upgrade</button></div>`
-
+    document.getElementById('gameButtons').outerHTML = ``;
     document.getElementById('body').innerHTML += upgradePawnElement;
 
 }
@@ -423,36 +441,19 @@ function setUpgrade(pawn){
     if(selected == 'Queen'){
         extraQueens++;
         selected = pawn[0] + 'q' + extraQueens;
-        if(pawn[0] == 'w'){
-            images.set(selected,'whiteQueen.png')
-        }else{
-            images.set(selected,'blackQueen.png')
-        }
         
     }else if(selected == 'Rook'){
         extraRooks++;
         selected = pawn[0] + 'r' + extraRooks;
-        if(pawn[0] == 'w'){
-            images.set(selected,'whiteRook.png')
-        }else{
-            images.set(selected,'blackRook.png')
-        }
+        
     }else if(selected == 'Bishop'){
         extraBishops++;
         selected = pawn[0] + 'b' + extraBishops;
-        if(pawn[0] == 'w'){
-            images.set(selected,'whiteBishop.png')
-        }else{
-            images.set(selected,'blackBishop.png')
-        }
+       
     }else if(selected == 'Knight'){
         extraKnights++;
         selected = pawn[0] + 'k' + extraKnights;
-        if(pawn[0] == 'w'){
-            images.set(selected,'whiteKnight.png')
-        }else{
-            images.set(selected,'blackKnight.png')
-        }
+        
     }
 
     
@@ -469,4 +470,427 @@ function setUpgrade(pawn){
         }
     }
 
+    document.getElementById('game').innerHTML += `<div id='gameButtons'>
+                                        <button onclick='resign()'>Resign</button>
+                                        <button onclick='revertMove()'>Revert Move</button>
+                                        <button onclick='confirmMove()'>Confrim Move</button>
+                                        
+                                    </div>`
+
+}
+
+
+function canRookMove(rook,square){
+
+    
+
+    let legalMoves = [];
+    let color = rook[0];
+    let from;
+
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == rook){
+                from = [i,j];
+                for(k = i-1; k >= 0; k--){
+                    if(boardToUse[k][j] == ''){
+                        legalMoves.push([k,j])
+                    }else if( boardToUse[k][j][0] != color){
+                        legalMoves.push([k,j])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = i+1; k < 8; k++){
+                    if(boardToUse[k][j] == ''){
+                        legalMoves.push([k,j])
+                    }else if( boardToUse[k][j][0] != color){
+                        legalMoves.push([k,j])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = j+1; k < 8; k++){
+                    if(boardToUse[i][k] == ''){
+                        legalMoves.push([i,k])
+                    }else if( boardToUse[i][k][0] != color){
+                        legalMoves.push([i,k])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = j-1; k >= 0; k--){
+                    if(boardToUse[i][k] == ''){
+                        legalMoves.push([i,k])
+                    }else if( boardToUse[i][k][0] != color){
+                        legalMoves.push([i,k])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+    
+
+    return isLegalMove(legalMoves, rook, square, from);
+
+}
+
+function canBishopMove(bishop, square){
+
+
+    let legalMoves = [];
+    let from;
+    let color = bishop[0];
+
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == bishop){
+                from = [i,j];
+                let l = j-1;
+                for(k = i-1; k >= 0; k--){
+                    if(l < 0){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if(boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l--;
+                }
+                l = j+1;
+                for(k = i-1; k >= 0; k--){
+                    if(l > 7){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if(boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l++;
+                }
+                l = j-1;
+                for(k = i+1; k < 8; k++){
+                    if(l < 0){
+                        break;
+                    }
+                   
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if( boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l--;
+                }
+                l = j+1;
+                for(k = i+1; k < 8; k++){
+                    if(l > 7){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if( boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l++;
+                }
+
+            }
+        }
+    }
+
+    return isLegalMove(legalMoves, bishop, square, from);
+}
+
+function canQueenMove(queen, square){
+
+    let legalMoves = [];
+    let color = queen[0];
+    let from;
+
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == queen){
+                from = [i,j];
+                for(k = i-1; k >= 0; k--){
+                    if(boardToUse[k][j] == ''){
+                        legalMoves.push([k,j])
+                    }else if( boardToUse[k][j][0] != color){
+                        legalMoves.push([k,j])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = i+1; k < 8; k++){
+                    if(boardToUse[k][j] == ''){
+                        legalMoves.push([k,j])
+                    }else if( boardToUse[k][j][0] != color){
+                        legalMoves.push([k,j])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = j+1; k < 8; k++){
+                    if(boardToUse[i][k] == ''){
+                        legalMoves.push([i,k])
+                    }else if( boardToUse[i][k][0] != color){
+                        legalMoves.push([i,k])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                for(k = j-1; k >= 0; k--){
+                    if(boardToUse[i][k] == ''){
+                        legalMoves.push([i,k])
+                    }else if( boardToUse[i][k][0] != color){
+                        legalMoves.push([i,k])
+                        break;
+                    }else{
+                        break;
+                    }
+                }
+                let l = j-1;
+                for(k = i-1; k >= 0; k--){
+                    if(l < 0){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if(boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l--;
+                }
+                l = j+1;
+                for(k = i-1; k >= 0; k--){
+                    if(l > 7){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if(boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l++;
+                }
+                l = j-1;
+                for(k = i+1; k < 8; k++){
+                    if(l < 0){
+                        break;
+                    }
+                   
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if( boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l--;
+                }
+                l = j+1;
+                for(k = i+1; k < 8; k++){
+                    if(l > 7){
+                        break;
+                    }
+                    if(boardToUse[k][l] == ''){
+                        legalMoves.push([k,l])
+                    }else if( boardToUse[k][l][0] != color){
+                        legalMoves.push([k,l])
+                        break;
+                    }else{
+                        break;
+                    }
+                    l++;
+                }
+
+            }
+        }
+    }
+    
+
+    return isLegalMove(legalMoves, queen, square, from);
+
+}
+
+function canKnightMove(knight, square){
+
+    let legalMoves = [];
+    let color = knight[0];
+    let from;
+
+    
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == knight){
+                from = [i,j];
+                let k;
+                let l;
+                let p;
+                let n;
+                let b;
+                let c;
+                let t;
+                let y;
+
+                k = i-2;
+                l = i-1;
+                p = i+2;
+                n = j+2;
+                b = i+1;
+                c = j+1;
+                t = j-1;
+                y = j-2;
+
+                if(k >= 0 && t >= 0){
+                    if(boardToUse[i-2][j-1] != undefined && (boardToUse[i-2][j-1] == '' || boardToUse[i-2][j-1][0] != color)){
+                        legalMoves.push([i-2,j-1]);
+                    }
+                }
+                if(l >= 0 && y >= 0){
+                    if(boardToUse[i-1][j-2] != undefined && (boardToUse[i-1][j-2] == '' || boardToUse[i-1][j-2][0] != color)){
+                        legalMoves.push([i-1,j-2]);
+                    }
+                }
+                if(b < 8 && y >= 0){
+                    if(boardToUse[i+1][j-2] != undefined && (boardToUse[i+1][j-2] == '' || boardToUse[i+1][j-2][0] != color)){
+                        legalMoves.push([i+1,j-2]);
+                    }
+                }
+                if(p < 8 && t >= 0){
+                    if(boardToUse[i+2][j-1] != undefined && (boardToUse[i+2][j-1] == '' || boardToUse[i+2][j-1][0] != color)){
+                        legalMoves.push([i+2,j-1]);
+                    }
+                }
+                if(p < 8 && c < 8){
+                    if(boardToUse[i+2][j+1] != undefined && (boardToUse[i+2][j+1] == '' || boardToUse[i+2][j+1][0] != color)){
+                        legalMoves.push([i+2,j+1]);
+                    }
+                }
+                if(b < 8 && n < 8){
+                    if(boardToUse[i+1][j+2] != undefined && (boardToUse[i+1][j+2] == '' || boardToUse[i+1][j+2][0] != color)){
+                        legalMoves.push([i+1,j+2]);
+                    }
+                }
+                if(l >= 0 && n < 8){
+                    if(boardToUse[i-1][j+2] != undefined && (boardToUse[i-1][j+2] == '' || boardToUse[i-1][j+2][0] != color)){
+                        legalMoves.push([i-1,j+2]);
+                    }
+                }
+                if(k >= 0 && c < 8){
+                    if(boardToUse[i-2][j+1] != undefined && (boardToUse[i-2][j+1] == '' || boardToUse[i-2][j+1][0] != color)){
+                        legalMoves.push([i-2,j+1]);
+                    }
+                }
+            }
+        }
+    }
+    
+    return isLegalMove(legalMoves, knight, square, from);
+}
+
+function canKingMove(king, square){
+
+    let legalMoves = [];
+    let color = king[0];
+    let from;
+
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == king){
+                from = [i,j];
+                if(i+1 < 8 && j >= 0 && j < 8){
+                    if(boardToUse[i+1][j] == '' || boardToUse[i+1][j][0] != color){
+                        legalMoves.push([i+1,j]);
+                    }
+                    if(boardToUse[i+1][j-1] == '' || boardToUse[i+1][j-1][0] != color){
+                        legalMoves.push([i+1,j-1]);
+                    }
+                    if(boardToUse[i+1][j+1] == '' || boardToUse[i+1][j+1][0] != color){
+                        legalMoves.push([i+1,j+1]);
+                    }
+                }
+                if(i-1 >= 0 && j >= 0 && j < 8){
+                    if(boardToUse[i-1][j] == '' || boardToUse[i-1][j] != color){
+                        legalMoves.push([i-1,j]);
+                    }
+                    if(boardToUse[i-1][j-1] == '' || boardToUse[i-1][j-1][0] != color){
+                        legalMoves.push([i-1,j-1]);
+                    }
+                    if(boardToUse[i-1][j+1] == '' || boardToUse[i-1][j+1][0] != color){
+                        legalMoves.push([i-1,j+1]);
+                    }
+                }
+                if(j < 8 && j >= 0){
+                    if(boardToUse[i][j-1] == '' || boardToUse[i][j-1][0] != color){
+                        legalMoves.push([i,j-1]);
+                    }
+                    if(boardToUse[i][j+1] == '' || boardToUse[i][j+1][0] != color){
+                        legalMoves.push([i,j+1]);
+                    }
+                }
+            
+            
+
+            }
+
+        }
+    }
+
+    return isLegalMove(legalMoves, king, square, from);
+
+
+}
+
+function isLegalMove(legalMoves, piece, square, from){
+
+    for(i = 0; i < squareNames.length; i++){
+        for(j = 0; j < squareNames.length; j++){
+            if(squareNames[i][j] == square){
+                target = [i,j];
+            }
+        }
+    }
+
+    for(i = 0; i < legalMoves.length; i++){
+        if(target[0] == legalMoves[i][0] && target[1] == legalMoves[i][1]){
+            for(i = 0; i < 8; i++){
+                beforeMove[i] = [...boardToUse[i]];
+            }
+            boardToUse[target[0]][target[1]] = piece;
+            boardToUse[from[0]][from[1]] = '';
+            return true;
+        }
+    }
+    return false;
 }

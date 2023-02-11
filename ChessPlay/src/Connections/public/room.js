@@ -70,7 +70,6 @@ socket.on('recieve-message', message =>{
 })
 
 socket.on('opponent-resign', () =>{
-
     alert("You won by resignation!");
     Opponents.delete(gameRoomId);
     backToLobby();
@@ -137,13 +136,18 @@ function decline(challenger){
 }
 function joinGame(){
     let gameId = $('#games').val();
-    inGame = true;
-    gameRoomId = parseInt(gameId);
-    setupGameRoom();
-    socket.emit('join-game', gameRoomId, userName);
+    if(gameId != null){
+        inGame = true;
+        gameRoomId = parseInt(gameId);
+        setupGameRoom();
+        socket.emit('join-game', gameRoomId, userName);
+    }
 }
 
 function setupGameRoom(){
+    
+    
+
     document.getElementById("body").innerHTML = `<div id='gameRoom'>
                                                     <div id='game'>
                                                         <div id='board'>
@@ -151,12 +155,13 @@ function setupGameRoom(){
                                                         <div id='gameButtons'>
                                                             <button onclick='resign()'>Resign</button>
                                                             <button onclick='revertMove()'>Revert Move</button>
-                                                            <button onclick='confirmMove()'>Confrim Move</button>
+                                                            <button onclick='confirmMove()'>Confirm Move</button>
                                                             
                                                         </div>
                                                     </div>
                                                     <div id='chat'>
                                                         <h2>Game: `+ gameRoomId +`</h2>
+                                                        <h2 id='turnTracker'></h2>
                                                         <div id='messages'></div>
                                                         <input type='text' id='messageToSend'></input>
                                                         <button id='sendMessage' onclick='sendMessage()'>send</button>
@@ -167,8 +172,8 @@ function setupGameRoom(){
     input = document.getElementById('messageToSend');
     input.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
-        event.preventDefault();
-        document.getElementById("sendMessage").click();
+            event.preventDefault();
+            document.getElementById("sendMessage").click();
         }
     });
 
@@ -177,6 +182,9 @@ function setupGameRoom(){
 
 function backToLobby(){
     inGame = false;
+    if(!confirmedMove){
+        moved = false;
+    }
     setupLobby();
     socket.emit('leave-game', gameRoomId);
     gameRoomId = null;
@@ -193,7 +201,7 @@ function sendMessage(){
 function placeMessage(message, isOpponent){
     if(inGame){
         if(isOpponent == true){
-            document.getElementById('messages').innerHTML += `<p id='opponentMessage'>`+ Opponents.get(gameRoomId) + `: ` + message + `</p>`;
+            document.getElementById('messages').innerHTML += `<p id='opponentMessage'>`+ Opponents.get(gameRoomId).split('.')[1] + `: ` + message + `</p>`;
         }else{
             document.getElementById('messages').innerHTML += `<p id='selfMessage'>`+ userName + `: ` + message + `</p>`;
         }
@@ -205,7 +213,7 @@ function resign(){
 
     let response = confirm("Are you sure you want to resign?");
     if(response){
-        socket.emit('resign', gameRoomId, Opponents.get(gameRoomId));
+        socket.emit('resign', gameRoomId, Opponents.get(gameRoomId).split('.')[1]);
         Opponents.delete(gameRoomId);
         backToLobby();
     }
