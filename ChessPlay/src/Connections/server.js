@@ -82,8 +82,9 @@ io.on('connection', socket => {
             while(io.ongoingGames.has(gameRoomId)){
                 gameRoomId = Math.floor(Math.random() * 1000);
             }
+
             let determineColor = Math.floor(Math.random()*2);
-            challenger = determineColor+'-'+challenger;
+            challenger = determineColor+'.'+challenger;
             if(determineColor == 0){
                 determineColor++;
             }else{
@@ -93,8 +94,8 @@ io.on('connection', socket => {
             io.to(challengedId).emit('challengeAccepted', gameRoomId, challenger);
             io.to(challengerId).emit('challengeAccepted', gameRoomId, challenged); 
 
-            challenged = determineColor+'-'+challenged;
-            addGametoDB(gameRoomId, challenger, challenged, "new");
+            challenged = determineColor+'.'+challenged;
+            addGametoDB(gameRoomId, challenger, challenged, "new", `[['wp1',0],['bp1',0],['wp2',0],['bp2',0],['wp3',0],['bp3',0],['wp4',0],['bp4',0],['wp5',0],['bp5',0],['wp6',0],['bp6',0],['wp7',0],['bp7',0],['wp8',0],['bp8',0]]`);
             getGamesFromDB();
 
         })
@@ -114,6 +115,14 @@ io.on('connection', socket => {
         socket.on('send-message', (message, gameRoomId) =>{
             socket.to(parseInt(gameRoomId)).emit('recieve-message', message);
            
+        })
+
+        socket.on('user-moved', (user, board)=>{
+            io.to(io.users.get(user)).emit('opponent-moved', board);
+        })
+
+        socket.on('update-game', (gameId, board, pawnsMoved) =>{
+            io.ongoingGames.set(gameId,[io.ongoingGames.get(gameId)[0],io.ongoingGames.get(gameId)[1],board,pawnsMoved]);
         })
 
         socket.on('leave-game', gameId =>{
@@ -183,7 +192,7 @@ function getGamesFromDB () {
     
         if(rows.length > 0){
             for(i = 0; i < rows.length; i++){
-                io.ongoingGames.set(rows[i]['id'], [rows[i]['challenger'], rows[i]['challenged'], rows[i]['positions']]);
+                io.ongoingGames.set(rows[i]['id'], [rows[i]['challenger'], rows[i]['challenged'], rows[i]['positions'], rows[i]['pawnsMoved']]);
             }
             
         }
@@ -194,11 +203,11 @@ function getGamesFromDB () {
 
 }
 
-function addGametoDB(gameRoomId, challenger, challenged, gameState){
+function addGametoDB(gameRoomId, challenger, challenged, gameState, pawnsMoved){
 
-    let sql = 'INSERT INTO games (id, challenger, challenged, positions) VALUES (?,?,?,?)';
-    let values = [parseInt(gameRoomId), challenger, challenged, gameState];
-    io.ongoingGames.set(gameRoomId, [challenger, challenged, gameState]);
+    let sql = 'INSERT INTO games (id, challenger, challenged, positions, pawnsMoved) VALUES (?,?,?,?,?)';
+    let values = [parseInt(gameRoomId), challenger, challenged, gameState, pawnsMoved];
+    io.ongoingGames.set(gameRoomId, [challenger, challenged, gameState, pawnsMoved]);
 
     con.query(sql, values, (err,rows) => {
         if(err) throw err;

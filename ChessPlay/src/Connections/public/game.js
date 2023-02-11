@@ -2,7 +2,7 @@ let gameId;
 let gameState;
 let white;
 let black;
-let whiteBoard = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
+let defaultBoard = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
             ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
             ['','','','','','','',''],
             ['','','','','','','',''],
@@ -11,21 +11,9 @@ let whiteBoard = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
             ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
             ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
 
-let blackBoard = [['wr2','wk2','wb2','wki','wqu','wb1','wk1','wr1'],
-                ['wp8','wp7','wp6','wp5','wp4','wp3','wp2','wp1'],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['','','','','','','',''],
-                ['bp1','bp2','bp3','bp4','bp5','bp6','bp7','bp8'],
-                ['br1','bk1','bb1','bki','bqu','bb2','bk2','br2']];
 
 
-
-
-
-
-let whiteSquareNames = [['a8','b8','c8','d8','e8','f8','g8','h8'],
+let squareNames = [['a8','b8','c8','d8','e8','f8','g8','h8'],
                         ['a7','b7','c7','d7','e7','f7','g7','h7'],
                         ['a6','b6','c6','d6','e6','f6','g6','h6'],
                         ['a5','b5','c5','d5','e5','f5','g5','h5'],
@@ -34,21 +22,54 @@ let whiteSquareNames = [['a8','b8','c8','d8','e8','f8','g8','h8'],
                         ['a2','b2','c2','d2','e2','f2','g2','h2'],
                         ['a1','b1','c1','d1','e1','f1','g1','h1']];
 
-let blackSquareNames = [['h1','g1','f1','e1','d1','c1','b1','a1'],
-                        ['h2','g2','f2','e2','d2','c2','b2','a2'],
-                        ['h3','g3','f3','e3','d3','c3','b3','a3'],
-                        ['h4','g4','f4','e4','d4','c4','b4','a4'],
-                        ['h5','g5','f5','e5','d5','c5','b5','a5'],
-                        ['h6','g6','f6','e6','d6','c6','b6','a6'],
-                        ['h7','g7','f7','e7','d7','c7','b7','a7'],
-                        ['h8','g8','f8','e8','d8','c8','b8','a8']];
 
+let boardToUse = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
+                ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
+                ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
 
-let boardToUse;
-let squareNamesToUse;
+let squareNamesToUse = [['a8','b8','c8','d8','e8','f8','g8','h8'],
+                        ['a7','b7','c7','d7','e7','f7','g7','h7'],
+                        ['a6','b6','c6','d6','e6','f6','g6','h6'],
+                        ['a5','b5','c5','d5','e5','f5','g5','h5'],
+                        ['a4','b4','c4','d4','e4','f4','g4','h4'],
+                        ['a3','b3','c3','d3','e3','f3','g3','h3'],
+                        ['a2','b2','c2','d2','e2','f2','g2','h2'],
+                        ['a1','b1','c1','d1','e1','f1','g1','h1']];
+
+let beforeMove = [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
+                    ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
+                    ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
+
+let boardToSend =  [['br2','bk2','bb2','bqu','bki','bb1','bk1','br1'],
+                    ['bp8','bp7','bp6','bp5','bp4','bp3','bp2','bp1'],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['','','','','','','',''],
+                    ['wp1','wp2','wp3','wp4','wp5','wp6','wp7','wp8'],
+                    ['wr1','wk1','wb1','wqu','wki','wb2','wk2','wr2']];
+
 let pawnsMoved = new Map();
-
 let images = new Map();
+let moved = false;
+let pieceMoved;
+let confirmedMove = false;
+let yourTurn = false;
+let inCheck = false;
+let extraQueens = 0;
+let extraRooks = 2;
+let extraBishops = 2;
+let extraKnights = 2;
 
 images.set('wp1','whitePawn.png');
 images.set('wp2','whitePawn.png');
@@ -88,12 +109,33 @@ socket.on('game-data', (game, gameData) =>{
 
     gameId = game;
     gameState = gameData[2];
+    
+    gameData[3] = gameData[3].toString();
+    gameData[3] = gameData[3].replaceAll('[','');
+    gameData[3] = gameData[3].replaceAll(']','');
+    gameData[3] = gameData[3].split(",");
+    let pm = [];
+    for(i = 1; i < 32; i+=2){
+        pm.push(gameData[3][i])
+    }
+    console.log(pm);
+    let j = 1;
+    for(i = 0; i < 16; i+=2){
+        pawnsMoved.set('wp'+j, parseInt(pm[i]));
+        j++;
+    }
+    j = 1;
+    for(i = 1; i < 16; i+=2){
+        pawnsMoved.set('bp'+j, parseInt(pm[i]));
+        j++;
+    }
+
     if(gameData[0][0] == '0'){
-        white = gameData[0];
-        black = gameData[1];
+        white = gameData[0].split('.')[1];
+        black = gameData[1].split('.')[1];
     }else{
-        white = gameData[1];
-        black = gameData[0];
+        white = gameData[1].split('.')[1];
+        black = gameData[0].split('.')[1];
     }
     if(gameState == 'new'){
         setupNewBoard();
@@ -104,6 +146,13 @@ socket.on('game-data', (game, gameData) =>{
 
 });
 
+socket.on('opponent-moved', board =>{
+    yourTurn = true;
+    confirmedMove = false;
+    moved = false;
+    updateBoard(board);
+})
+
 
 function setupNewBoard(){
 
@@ -111,67 +160,119 @@ function setupNewBoard(){
 
     if(white.includes(userName)){
 
-
+       
         for(i = 0; i < 8; i++){
-            for(j = 0; j < 8; j++){
-                document.getElementById("board").innerHTML += `<div class='square' id='`+whiteSquareNames[i][j]+`' ondrop="drop(event)" ondragover="allowDrop(event)"></div>`;
-            }
+            boardToUse[i] = [...defaultBoard[i]];
+            squareNamesToUse[i] = [...squareNames[i]];
         }
-        for(i = 0; i < 8; i++){
-            for(j = 0; j < 8; j++){
-                let img;
-                if(images.has(whiteBoard[i][j])){
-                    img = "assets/images/" + images.get(whiteBoard[i][j]);
-                    if(whiteBoard[i][j].includes('w')){
-                        document.getElementById(whiteSquareNames[i][j]).innerHTML = `<img id="`+whiteBoard[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
-                    }else{
-                        document.getElementById(whiteSquareNames[i][j]).innerHTML = `<img id="`+whiteBoard[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
 
-                    }
-                    
-                }
-            }
-        }
+        yourTurn = true;
+
+        setSquares();
+        displayBoard();
         
-        boardToUse = whiteBoard;
-        squareNamesToUse = whiteSquareNames;
-
-
+        
     }else{
 
+        defaultBoard.reverse();
+        squareNames.reverse();
         for(i = 0; i < 8; i++){
-            for(j = 0; j < 8; j++){
-                document.getElementById("board").innerHTML += `<div class='square' id='`+blackSquareNames[i][j]+`' ondrop="drop(event)" ondragover="allowDrop(event)"></div>`;
-            }
+            defaultBoard[i].reverse();
+            squareNames[i].reverse();
         }
         for(i = 0; i < 8; i++){
-            for(j = 0; j < 8; j++){
-                let img;
-                if(images.has(blackBoard[i][j])){
-                    img = "assets/images/" + images.get(blackBoard[i][j]);
-                    if(!blackBoard[i][j].includes('w')){
-                        document.getElementById(blackSquareNames[i][j]).innerHTML = `<img id="`+blackBoard[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
-                    }else{
-                        document.getElementById(blackSquareNames[i][j]).innerHTML = `<img id="`+blackBoard[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
+            boardToUse[i] = [...defaultBoard[i]];
+            squareNamesToUse[i] = [...squareNames[i]];
+        }
 
-                    }
-                }
-            }
-        }
-        
-        boardToUse = blackBoard;
-        squareNamesToUse = blackSquareNames;
+        yourTurn = false;
+
+        setSquares();
+        displayBoard();
     }
     
 }
 
 function setupExistingBoard(board){
 
+    
 
+    if(white == userName){
+        for(i = 0; i < board.length; i++){
+            boardToUse[i] = [...board[i]];
+        }
+    }else{
+        board.reverse();
+        for(i = 0; i < board.length; i++){
+            board[i].reverse();
+        }
+        for(i = 0; i < board.length; i++){
+            boardToUse[i] = [...board[i]];
+        }
+    }
+
+    setSquares();
+    displayBoard();
 
 
 }
 
+function setSquares(){
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            document.getElementById("board").innerHTML += `<div class='square' id='`+squareNamesToUse[i][j]+`' ondrop="drop(event)" ondragover="allowDrop(event)"></div>`;
+        }
+    }
+}
+
+function updateBoard(board){
+
+    board.reverse();
+    for(i = 0; i < board.length; i++){
+        board[i].reverse();
+    }
+    for(i = 0; i < 8; i++){
+        boardToUse[i] = [...board[i]];
+    }
+    
+    clearBoard();
+    displayBoard();
+}
+
+function clearBoard(){
+
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            document.getElementById(squareNamesToUse[i][j]).innerHTML = ``;
+        }
+    }
+
+
+}
+
+function displayBoard(){
+
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 8; j++){
+            let img;
+            if(images.has(boardToUse[i][j])){
+                img = "assets/images/" + images.get(boardToUse[i][j]);
+                if(boardToUse[i][j].includes('w') && userName == white){
+                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
+                }else if(!boardToUse[i][j].includes('w') && userName == white){
+                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
+                }else if(boardToUse[i][j].includes('w') && userName == black){
+                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="false" width='90px' height='90px'>`;
+                }else if(!boardToUse[i][j].includes('w') && userName == black){
+                    document.getElementById(squareNamesToUse[i][j]).innerHTML = `<img id="`+boardToUse[i][j]+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
+                }
+                
+            }
+        }
+    }
+
+
+}
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -185,25 +286,66 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     let canMove = false;
+    
+    if(!moved){
+        if(data.includes('p')){
+            if(ev.target.id.length == 3){
+                canMove = canPawnMove(data,ev.target.parentNode.id);
+            }else{
+                canMove = canPawnMove(data,ev.target.id);
+            }
+        }
+        if(canMove && yourTurn){
+            if(ev.target.id.length == 3){
+                ev.target.parentNode.replaceChild(document.getElementById(data),ev.target);
+            }else{
+                ev.target.appendChild(document.getElementById(data));
+            }
+            yourTurn = false;
+            moved = true;
+            pieceMoved = data;
+        }
+    }
+    
+    
+}
 
-    if(data.includes('p')){
-        if(ev.target.id.length == 3){
-            canMove = canPawnMove(data,ev.target.parentNode.id);
+function confirmMove(){
+    confirmedMove = true;
+    if(moved){
+        socket.emit('user-moved', Opponents.get(gameId).split('.')[1], boardToUse);
+        
+        if(userName == white){
+            socket.emit('update-game', gameId, boardToUse,[...pawnsMoved.entries()]);
         }else{
-            canMove = canPawnMove(data,ev.target.id);
+            for(i = 0; i < boardToUse.length; i++){
+                boardToSend[i] = [...boardToUse[i]];
+                boardToSend[i].reverse();
+            }
+            boardToSend.reverse();
+            socket.emit('update-game', gameId, boardToSend , [...pawnsMoved.entries()]);
         }
         
+    }else{
+        alert('make a move!');
     }
-    if(canMove){
-        if(ev.target.id.length == 3){
-             ev.target.parentNode.replaceChild(document.getElementById(data),ev.target);  
-        }else{
-            ev.target.appendChild(document.getElementById(data));
+    
+}
+
+function revertMove(){
+
+    if(!confirmedMove && moved){
+        yourTurn = true;
+        moved = false;
+        
+        pawnsMoved.set(pieceMoved, pawnsMoved.get(pieceMoved)-1);
+        
+        for(i = 0; i < 8; i++){
+            boardToUse[i] = [...beforeMove[i]];
         }
-       
+        clearBoard();
+        displayBoard();
     }
-    
-    
 }
 
 function canPawnMove(pawn,square){
@@ -218,19 +360,23 @@ function canPawnMove(pawn,square){
         for(j = 0; j < boardToUse.length; j++){
             if(boardToUse[i][j] == pawn){
                 from = [i,j];
-                if(boardToUse[i-1][j] == '' && boardToUse[i-1][j] != undefined){
-                    legalMoves.push([i-1,j]);
-                    if(boardToUse[i-2][j] == '' && boardToUse[i-2][j] != undefined && !pawnsMoved.has(pawn)){
-                        legalMoves.push([i-2,j]);
+                if(i != 0){
+                    if(boardToUse[i-1][j] != undefined && boardToUse[i-1][j] == ''){
+                        legalMoves.push([i-1,j]);
+                        if(i>1){
+                            if(boardToUse[i-2][j] != undefined && boardToUse[i-2][j] == '' &&  pawnsMoved.get(pawn) == 0){
+                                legalMoves.push([i-2,j]);
+                            }
+                        }
+                    }
+                    if(boardToUse[i-1][j-1] != undefined && boardToUse[i-1][j-1] != '' && boardToUse[i-1][j-1][0] != color ){
+                        legalMoves.push([i-1,j-1]);
+                    }
+                    if(boardToUse[i-1][j+1] != undefined && boardToUse[i-1][j+1] != '' && boardToUse[i-1][j+1][0] != color){
+                        legalMoves.push([i-1,j+1]);
                     }
                 }
-                if(boardToUse[i-1][j-1] != '' && boardToUse[i-1][j-1] != undefined && boardToUse[i-1][j-1][0] != color ){
-                    legalMoves.push([i-1,j-1]);
-                }
-                if(boardToUse[i-1][j+1] != '' && boardToUse[i-1][j+1] != undefined && boardToUse[i-1][j+1][0] != color){
-                    legalMoves.push([i-1,j+1]);
-                }
-
+                
             }
 
         }
@@ -248,13 +394,79 @@ function canPawnMove(pawn,square){
     for(i = 0; i < legalMoves.length; i++){
         if(target[0] == legalMoves[i][0] && target[1] == legalMoves[i][1]){
             legal = true;
-            pawnsMoved.set(pawn,true);
+            pawnsMoved.set(pawn,pawnsMoved.get(pawn)+1);
+            for(i = 0; i < 8; i++){
+                beforeMove[i] = [...boardToUse[i]];
+            }
             boardToUse[target[0]][target[1]] = pawn;
             boardToUse[from[0]][from[1]] = '';
             break;
         }
     }
+    
 
-    console.log(legalMoves,target, legal);
     return legal;
+}
+
+
+function pawnUpgrade(pawn){
+    let upgradePawnElement = `<div id="upgradePawn"> <h2> Pawn Upgrade </h2> <select id="selectUpgrade"><option>Queen</option><option>Rook</option><option>Bishop</option><option>Knight</option></select><button onclick="setUpgrade('`+pawn+`')">Upgrade</button></div>`
+
+    document.getElementById('body').innerHTML += upgradePawnElement;
+
+}
+
+function setUpgrade(pawn){
+
+    let selected = $('#selectUpgrade').val();
+
+    if(selected == 'Queen'){
+        extraQueens++;
+        selected = pawn[0] + 'q' + extraQueens;
+        if(pawn[0] == 'w'){
+            images.set(selected,'whiteQueen.png')
+        }else{
+            images.set(selected,'blackQueen.png')
+        }
+        
+    }else if(selected == 'Rook'){
+        extraRooks++;
+        selected = pawn[0] + 'r' + extraRooks;
+        if(pawn[0] == 'w'){
+            images.set(selected,'whiteRook.png')
+        }else{
+            images.set(selected,'blackRook.png')
+        }
+    }else if(selected == 'Bishop'){
+        extraBishops++;
+        selected = pawn[0] + 'b' + extraBishops;
+        if(pawn[0] == 'w'){
+            images.set(selected,'whiteBishop.png')
+        }else{
+            images.set(selected,'blackBishop.png')
+        }
+    }else if(selected == 'Knight'){
+        extraKnights++;
+        selected = pawn[0] + 'k' + extraKnights;
+        if(pawn[0] == 'w'){
+            images.set(selected,'whiteKnight.png')
+        }else{
+            images.set(selected,'blackKnight.png')
+        }
+    }
+
+    
+    let img = "assets/images/" + images.get(selected);
+
+    document.getElementById(pawn).outerHTML = `<img id="`+selected+`"src="`+img+`" draggable="true" ondragstart="drag(event)" width='90px' height='90px'>`;
+    document.getElementById('upgradePawn').outerHTML = '';
+    for(i = 0; i < boardToUse.length; i++){
+        for(j = 0; j < boardToUse.length; j++){
+            if(boardToUse[i][j] == pawn){
+                boardToUse[i][j] = selected;
+            }
+
+        }
+    }
+
 }

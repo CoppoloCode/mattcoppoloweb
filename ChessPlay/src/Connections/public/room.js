@@ -150,6 +150,9 @@ function setupGameRoom(){
                                                         </div>
                                                         <div id='gameButtons'>
                                                             <button onclick='resign()'>Resign</button>
+                                                            <button onclick='revertMove()'>Revert Move</button>
+                                                            <button onclick='confirmMove()'>Confrim Move</button>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div id='chat'>
