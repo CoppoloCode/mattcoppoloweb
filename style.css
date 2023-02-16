@@ -178,6 +178,8 @@ nav ul li a:hover{
 .about-container{
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     padding-bottom: 10%;
 }
@@ -203,9 +205,9 @@ nav ul li a:hover{
     display: flex;
     justify-content: space-evenly;
     visibility: hidden;
+    width: 70vw;
 }
-.about-row-2-col-1{
-    display: flex;
+.about-row-2-col{
     justify-content: space-evenly;
     text-align: left;
     width: 70vw;
@@ -215,7 +217,7 @@ nav ul li a:hover{
     line-height: 2;
     overflow-y: scroll;
 }
-.about-row-2-col-1::-webkit-scrollbar{
+.about-row-2-col::-webkit-scrollbar{
     display: none;
 }
 .about-row-3{
@@ -282,13 +284,15 @@ nav ul li a:hover{
     align-items: center;
     padding-top: 5vh;
     visibility: hidden;
+    gap: 50px;
 }
 .projects-row img{
     height: 40vh;
-    width: auto;
+    width: 15vw;
     border-radius: 12px;
-    box-shadow: 8px 8px 8px 8px;
+    box-shadow: 0px 0px 8px 8px;
     filter:grayscale(100%);
+    object-fit: cover;
 }
 .projects-col{
     display:flex;
@@ -298,15 +302,8 @@ nav ul li a:hover{
     gap: 4vh;
     width: 25vw;
 }
-.projects-col a{
-    color: white;
-    text-decoration: none;
-    background: rgb(74, 74, 221);
-    padding: 5px;
-    border-radius: 12px;
-    box-shadow: 4px 4px 4px 4px black;
-}
-.projects-col a:hover ~ img{
+
+.projects-col a:hover img{
     cursor: pointer;
     animation: scale .1s ease-in;
     animation-fill-mode: forwards; 
