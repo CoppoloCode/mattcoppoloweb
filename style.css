@@ -68,6 +68,7 @@ nav ul li a:hover{
 /* ---------------------Intro ------------------------ */
 .Intro{
     scroll-snap-align: start;
+    padding-bottom: 10rem;
 }
 .intro-container{
     display:flex;
@@ -148,39 +149,11 @@ nav ul li a:hover{
 .About{
     scroll-snap-align: start;
 }
-.reveal{
-    animation-play-state: paused;
-}
-.reveal.active1{
-    animation: 2s ease-in 0s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active2{
-    animation: 2s ease-in .5s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active3{
-    animation: 2s ease-in 1s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active4{
-    animation: 2s ease-in 1.5s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active5{
-    animation: 2s ease-in 2s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active6{
-    animation: 2s ease-in 2.5s 1 appear;
-    animation-fill-mode: forwards;
-}
 .about-container{
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     padding-bottom: 10%;
 }
 .about-row-1{
@@ -217,39 +190,179 @@ nav ul li a:hover{
     line-height: 2;
     overflow-y: scroll;
 }
+.about-row-2-col h2{
+    font-size: 2rem;
+    background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 100;
+    text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
 .about-row-2-col::-webkit-scrollbar{
     display: none;
 }
+
 .about-row-3{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    font-size: 2rem;
-    padding-top: 15vh;
-    color: whitesmoke;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.about-row-3 h1{
+    font-size: 5rem;
+    background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 100;
+    text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding-bottom: 25px;
     visibility: hidden;
-}
-.about-row-3 a{
-    color:whitesmoke;
-    text-decoration: none;
-    background: rgb(54, 3, 54);
-    padding: 6px;
-    border-radius: 28px;
-    box-shadow: 4px 4px 4px 4px black;
+
 }
 
-.about-row-3-col-3:hover{
-    animation: bounceAnimation .5s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-    animation-fill-mode: forwards;
+.about-row-4 {
+    display: flex;
+    gap: 10rem;
+    visibility: hidden;
+    flex-wrap: wrap;
 }
 
-@keyframes bounceAnimation {
-	from {transform: translateY(0px);}
-	to {transform: translateY(-20px);}
+.about-row-4-col{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
+
+.about-row-4-col h2{
+    font-size: 2rem;
+    background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 100;
+    text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.frontend img{
+    width: 250px;
+    height: 250px;
+    filter: grayscale(100);
+    cursor: pointer;
+}
+
+.frontend img:hover{
+    animation: scale .1s ease-in;
+    animation-fill-mode: forwards; 
+}
+
+.frontendtools img{
+    width: 60px;
+    height: 60px;
+}
+
+.tools img{
+    width: 250px;
+    height: 250px;
+    filter: grayscale(100);
+    cursor: pointer;
+}
+
+.tools img:hover{
+    animation: scale .1s ease-in;
+    animation-fill-mode: forwards; 
+}
+
+.toolstools img{
+    width: 60px;
+    height: 60px;
+}
+
+.backend img{
+    width: 250px;
+    height: 250px;
+    filter: grayscale(100);
+    cursor: pointer;
+}
+
+.backend img:hover{
+    animation: scale .1s ease-in;
+    animation-fill-mode: forwards; 
+}
+
+.backendtools img{
+    width: 60px;
+    height: 60px;
+}
+
+#html{
+    animation: showtools .3s ease-in;
+}
+#javascript{
+    animation: showtools .5s ease-in;
+}
+#css{
+    animation: showtools .7s ease-in;
+}
+#react{
+    animation: showtools .9s ease-in;
+}
+#github{
+    animation: showtools .3s ease-in;
+}
+#visual{
+    animation: showtools .5s ease-in;
+}
+#railway{
+    animation: showtools .7s ease-in;
+}
+#heroku{
+    animation: showtools .9s ease-in;
+}
+#mysql{
+    animation: showtools .3s ease-in;
+}
+#node{
+    animation: showtools .5s ease-in;
+}
+#express{
+    animation: showtools .7s ease-in;
+}
+#socketio{
+    animation: showtools .9s ease-in;
+}
+
+
+
+@keyframes showtools {
+
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+
+
+}
+@keyframes hidetools {
+
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(0);
+        visibility: hidden;
+    }
+
+
+}
+
+
 
 
 /* -----------------Projects------------------------ */
@@ -458,6 +571,43 @@ textarea{
 }
 
 
+.reveal{
+    animation-play-state: paused;
+}
+.reveal.active1{
+    animation: 2s ease-in 0s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active2{
+    animation: 2s ease-in .5s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active3{
+    animation: 2s ease-in 1s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active4{
+    animation: 2s ease-in 1.5s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active5{
+    animation: 2s ease-in 2s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active6{
+    animation: 2s ease-in 2.5s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active7{
+    animation: 2s ease-in 3s 1 appear;
+    animation-fill-mode: forwards;
+}
+.reveal.active8{
+    animation: 2s ease-in 3.5s 1 appear;
+    animation-fill-mode: forwards;
+}
+
+
 @keyframes scale {
 	from{
         transform: scale(1);
@@ -476,7 +626,7 @@ textarea{
     }
     .navbar nav{
         width: 0px;
-     }
+    }
     .navbar img{
         width: 10%;
         height: 10%;
@@ -515,15 +665,19 @@ textarea{
         font-size: 5rem;
         color: orangered;
     }
+    .about-row-2{
+        flex-direction: column;
+    }
 
-    .about-row-2-col-1{
+    .about-row-2-col{
         font-size: 1.5rem;
-        width: 90vw;
-        height: 40vh;
         text-align: center
     }
     .about-row-3{
         gap: 4vh;
+    }
+    .about-row-4{
+        flex-direction: column;
     }
     .projects-row{
         display: flex;

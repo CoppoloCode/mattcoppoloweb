@@ -17,8 +17,82 @@ function reveal() {
   
   window.addEventListener("scroll", reveal);
 
+function showTools(event){
+    if(event.target.id === "frontend"){
+        
+        document.getElementById("frontendtools").innerHTML = `<img id="html" src="images/html.png" >
+                                                            <img id="javascript" src="images/javascript.png" >
+                                                            <img id="css" src="images/css.png" >
+                                                            <img id="react" src="images/react.png" >`
+    }
+    if(event.target.id === "tools"){
 
-  
+      document.getElementById("toolstools").innerHTML = `<img id="github" src="images/github.png" >
+                                                            <img id="visual" src="images/visualStudio.png" >
+                                                            <img id="railway" src="images/railway.png" >
+                                                            <img id="heroku" src="images/heroku.png" >`
+    }
+    if(event.target.id === "backend"){
+
+      document.getElementById("backendtools").innerHTML = `<img id="mysql" src="images/mysql.png" >
+                                                            <img id="node" src="images/node.png" >
+                                                            <img id="express" src="images/express.png" >
+                                                            <img id="socketio" src="images/socketio.png" >`
+    }
+    
+}
+
+function hideTools(event){
+
+  if(event.target.id === "frontend"){
+    
+    document.getElementById("html").style.animation = "hidetools .9s ease-in";
+    document.getElementById("html").style.animationFillMode = "forwards";
+    document.getElementById("javascript").style.animation = "hidetools .7s ease-in";
+    document.getElementById("javascript").style.animationFillMode = "forwards";
+    document.getElementById("css").style.animation = "hidetools .5s ease-in";
+    document.getElementById("css").style.animationFillMode = "forwards";
+    document.getElementById("react").style.animation = "hidetools .3s ease-in";
+    document.getElementById("react").style.animationFillMode = "forwards";
+
+  }
+  if(event.target.id === "tools"){
+    document.getElementById("github").style.animation = "hidetools .9s ease-in";
+    document.getElementById("github").style.animationFillMode = "forwards";
+    document.getElementById("visual").style.animation = "hidetools .7s ease-in";
+    document.getElementById("visual").style.animationFillMode = "forwards";
+    document.getElementById("railway").style.animation = "hidetools .5s ease-in";
+    document.getElementById("railway").style.animationFillMode = "forwards";
+    document.getElementById("heroku").style.animation = "hidetools .3s ease-in";
+    document.getElementById("heroku").style.animationFillMode = "forwards";
+
+  }
+  if(event.target.id === "backend"){
+    document.getElementById("mysql").style.animation = "hidetools .9s ease-in";
+    document.getElementById("mysql").style.animationFillMode = "forwards";
+    document.getElementById("node").style.animation = "hidetools .7s ease-in";
+    document.getElementById("node").style.animationFillMode = "forwards";
+    document.getElementById("express").style.animation = "hidetools .5s ease-in";
+    document.getElementById("express").style.animationFillMode = "forwards";
+    document.getElementById("socketio").style.animation = "hidetools .3s ease-in";
+    document.getElementById("socketio").style.animationFillMode = "forwards";
+
+  }
+
+}
+
+  let frontend = document.getElementById("frontend");
+  let tools = document.getElementById('tools');
+  let backend = document.getElementById("backend");
+
+  frontend.addEventListener("mouseover" , showTools);
+  frontend.addEventListener("mouseleave" , hideTools);
+  tools.addEventListener("mouseover" , showTools);
+  tools.addEventListener("mouseleave" , hideTools);
+  backend.addEventListener("mouseover" , showTools);
+  backend.addEventListener("mouseleave" , hideTools);
+
+
 
 
 $(document).ready(function() {
