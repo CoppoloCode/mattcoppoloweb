@@ -161,7 +161,6 @@ nav ul li a:hover{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    visibility: hidden;
 }
 .about-row-1 h1{
     font-size: 5rem;
@@ -177,7 +176,6 @@ nav ul li a:hover{
    
     display: flex;
     justify-content: space-evenly;
-    visibility: hidden;
     width: 70vw;
 }
 .about-row-2-col{
@@ -219,14 +217,12 @@ nav ul li a:hover{
     text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
     text-align: center;
     padding-bottom: 25px;
-    visibility: hidden;
 
 }
 
 .about-row-4 {
     display: flex;
     gap: 10rem;
-    visibility: hidden;
     flex-wrap: wrap;
 }
 
@@ -388,7 +384,6 @@ nav ul li a:hover{
     font-weight: 100;
     text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
     text-align: center;
-    visibility: hidden;
 }
 .projects-row{
     display:flex;
@@ -396,7 +391,6 @@ nav ul li a:hover{
     justify-content: space-evenly;
     align-items: center;
     padding-top: 5vh;
-    visibility: hidden;
     gap: 50px;
 }
 .projects-row img{
@@ -458,7 +452,6 @@ nav ul li a:hover{
     font-weight: 100;
     text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
     text-align: center;
-    visibility: hidden;
 }
 .contact-row-1{
     height: 80vh;
@@ -568,43 +561,6 @@ textarea{
     text-align: center;
     padding-top: 10%;
     padding-bottom: 5%;
-}
-
-
-.reveal{
-    animation-play-state: paused;
-}
-.reveal.active1{
-    animation: 2s ease-in 0s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active2{
-    animation: 2s ease-in .5s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active3{
-    animation: 2s ease-in 1s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active4{
-    animation: 2s ease-in 1.5s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active5{
-    animation: 2s ease-in 2s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active6{
-    animation: 2s ease-in 2.5s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active7{
-    animation: 2s ease-in 3s 1 appear;
-    animation-fill-mode: forwards;
-}
-.reveal.active8{
-    animation: 2s ease-in 3.5s 1 appear;
-    animation-fill-mode: forwards;
 }
 
 

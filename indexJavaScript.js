@@ -1,22 +1,6 @@
 
 var sendCount = 0;
 
-function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-  
-    for (var i = 0; i < reveals.length; i++) {
-      var windowHeight = window.innerHeight;
-      var elementTop = reveals[i].getBoundingClientRect().top;
-      var elementVisible = 150;
-  
-      if (elementTop < windowHeight - elementVisible) {
-        reveals[i].classList.add("active" + (i+1));
-      } 
-    }
-  }
-  
-  window.addEventListener("scroll", reveal);
-
 function showTools(event){
     if(event.target.id === "frontend"){
         
@@ -46,35 +30,35 @@ function hideTools(event){
 
   if(event.target.id === "frontend"){
     
-    document.getElementById("html").style.animation = "hidetools .9s ease-in";
+    document.getElementById("html").style.animation = "hidetools .3s ease-in";
     document.getElementById("html").style.animationFillMode = "forwards";
-    document.getElementById("javascript").style.animation = "hidetools .7s ease-in";
+    document.getElementById("javascript").style.animation = "hidetools .5s ease-in";
     document.getElementById("javascript").style.animationFillMode = "forwards";
-    document.getElementById("css").style.animation = "hidetools .5s ease-in";
+    document.getElementById("css").style.animation = "hidetools .7s ease-in";
     document.getElementById("css").style.animationFillMode = "forwards";
-    document.getElementById("react").style.animation = "hidetools .3s ease-in";
+    document.getElementById("react").style.animation = "hidetools .9s ease-in";
     document.getElementById("react").style.animationFillMode = "forwards";
 
   }
   if(event.target.id === "tools"){
-    document.getElementById("github").style.animation = "hidetools .9s ease-in";
+    document.getElementById("github").style.animation = "hidetools .3s ease-in";
     document.getElementById("github").style.animationFillMode = "forwards";
-    document.getElementById("visual").style.animation = "hidetools .7s ease-in";
+    document.getElementById("visual").style.animation = "hidetools .5s ease-in";
     document.getElementById("visual").style.animationFillMode = "forwards";
-    document.getElementById("railway").style.animation = "hidetools .5s ease-in";
+    document.getElementById("railway").style.animation = "hidetools .7s ease-in";
     document.getElementById("railway").style.animationFillMode = "forwards";
-    document.getElementById("heroku").style.animation = "hidetools .3s ease-in";
+    document.getElementById("heroku").style.animation = "hidetools .9s ease-in";
     document.getElementById("heroku").style.animationFillMode = "forwards";
 
   }
   if(event.target.id === "backend"){
-    document.getElementById("mysql").style.animation = "hidetools .9s ease-in";
+    document.getElementById("mysql").style.animation = "hidetools .3s ease-in";
     document.getElementById("mysql").style.animationFillMode = "forwards";
-    document.getElementById("node").style.animation = "hidetools .7s ease-in";
+    document.getElementById("node").style.animation = "hidetools .5s ease-in";
     document.getElementById("node").style.animationFillMode = "forwards";
-    document.getElementById("express").style.animation = "hidetools .5s ease-in";
+    document.getElementById("express").style.animation = "hidetools .7s ease-in";
     document.getElementById("express").style.animationFillMode = "forwards";
-    document.getElementById("socketio").style.animation = "hidetools .3s ease-in";
+    document.getElementById("socketio").style.animation = "hidetools .9s ease-in";
     document.getElementById("socketio").style.animationFillMode = "forwards";
 
   }
