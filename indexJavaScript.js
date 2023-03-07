@@ -1,65 +1,79 @@
 
 var sendCount = 0;
 
+let frontendImages = ["html","javascript","css","react","jquery"];
+let toolsImages = ["github","visualstudio","railway","heroku"];
+let backendImages = ["mysql","node","express","socketio","php"];
+
 function showTools(event){
+    let time = .3;
+
     if(event.target.id === "frontend"){
+      
+      document.getElementById("frontendtools").innerHTML = ``;
+      for(i = 0; i < frontendImages.length; i++){
+        document.getElementById("frontendtools").innerHTML += `<img id="`+frontendImages[i]+`" src="images/`+frontendImages[i]+`.png">`
+      }
+      for(i = 0; i < frontendImages.length; i++){
+        document.getElementById(frontendImages[i]).style.animation = "showtools "+time+"s ease-in";
+        time += .2;
+      }
         
-        document.getElementById("frontendtools").innerHTML = `<img id="html" src="images/html.png" >
-                                                            <img id="javascript" src="images/javascript.png" >
-                                                            <img id="css" src="images/css.png" >
-                                                            <img id="react" src="images/react.png" >`
     }
     if(event.target.id === "tools"){
-
-      document.getElementById("toolstools").innerHTML = `<img id="github" src="images/github.png" >
-                                                            <img id="visual" src="images/visualStudio.png" >
-                                                            <img id="railway" src="images/railway.png" >
-                                                            <img id="heroku" src="images/heroku.png" >`
+      document.getElementById("toolstools").innerHTML = ``;
+      for(i = 0; i < toolsImages.length; i++){
+        document.getElementById("toolstools").innerHTML += `<img id="`+toolsImages[i]+`" src="images/`+toolsImages[i]+`.png">`
+      }
+      for(i = 0; i < toolsImages.length; i++){
+        document.getElementById(toolsImages[i]).style.animation = "showtools "+time+"s ease-in";
+        time += .2;
+      }
     }
     if(event.target.id === "backend"){
-
-      document.getElementById("backendtools").innerHTML = `<img id="mysql" src="images/mysql.png" >
-                                                            <img id="node" src="images/node.png" >
-                                                            <img id="express" src="images/express.png" >
-                                                            <img id="socketio" src="images/socketio.png" >`
+      document.getElementById("backendtools").innerHTML = ``;
+      for(i = 0; i < backendImages.length; i++){
+        document.getElementById("backendtools").innerHTML += `<img id="`+backendImages[i]+`" src="images/`+backendImages[i]+`.png">`
+      }
+      for(i = 0; i < backendImages.length; i++){
+        document.getElementById(backendImages[i]).style.animation = "showtools "+time+"s ease-in";
+        time += .2;
+      }
     }
     
 }
 
 function hideTools(event){
 
+  let time = .3;
+
   if(event.target.id === "frontend"){
     
-    document.getElementById("html").style.animation = "hidetools .3s ease-in";
-    document.getElementById("html").style.animationFillMode = "forwards";
-    document.getElementById("javascript").style.animation = "hidetools .5s ease-in";
-    document.getElementById("javascript").style.animationFillMode = "forwards";
-    document.getElementById("css").style.animation = "hidetools .7s ease-in";
-    document.getElementById("css").style.animationFillMode = "forwards";
-    document.getElementById("react").style.animation = "hidetools .9s ease-in";
-    document.getElementById("react").style.animationFillMode = "forwards";
+    for(i = 0; i < frontendImages.length; i++){
+      document.getElementById(frontendImages[i]).style.animation = "hidetools "+time+"s ease-in";
+      document.getElementById(frontendImages[i]).style.animationFillMode = "forwards";
+      time += .2;
+    }
+    
+
 
   }
   if(event.target.id === "tools"){
-    document.getElementById("github").style.animation = "hidetools .3s ease-in";
-    document.getElementById("github").style.animationFillMode = "forwards";
-    document.getElementById("visual").style.animation = "hidetools .5s ease-in";
-    document.getElementById("visual").style.animationFillMode = "forwards";
-    document.getElementById("railway").style.animation = "hidetools .7s ease-in";
-    document.getElementById("railway").style.animationFillMode = "forwards";
-    document.getElementById("heroku").style.animation = "hidetools .9s ease-in";
-    document.getElementById("heroku").style.animationFillMode = "forwards";
+    
+    for(i = 0; i < toolsImages.length; i++){
+      document.getElementById(toolsImages[i]).style.animation = "hidetools "+time+"s ease-in";
+      document.getElementById(toolsImages[i]).style.animationFillMode = "forwards";
+      time += .2;
+    }
 
   }
   if(event.target.id === "backend"){
-    document.getElementById("mysql").style.animation = "hidetools .3s ease-in";
-    document.getElementById("mysql").style.animationFillMode = "forwards";
-    document.getElementById("node").style.animation = "hidetools .5s ease-in";
-    document.getElementById("node").style.animationFillMode = "forwards";
-    document.getElementById("express").style.animation = "hidetools .7s ease-in";
-    document.getElementById("express").style.animationFillMode = "forwards";
-    document.getElementById("socketio").style.animation = "hidetools .9s ease-in";
-    document.getElementById("socketio").style.animationFillMode = "forwards";
+    
+    for(i = 0; i < backendImages.length; i++){
+      document.getElementById(backendImages[i]).style.animation = "hidetools "+time+"s ease-in";
+      document.getElementById(backendImages[i]).style.animationFillMode = "forwards";
+      time += .2;
+    }
 
   }
 
