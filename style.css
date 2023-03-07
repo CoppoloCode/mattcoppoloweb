@@ -514,7 +514,6 @@ textarea{
     align-items: center;
     flex-direction: column;
     scroll-snap-align: start;
-    height: 100vh;
     margin-bottom: 15%;
 }
 .resume-container h1{
@@ -611,9 +610,13 @@ textarea{
         width: 80vw;
         height: auto
     }
+    .projects-col h2{
+        font-size: 4rem;
+    }
     .projects-col p{
         font-size: 2rem;
         width: 80vw;
+        text-align: center;
     }
     .projects-col a{
         font-size: 5rem;
