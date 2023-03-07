@@ -13,6 +13,9 @@ body{
     background: radial-gradient(rgb(31, 30, 30), black);
     z-index: 1;
 }
+p{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
 /* --------------Header-------------------------- */
 
@@ -180,7 +183,7 @@ nav ul li a:hover{
 }
 .about-row-2-col{
     justify-content: space-evenly;
-    text-align: left;
+    text-align: center;
     width: 70vw;
     color: whitesmoke;
     font-weight: 100;
@@ -260,6 +263,7 @@ nav ul li a:hover{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    gap: 5px;
 }
 .skillslogos img{
     width: 5rem;
@@ -322,8 +326,12 @@ nav ul li a:hover{
 /* -----------------Projects------------------------ */
 
 .projects-container{
+    display: flex;
+    flex-direction: column;
     scroll-snap-align: start;
     padding-bottom: 5vh;
+    gap: 30px;
+    align-items: center;
 }
 .reveal.active7{
     animation: 2s ease-in 0s 1 appear;
@@ -348,8 +356,12 @@ nav ul li a:hover{
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 5vh;
-    gap: 50px;
+    padding: 3vh;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 4px 4px 4px 4px black;
+    border-radius: 12px;
+    width: 75vw;
 }
 .logos img{
     height: 5rem;
@@ -358,28 +370,22 @@ nav ul li a:hover{
 .projects-col{
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4vh;
+    align-items: flex-start;
+    gap: 2vh;
     width: 25vw;
 }
 
 .projects-col-img img{
-    height: 50vh;
-    width: 60vw;
+    height: 45vh;
+    width: 40vw;
     object-fit: cover;
-    filter:grayscale(100);
     border-style: solid;
     border-color:black;
     box-shadow: 4px 4px 4px 4px black;
     border-radius: 12px;
+    
 }
 
-.projects-col-img a:hover img{
-    cursor: pointer;
-    animation: scale .1s ease-in;
-    animation-fill-mode: forwards; 
-}
 .projects-col h2{
     font-size: 2rem;
     background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
@@ -396,8 +402,22 @@ nav ul li a:hover{
     padding: 5px;
     
 }
+.project-buttons{
+    display:flex;
+    gap:20px;
+}
 
-
+.projects-col a{
+    text-decoration: none;
+    font-size: 20px;
+    color: whitesmoke;
+    padding: 5px;
+    display: inline-block;
+    background: #ff523b;
+    border-radius: 30px;
+    transition: background 0.5s;
+    box-shadow: 4px 4px 4px 4px black;
+}
 
 
 /* -----------------------Contact----------------------- */
@@ -601,14 +621,23 @@ textarea{
     .about-row-4{
         flex-direction: column;
     }
+    .skillslogos{
+        width: 50vw;
+    }
     .projects-row{
         display: flex;
         flex-direction: column;
         gap: 5vw;
+        width:90vw;
     }
     .projects-col{
         width: 80vw;
-        height: auto
+        height: auto;
+        align-items: center;
+    }
+    .projects-col-img img{
+        width: 70vw;
+        height: 40vh;
     }
     .projects-col h2{
         font-size: 4rem;
@@ -618,8 +647,8 @@ textarea{
         width: 80vw;
         text-align: center;
     }
-    .projects-col a{
-        font-size: 5rem;
+    .project-buttons a{
+        font-size: 3rem;
     }
     .contact-container{
         font-size: 2rem;

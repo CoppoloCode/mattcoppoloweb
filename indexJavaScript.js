@@ -6,7 +6,7 @@ let toolsImages = ["github","visualstudio","railway","heroku"];
 let backendImages = ["mysql","node","express","socketio","php"];
 
 function showTools(event){
-    let time = .3;
+    let time = .2;
 
     if(event.target.id === "frontend"){
       
@@ -16,7 +16,7 @@ function showTools(event){
       }
       for(i = 0; i < frontendImages.length; i++){
         document.getElementById(frontendImages[i]).style.animation = "showtools "+time+"s ease-in";
-        time += .2;
+        time += .1;
       }
         
     }
@@ -27,7 +27,7 @@ function showTools(event){
       }
       for(i = 0; i < toolsImages.length; i++){
         document.getElementById(toolsImages[i]).style.animation = "showtools "+time+"s ease-in";
-        time += .2;
+        time += .1;
       }
     }
     if(event.target.id === "backend"){
@@ -37,7 +37,7 @@ function showTools(event){
       }
       for(i = 0; i < backendImages.length; i++){
         document.getElementById(backendImages[i]).style.animation = "showtools "+time+"s ease-in";
-        time += .2;
+        time += .1;
       }
     }
     
@@ -45,14 +45,14 @@ function showTools(event){
 
 function hideTools(event){
 
-  let time = .3;
+  let time = .2;
 
   if(event.target.id === "frontend"){
     
     for(i = 0; i < frontendImages.length; i++){
       document.getElementById(frontendImages[i]).style.animation = "hidetools "+time+"s ease-in";
       document.getElementById(frontendImages[i]).style.animationFillMode = "forwards";
-      time += .2;
+      time += .1;
     }
     
 
@@ -63,7 +63,7 @@ function hideTools(event){
     for(i = 0; i < toolsImages.length; i++){
       document.getElementById(toolsImages[i]).style.animation = "hidetools "+time+"s ease-in";
       document.getElementById(toolsImages[i]).style.animationFillMode = "forwards";
-      time += .2;
+      time += .1;
     }
 
   }
@@ -72,7 +72,7 @@ function hideTools(event){
     for(i = 0; i < backendImages.length; i++){
       document.getElementById(backendImages[i]).style.animation = "hidetools "+time+"s ease-in";
       document.getElementById(backendImages[i]).style.animationFillMode = "forwards";
-      time += .2;
+      time += .1;
     }
 
   }
