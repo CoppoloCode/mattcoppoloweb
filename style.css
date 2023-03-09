@@ -418,6 +418,9 @@ nav ul li a:hover{
     transition: background 0.5s;
     box-shadow: 4px 4px 4px 4px black;
 }
+.projects-col a:hover{
+    background: #563434;
+}
 
 
 /* -----------------------Contact----------------------- */
