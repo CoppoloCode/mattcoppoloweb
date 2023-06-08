@@ -157,7 +157,8 @@ nav ul li a:hover{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10%;
+    gap: 40px;
+    padding-bottom: 100px;
 }
 .about-row-1{
     display: flex;
@@ -206,30 +207,13 @@ nav ul li a:hover{
     display: none;
 }
 
-.about-row-3{
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-.about-row-3 h1{
-    font-size: 5rem;
-    background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 100;
-    text-shadow:  0 10px 6px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    padding-bottom: 25px;
-
-}
-
-.about-row-4 {
+.about-row-3 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.about-row-4-col{
+.about-row-3-col{
     display:flex;
     width: 25vw;
     flex-direction: column;
@@ -237,7 +221,7 @@ nav ul li a:hover{
     align-items: center;
 }
 
-.about-row-4-col h2{
+.about-row-3-col h2{
     font-size: 2rem;
     background-image: linear-gradient(45deg, rgb(110, 13, 13), rgb(121, 84, 15));
     background-clip: text;

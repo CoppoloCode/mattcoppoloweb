@@ -1,9 +1,9 @@
 
 var sendCount = 0;
 
-let frontendImages = ["html","javascript","css","react","jquery"];
-let toolsImages = ["github","visualstudio","railway","heroku"];
-let backendImages = ["mysql","node","express","socketio","php"];
+let frontendImages = ["html","javascript","typescript","css","tailwind","react","jquery"];
+let toolsImages = ["github","visualstudio","railway","heroku","nextjs","vercel","t3"];
+let backendImages = ["mysql","prisma","node","express","socketio","php","trpc","python"];
 
 function showTools(event){
     let time = .2;
@@ -84,11 +84,11 @@ function hideTools(event){
   let backend = document.getElementById("backend");
 
   frontend.addEventListener("mouseover" , showTools);
-  frontend.addEventListener("mouseleave" , hideTools);
+  // frontend.addEventListener("mouseleave" , hideTools);
   tools.addEventListener("mouseover" , showTools);
-  tools.addEventListener("mouseleave" , hideTools);
+  // tools.addEventListener("mouseleave" , hideTools);
   backend.addEventListener("mouseover" , showTools);
-  backend.addEventListener("mouseleave" , hideTools);
+  // backend.addEventListener("mouseleave" , hideTools);
 
 
 
